@@ -1,0 +1,57 @@
+﻿program Project1;
+
+{$APPTYPE CONSOLE}
+{5.	Ввести три числа. Если они могут быть длинами сторон
+равнобедренного треугольника, вычислить длины его высот.
+Вывести длину основания и длины высот в порядке возрастания.}
+
+  procedure Ptreugolnik(a,b,c:real);
+  var h1,h2,s,x:real;
+  begin
+    d:=(c/2);
+    h1:=sqrt(sqr(a)-sqr(d));
+    s:=(d*h1);
+    h2:=((h1*c)/b);
+    if (h1<h2) then
+    begin
+      s:=h2;
+      h2:=h1;
+      h1:=s;
+    end;
+    if (h2<c) then
+    begin
+      s:=c;
+      c:=h2;
+      h2:=s;
+    end;
+    if (h1<h2) then
+    begin
+      s:=h2;
+      h2:=h1;
+      x:=s;
+    end;
+    write(c, h1, h2);
+  end;
+
+  var
+  a,b,c,d:real;
+
+begin
+  Write ( );Readln (a);
+  Write ( );Readln (b);
+  Write ( );Readln (c);
+  if (a>0) and (b>0) and (c>0) and ((a+b)>c)and ((b+c)>a)and ((b+c)>a)then
+    if (a=b) then
+      Ptreugolnik(a,b,c)
+    else
+      if b=c then
+        Ptreugolnik(b,c,a)
+      else
+        if a=c then
+          Ptreugolnik(a,c,b)
+        else
+        write(neravnobedreni)
+  else
+    write(Netreugolnik);
+    readln();
+end.

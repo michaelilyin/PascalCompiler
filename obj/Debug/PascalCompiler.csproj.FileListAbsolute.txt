@@ -1,0 +1,6 @@
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\bin\Debug\PascalCompiler.exe.config
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\bin\Debug\PascalCompiler.exe
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\bin\Debug\PascalCompiler.pdb
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\obj\Debug\PascalCompiler.csprojResolveAssemblyReference.cache
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\obj\Debug\PascalCompiler.exe
+C:\Users\Michael\Dropbox\VSU\CompilersTheory\PascalCompiler\PascalCompiler\obj\Debug\PascalCompiler.pdb
