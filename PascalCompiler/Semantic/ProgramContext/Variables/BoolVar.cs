@@ -9,8 +9,6 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
     class BoolVar : Variable
     {
         private bool value;
-        private bool isInit = false;
-
 
         public bool Value
         {

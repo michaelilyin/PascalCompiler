@@ -9,8 +9,6 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
     class FloatVar : Variable
     {
         private float value;
-        private bool isInit = false;
-
 
         public float Value
         {

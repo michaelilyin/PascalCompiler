@@ -79,18 +79,33 @@ namespace PascalCompiler.Semantic
             }
         }
 
-        private void AnalizeExpression(ITree node)
+        private void AnalizeTerm(ITree node, Context context)
         {
 
         }
 
-        private void AnalizeImplementation(ITree node)
+        private void AnalizeExpression(ITree node, Context context)
+        {
+            switch (node.Type)
+            {
+                case AstNodeType.ASSIGN:
+                    Variable v = context.FindVar(node.GetChild(0).Text);
+                    if (v == null)
+                        throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(0).Text));
+                    v.Init();
+                    AnalizeTerm(node.GetChild(1), context);
+                    break;
+            }
+        }
+
+        private void AnalizeImplementation(ITree node, Context context)
         {
             if (node.Type != AstNodeType.BLOCK)
                 throw new SemanticException("The block expected");
+            Console.WriteLine("This block has {0} operations", node.ChildCount);
             for (int i = 0; i < node.ChildCount; i++)
             {
-                AnalizeExpression(node);
+                AnalizeExpression(node.GetChild(i), context);
             }
         }
 
@@ -106,7 +121,7 @@ namespace PascalCompiler.Semantic
                 Console.WriteLine("Analize {0} program children", i);
                 AnalizeDefinition(program.GetChild(i), progContext);
             }
-            AnalizeImplementation(program.GetChild(program.ChildCount - 1));
+            AnalizeImplementation(program.GetChild(program.ChildCount - 1), progContext);
             AnalizeNode(program);
         }
     }

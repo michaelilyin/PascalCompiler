@@ -9,8 +9,6 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
     class IntVar : Variable
     {
         private int value;
-        private bool isInit = false;
-
 
         public int Value
         {
