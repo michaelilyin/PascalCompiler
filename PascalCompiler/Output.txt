@@ -1,5 +1,14 @@
 Project1
 ├ METHODS
+│ ├ func test
+│ │ ├ float
+│ │ ├ PARAMS
+│ │ │ └ integer
+│ │ │   └ patram
+│ │ └ BLOCK
+│ │   └ :=
+│ │     ├ patram
+│ │     └ 2
 │ └ proc Ptreugolnik
 │   ├ PARAMS
 │   │ └ real
@@ -180,7 +189,8 @@ Project1
   │ │     └ FUNC_CALL
   │ │       ├ write
   │ │       └ PARAMS
-  │ │         └ neravnobedreni
+  │ │         └ FUNC_CALL
+  │ │           └ neravnobedreni
   │ └ FUNC_CALL
   │   ├ write
   │   └ PARAMS

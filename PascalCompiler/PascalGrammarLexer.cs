@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-10 18:29:52
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-14 18:11:03
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -1007,10 +1007,10 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = WS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:64:3: ( ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+ )
-            // PascalGrammar.g:65:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
+            // PascalGrammar.g:66:3: ( ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+ )
+            // PascalGrammar.g:67:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
             {
-            	// PascalGrammar.g:65:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
+            	// PascalGrammar.g:67:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
             	int cnt11 = 0;
             	do 
             	{
@@ -1075,8 +1075,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = ADD;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:68:4: ( '+' )
-            // PascalGrammar.g:68:9: '+'
+            // PascalGrammar.g:70:4: ( '+' )
+            // PascalGrammar.g:70:9: '+'
             {
             	Match('+'); 
 
@@ -1098,8 +1098,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = SUB;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:69:4: ( '-' )
-            // PascalGrammar.g:69:9: '-'
+            // PascalGrammar.g:71:4: ( '-' )
+            // PascalGrammar.g:71:9: '-'
             {
             	Match('-'); 
 
@@ -1121,8 +1121,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = MUL;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:70:4: ( '*' )
-            // PascalGrammar.g:70:9: '*'
+            // PascalGrammar.g:72:4: ( '*' )
+            // PascalGrammar.g:72:9: '*'
             {
             	Match('*'); 
 
@@ -1144,8 +1144,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = DIV;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:71:4: ( '/' )
-            // PascalGrammar.g:71:9: '/'
+            // PascalGrammar.g:73:4: ( '/' )
+            // PascalGrammar.g:73:9: '/'
             {
             	Match('/'); 
 
@@ -1167,8 +1167,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = ASSIGN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:72:7: ( ':=' )
-            // PascalGrammar.g:72:9: ':='
+            // PascalGrammar.g:74:7: ( ':=' )
+            // PascalGrammar.g:74:9: ':='
             {
             	Match(":="); 
 
@@ -1191,7 +1191,7 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = COMPARE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:73:8: ( '>' | '>=' | '<' | '<=' | '=' | '!=' )
+            // PascalGrammar.g:75:8: ( '>' | '>=' | '<' | '<=' | '=' | '!=' )
             int alt12 = 6;
             switch ( input.LA(1) ) 
             {
@@ -1241,14 +1241,14 @@ public partial class PascalGrammarLexer : Lexer {
             switch (alt12) 
             {
                 case 1 :
-                    // PascalGrammar.g:73:10: '>'
+                    // PascalGrammar.g:75:10: '>'
                     {
                     	Match('>'); 
 
                     }
                     break;
                 case 2 :
-                    // PascalGrammar.g:73:16: '>='
+                    // PascalGrammar.g:75:16: '>='
                     {
                     	Match(">="); 
 
@@ -1256,14 +1256,14 @@ public partial class PascalGrammarLexer : Lexer {
                     }
                     break;
                 case 3 :
-                    // PascalGrammar.g:73:23: '<'
+                    // PascalGrammar.g:75:23: '<'
                     {
                     	Match('<'); 
 
                     }
                     break;
                 case 4 :
-                    // PascalGrammar.g:73:29: '<='
+                    // PascalGrammar.g:75:29: '<='
                     {
                     	Match("<="); 
 
@@ -1271,14 +1271,14 @@ public partial class PascalGrammarLexer : Lexer {
                     }
                     break;
                 case 5 :
-                    // PascalGrammar.g:73:36: '='
+                    // PascalGrammar.g:75:36: '='
                     {
                     	Match('='); 
 
                     }
                     break;
                 case 6 :
-                    // PascalGrammar.g:73:42: '!='
+                    // PascalGrammar.g:75:42: '!='
                     {
                     	Match("!="); 
 

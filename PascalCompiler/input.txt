@@ -5,6 +5,11 @@
 равнобедренного треугольника, вычислить длины его высот.
 Вывести длину основания и длины высот в порядке возрастания.}
 
+  function test(patram: integer): float;
+  begin
+	patram := 2;
+  end;
+
   procedure Ptreugolnik(a,b,c:real);
   var h1,h2,s,x:real;
   begin
@@ -50,7 +55,7 @@ begin
         if a=c then
           Ptreugolnik(a,c,b)
         else
-        write(neravnobedreni)
+        write(neravnobedreni())
   else
     write(Netreugolnik);
     readln();

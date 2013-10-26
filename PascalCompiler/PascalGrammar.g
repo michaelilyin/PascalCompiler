@@ -95,6 +95,7 @@ func_call
 
 expr	:
 	IDENT ASSIGN^ term
+//	| IDENT ASSIGN^ STRING
 	| func_call
 	| BLOCKOPEN expr_list BLOCKEND -> ^(BLOCK expr_list)
 	| IF^ compare THEN! expr (ELSE! expr)?
