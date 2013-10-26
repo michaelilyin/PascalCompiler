@@ -79,9 +79,28 @@ namespace PascalCompiler.Semantic
             }
         }
 
-        private void AnalizeTerm(ITree node, Context context)
+        private void AnalizeTerm(Variable target, ITree node, Context context)
         {
-
+            switch (node.Type)
+            {
+                case AstNodeType.IDENT:
+                    Variable source = context.FindVar(node.Text);
+                    if (source == null)
+                        //find func
+                        throw new SemanticException(String.Format("Undefined function or variable {0}", node.Text));
+                    else
+                        if (!source.IsInit)
+                            throw new SemanticException(String.Format("The variable {0} is not initialized", source.Name));
+                    if (source.Type > 0 && target.Type > 0)
+                    {
+                        if (source.Type > target.Type)
+                            throw new SemanticException(String.Format("Illegal assign {0} to {1}", source.Type.ToString(), target.Type.ToString()));
+                    }
+                    else
+                        if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
+                            throw new SemanticException("Illegal assign bool and none bool");
+                    break;
+            }
         }
 
         private void AnalizeExpression(ITree node, Context context)
@@ -92,8 +111,8 @@ namespace PascalCompiler.Semantic
                     Variable v = context.FindVar(node.GetChild(0).Text);
                     if (v == null)
                         throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(0).Text));
+                    AnalizeTerm(v, node.GetChild(1), context);
                     v.Init();
-                    AnalizeTerm(node.GetChild(1), context);
                     break;
             }
         }

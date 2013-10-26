@@ -8,6 +8,8 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
 {
     enum VariableType
     {
-        INT, FLOAT, BOOL
+        FLOAT = 10, 
+        INT = 5, 
+        BOOL = -1
     }
 }
