@@ -54,6 +54,14 @@
     <Compile Include="ProgAstNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Semantic\ProgramContext\Context.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\BoolVar.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\FloatVar.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\IntVar.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\Variable.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\VariableType.cs" />
+    <Compile Include="Semantic\SemAnalizer.cs" />
+    <Compile Include="Semantic\SemanticException.cs" />
     <Compile Include="TreePrinter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +69,8 @@
     <None Include="PascalGrammar.g" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="input.txt" />
+    <Content Include="Test\input.txt" />
+    <Content Include="Test\SemTest.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
