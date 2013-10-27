@@ -14,8 +14,8 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
         {
             get
             {
-                if (!IsInit)
-                    throw new SemanticException(String.Format("The variable {0} is not initialized", Name));
+                //if (!IsInit)
+                //    throw new SemanticException(String.Format("The variable {0} is not initialized", Name));
                 return this.value; 
             }
             set 

@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Tree;
 using PascalCompiler.Semantic.ProgramContext;
+using PascalCompiler.Semantic.ProgramContext.Methods;
 using PascalCompiler.Semantic.ProgramContext.Variables;
 using System;
 using System.Collections.Generic;
@@ -45,29 +46,37 @@ namespace PascalCompiler.Semantic
             Console.WriteLine("I am a function!!");
             Context currentContext = new Context(context);
             currentContext.PutVar("result", GetTypeFromString(node.GetChild(0).Text));
-
+            Function func = new Function(((FunctionAstNode)node).Name, GetTypeFromString(node.GetChild(0).Text));
             for (int i = 1; i < node.ChildCount - 1; i++)
             {
-                switch (node.GetChild(i).Type)
+                if(node.GetChild(i).Type == AstNodeType.PARAMS)
                 {
-                    case AstNodeType.PARAMS:
-                        Console.WriteLine("~~Analize params");
-                        AnalizeVariablesDefinition(node.GetChild(i), currentContext);
-                        break;
-                    case AstNodeType.VAR:
-                        Console.WriteLine("~~Analize variables");
-                        AnalizeVariablesDefinition(node.GetChild(i), currentContext);
-                        break;
-                    case AstNodeType.METHODS:
-                        Console.WriteLine("~~Analize inner methods");
-                        AnalizeMethodsDefinition(node.GetChild(i), currentContext);
-                        break;
+                    Console.WriteLine("~~Analize params");
+                    for (int j = 0; j < node.GetChild(i).ChildCount; j++)
+                    {
+                        func.addParamType(GetTypeFromString(node.GetChild(i).GetChild(j).Text));
+                    }
+                    AnalizeVariablesDefinition(node.GetChild(i), currentContext);
                 }
             }
+            for (int i = 1; i < node.ChildCount - 1; i++)
+            {
+                    if (node.GetChild(i).Type == AstNodeType.VAR)
+                    {
+                        Console.WriteLine("~~Analize variables");
+                        AnalizeVariablesDefinition(node.GetChild(i), currentContext);
+                    }
+            }
+            for (int i = 1; i < node.ChildCount - 1; i++)
+            {
+                if (node.GetChild(i).Type == AstNodeType.METHODS)
+                {
+                    Console.WriteLine("~~Analize inner methods");
+                    AnalizeMethodsDefinition(node.GetChild(i), currentContext);
+                }
+            }
+            context.PutMethod(func);
             AnalizeImplementation(node.GetChild(node.ChildCount - 1), currentContext);
-
-            if (currentContext.FindVar("result").IsInit == false) 
-                throw new SemanticException("The function return value must be initialized");
         }
 
         private void AnalizeProcedureDefinition(ITree node, Context context)
@@ -75,34 +84,46 @@ namespace PascalCompiler.Semantic
             Console.WriteLine("I am a procedure!!");
             Context currentContext = context;
             bool contextChanged = false;
+            Procedure proc = new Procedure(((ProcedureAstNode)node).Name);
             for (int i = 0; i < node.ChildCount - 1; i++)
             {
-                switch (node.GetChild(i).Type)
+                if (node.GetChild(i).Type == AstNodeType.PARAMS) 
                 {
-                    case AstNodeType.PARAMS:
-                        Console.WriteLine("~~Analize params");
-                        if (!contextChanged)
-                        {
-                            currentContext = new Context(currentContext);
-                            contextChanged = true;
-                        }
-                        AnalizeVariablesDefinition(node.GetChild(i), currentContext);
-                        break;
-                    case AstNodeType.VAR:
-                        Console.WriteLine("~~Analize variables");
-                        if (!contextChanged)
-                        {
-                            currentContext = new Context(currentContext);
-                            contextChanged = true;
-                        }
-                        AnalizeVariablesDefinition(node.GetChild(i), currentContext);
-                        break;
-                    case AstNodeType.METHODS:
-                        Console.WriteLine("~~Analize inner methods");
-                        AnalizeMethodsDefinition(node.GetChild(i), currentContext);
-                        break;
+                    Console.WriteLine("~~Analize params");
+                    if (!contextChanged)
+                    {
+                        currentContext = new Context(currentContext);
+                        contextChanged = true;
+                    }
+                    for (int j = 0; j < node.GetChild(i).ChildCount; j++)
+                    {
+                        proc.addParamType(GetTypeFromString(node.GetChild(i).GetChild(j).Text));
+                    }
+                    AnalizeVariablesDefinition(node.GetChild(i), currentContext);
                 }
             }
+            for (int i = 0; i < node.ChildCount - 1; i++)
+            {
+                if (node.GetChild(i).Type == AstNodeType.VAR)
+                {
+                    Console.WriteLine("~~Analize variables");
+                    if (!contextChanged)
+                    {
+                        currentContext = new Context(currentContext);
+                        contextChanged = true;
+                    }
+                    AnalizeVariablesDefinition(node.GetChild(i), currentContext);
+                }
+            }
+            for (int i = 0; i < node.ChildCount - 1; i++)
+            {
+                if (node.GetChild(i).Type == AstNodeType.METHODS)
+                {
+                        Console.WriteLine("~~Analize inner methods");
+                        AnalizeMethodsDefinition(node.GetChild(i), currentContext);
+                }
+            }
+            context.PutMethod(proc);
             AnalizeImplementation(node.GetChild(node.ChildCount - 1), currentContext);
         }
 
@@ -189,26 +210,44 @@ namespace PascalCompiler.Semantic
                 case AstNodeType.IDENT:
                     Variable source = context.FindVar(node.Text);
                     if (source == null)
-                        //find func
-                        throw new SemanticException(String.Format("Undefined function or variable {0}", node.Text));
-                    else
-                        if (!source.IsInit)
-                            throw new SemanticException(String.Format("The variable {0} is not initialized", source.Name));
-                    if (source.Type > 0 && target.Type > 0)
                     {
-                        if (source.Type > target.Type)
-                            throw new SemanticException(String.Format("Illegal assign {0} to {1}", source.Type.ToString(), target.Type.ToString()));
+                        Function func = context.findFunc(node.Text);
+                        if (func == null)
+                            throw new SemanticException(String.Format("Undefined function or variable {0}", node.Text));
+                        else
+                            if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
+                                throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable", target.Type));
                     }
                     else
-                        if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
-                            throw new SemanticException("Illegal assign bool and none bool");
+                    {
+                        //    if (!source.IsInit)
+                        //        throw new SemanticException(String.Format("The variable {0} is not initialized", source.Name));
+                        if (source.Type > 0 && target.Type > 0)
+                        {
+                            if (source.Type > target.Type)
+                                throw new SemanticException(String.Format("Illegal assign {0} to {1}", source.Type.ToString(), target.Type.ToString()));
+                        }
+                        else
+                            if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
+                                throw new SemanticException("Illegal assign bool and none bool");
+                    }
                     break;
                 case AstNodeType.BOOLEAN:
                     if (target.Type != VariableType.BOOL)
                         throw new SemanticException("The boolean value must be assignrd only to bolean variable");
                     break;
                 case AstNodeType.FUNC_CALL:
-                    break;
+                    {
+                        Function func = context.findFunc(node.GetChild(0).Text);
+
+                        //проверить параметры!
+                        if (func == null)
+                            throw new SemanticException(String.Format("Undefined function or variable {0}", node.GetChild(0).Text));
+                        else
+                            if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
+                                throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable", target.Type));
+                        break;
+                    }
                 case AstNodeType.STRING:
                     if (target.Type != VariableType.STRING)
                         throw new SemanticException("The string value must be assigned only to string variable");
@@ -259,7 +298,7 @@ namespace PascalCompiler.Semantic
                     if (v == null)
                         throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(0).Text));
                     AnalizeTerm(v, node.GetChild(1), context);
-                    v.Init();
+                    //v.Init();
                     break;
                 case AstNodeType.BLOCK:
                     Console.WriteLine("Inner block");
@@ -270,10 +309,21 @@ namespace PascalCompiler.Semantic
                         throw new SemanticException(String.Format("Illegal use of Variable {0}", node.Text));
                     if (false/*find func*/)
                     {
-                        //заменить узел на FUNC_CALL
+                        //заменить узел на FUNC_CALL и проанализировать
                     }
                     else
                         throw new SemanticException(String.Format("The {0} function is not found in a curren context", node.Text));
+                    break;
+                case AstNodeType.FUNC_CALL:
+                    Procedure proc = context.findMethod(node.GetChild(0).Text);
+                    if (proc == null)
+                        throw new SemanticException(String.Format("Undefined function or procedure {0}", node.GetChild(0).Text));
+                    for (int i = 0; i < node.GetChild(1).ChildCount; i++)
+                    {
+                        if (GetTypeFromString(node.GetChild(1).GetChild(i).Text) > proc.ParamsTypes[i]
+                            || (GetTypeFromString(node.GetChild(1).GetChild(i).Text) == VariableType.BOOL && proc.ParamsTypes[i] != VariableType.BOOL))
+                            throw new SemanticException("NESOVMESTIMIE PARAMETRI V ROT IH!");
+                    }
                     break;
             }
         }
@@ -298,8 +348,19 @@ namespace PascalCompiler.Semantic
                 throw new SemanticException("The implementation block expected");
             for (int i = 0; i < program.ChildCount - 1; i++)
             {
-                Console.WriteLine("Analize {0} program children", i);
-                AnalizeDefinition(program.GetChild(i), progContext);
+                if (program.GetChild(i).Type == AstNodeType.VAR) 
+                {
+                    Console.WriteLine("Analize {0} program children", i);
+                    AnalizeDefinition(program.GetChild(i), progContext);
+                }
+            }
+            for (int i = 0; i < program.ChildCount - 1; i++)
+            {
+                if (program.GetChild(i).Type == AstNodeType.METHODS) 
+                {
+                    Console.WriteLine("Analize {0} program children", i);
+                    AnalizeDefinition(program.GetChild(i), progContext);
+                }
             }
             AnalizeImplementation(program.GetChild(program.ChildCount - 1), progContext);
         }

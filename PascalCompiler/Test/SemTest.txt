@@ -7,15 +7,25 @@ begin
 	a := 123;
 end;
 
+function ololo: real;
+begin
+	result := 124.23;
+end;
+
 function func1(a, l: integer) : integer;
 	function check(a: integer) : boolean;
 	begin
 		result := true;
+		g := 23;
+		r := ololo();
 	end;
 var
-	b, c, d : integer;
+	b, c, g : integer;
+	o : boolean;
+	oh : real;
 begin
 	a := 123;
+	o := check(o);
 	result := a;
 end;
 
@@ -41,6 +51,4 @@ begin
 	//println;
 	s := a;
 	//s := c; //error
-	printf();
-	print(1, 4, f);
 end.

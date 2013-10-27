@@ -10,12 +10,6 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
     {
         protected VariableType type;
         private string name;
-        private bool isInit = false;
-
-        public bool IsInit
-        {
-            get { return isInit; }
-        }
 
         public Variable(string name)
         {
@@ -30,11 +24,6 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
         internal VariableType Type
         {
             get { return type; }
-        }
-
-        public void Init()
-        {
-            isInit = true;
         }
 
     }

@@ -5,9 +5,10 @@
 равнобедренного треугольника, вычислить длины его высот.
 Вывести длину основания и длины высот в порядке возрастания.}
 
-  function test(patram: integer): float;
+  function test(patram: integer): real;
   begin
 	patram := 2;
+	result := patram;
   end;
 
   procedure Ptreugolnik(a,b,c:real);

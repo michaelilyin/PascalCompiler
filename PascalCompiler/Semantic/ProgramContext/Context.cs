@@ -17,13 +17,30 @@ namespace PascalCompiler.Semantic.ProgramContext
         public Context()
             : this(null)
         {
-
+            variables = new List<Variable>();
+            methods = new List<Procedure>();
         }
 
         public Context(Context parentContext)
         {
             variables = new List<Variable>();
             this.parentContext = parentContext;
+            methods = new List<Procedure>();
+            if (parentContext == null)
+            {
+                Procedure pr = new Procedure("wtire");
+                pr.addParamType(VariableType.STRING);
+                Procedure pr1 = new Procedure("writeln");
+                pr.addParamType(VariableType.STRING);
+                Procedure pr2 = new Procedure("read");
+                pr.addParamType(VariableType.STRING);
+                Procedure pr3 = new Procedure("readln");
+                pr.addParamType(VariableType.STRING);
+                methods.Add(pr);
+                methods.Add(pr1);
+                methods.Add(pr2);
+                methods.Add(pr3);
+            }
         }
 
         public void PutVar(string name, VariableType type)
