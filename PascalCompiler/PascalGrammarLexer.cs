@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-14 18:11:03
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-27 19:17:34
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -18,6 +18,7 @@ namespace  PascalCompiler
 public partial class PascalGrammarLexer : Lexer {
     public const int FUNCTION = 13;
     public const int T__40 = 40;
+    public const int T__41 = 41;
     public const int XOR = 25;
     public const int WHILE = 22;
     public const int TO = 20;
@@ -25,19 +26,18 @@ public partial class PascalGrammarLexer : Lexer {
     public const int NUMBER = 27;
     public const int DO = 21;
     public const int FOR = 19;
-    public const int SUB = 31;
+    public const int SUB = 32;
     public const int SEMICOLON = 10;
     public const int AND = 23;
     public const int EOF = -1;
-    public const int MUL = 32;
+    public const int MUL = 33;
     public const int PROCEDURE = 14;
     public const int FUNC_CALL = 15;
     public const int IF = 16;
     public const int BLOCKOPEN = 11;
-    public const int WS = 29;
+    public const int WS = 30;
     public const int METHODS = 8;
     public const int THEN = 17;
-    public const int T__36 = 36;
     public const int T__37 = 37;
     public const int T__38 = 38;
     public const int T__39 = 39;
@@ -45,15 +45,16 @@ public partial class PascalGrammarLexer : Lexer {
     public const int BLOCKEND = 12;
     public const int BLOCK = 6;
     public const int OR = 24;
-    public const int ASSIGN = 34;
-    public const int COMPARE = 35;
+    public const int ASSIGN = 35;
+    public const int COMPARE = 36;
     public const int IDENT = 26;
     public const int PROGRAM = 4;
     public const int VAR = 5;
-    public const int DIV = 33;
+    public const int DIV = 34;
     public const int COMMENT = 28;
+    public const int STRING = 29;
     public const int PARAMS = 7;
-    public const int ADD = 30;
+    public const int ADD = 31;
 
     // delegates
     // delegators
@@ -483,29 +484,6 @@ public partial class PascalGrammarLexer : Lexer {
     }
     // $ANTLR end "XOR"
 
-    // $ANTLR start "T__36"
-    public void mT__36() // throws RecognitionException [2]
-    {
-    		try
-    		{
-            int _type = T__36;
-    	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:26:7: ( '(' )
-            // PascalGrammar.g:26:9: '('
-            {
-            	Match('('); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally 
-    	{
-        }
-    }
-    // $ANTLR end "T__36"
-
     // $ANTLR start "T__37"
     public void mT__37() // throws RecognitionException [2]
     {
@@ -513,10 +491,10 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = T__37;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:27:7: ( ')' )
-            // PascalGrammar.g:27:9: ')'
+            // PascalGrammar.g:26:7: ( '(' )
+            // PascalGrammar.g:26:9: '('
             {
-            	Match(')'); 
+            	Match('('); 
 
             }
 
@@ -536,10 +514,10 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = T__38;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:28:7: ( ',' )
-            // PascalGrammar.g:28:9: ','
+            // PascalGrammar.g:27:7: ( ')' )
+            // PascalGrammar.g:27:9: ')'
             {
-            	Match(','); 
+            	Match(')'); 
 
             }
 
@@ -559,10 +537,10 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = T__39;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:29:7: ( ':' )
-            // PascalGrammar.g:29:9: ':'
+            // PascalGrammar.g:28:7: ( ',' )
+            // PascalGrammar.g:28:9: ','
             {
-            	Match(':'); 
+            	Match(','); 
 
             }
 
@@ -582,6 +560,29 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = T__40;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
+            // PascalGrammar.g:29:7: ( ':' )
+            // PascalGrammar.g:29:9: ':'
+            {
+            	Match(':'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally 
+    	{
+        }
+    }
+    // $ANTLR end "T__40"
+
+    // $ANTLR start "T__41"
+    public void mT__41() // throws RecognitionException [2]
+    {
+    		try
+    		{
+            int _type = T__41;
+    	int _channel = DEFAULT_TOKEN_CHANNEL;
             // PascalGrammar.g:30:7: ( '.' )
             // PascalGrammar.g:30:9: '.'
             {
@@ -596,7 +597,7 @@ public partial class PascalGrammarLexer : Lexer {
     	{
         }
     }
-    // $ANTLR end "T__40"
+    // $ANTLR end "T__41"
 
     // $ANTLR start "IDENT"
     public void mIDENT() // throws RecognitionException [2]
@@ -1000,6 +1001,116 @@ public partial class PascalGrammarLexer : Lexer {
     }
     // $ANTLR end "COMMENT"
 
+    // $ANTLR start "STRING"
+    public void mSTRING() // throws RecognitionException [2]
+    {
+    		try
+    		{
+            int _type = STRING;
+    	int _channel = DEFAULT_TOKEN_CHANNEL;
+            // PascalGrammar.g:64:8: ( '\"' ( ( '\\\\\"' ) | (~ '\"' ) )* '\"' )
+            // PascalGrammar.g:65:2: '\"' ( ( '\\\\\"' ) | (~ '\"' ) )* '\"'
+            {
+            	Match('\"'); 
+            	// PascalGrammar.g:65:6: ( ( '\\\\\"' ) | (~ '\"' ) )*
+            	do 
+            	{
+            	    int alt11 = 3;
+            	    int LA11_0 = input.LA(1);
+
+            	    if ( (LA11_0 == '\\') )
+            	    {
+            	        int LA11_2 = input.LA(2);
+
+            	        if ( (LA11_2 == '\"') )
+            	        {
+            	            int LA11_4 = input.LA(3);
+
+            	            if ( ((LA11_4 >= '\u0000' && LA11_4 <= '\uFFFF')) )
+            	            {
+            	                alt11 = 1;
+            	            }
+
+            	            else 
+            	            {
+            	                alt11 = 2;
+            	            }
+
+            	        }
+            	        else if ( ((LA11_2 >= '\u0000' && LA11_2 <= '!') || (LA11_2 >= '#' && LA11_2 <= '\uFFFF')) )
+            	        {
+            	            alt11 = 2;
+            	        }
+
+
+            	    }
+            	    else if ( ((LA11_0 >= '\u0000' && LA11_0 <= '!') || (LA11_0 >= '#' && LA11_0 <= '[') || (LA11_0 >= ']' && LA11_0 <= '\uFFFF')) )
+            	    {
+            	        alt11 = 2;
+            	    }
+
+
+            	    switch (alt11) 
+            		{
+            			case 1 :
+            			    // PascalGrammar.g:65:7: ( '\\\\\"' )
+            			    {
+            			    	// PascalGrammar.g:65:7: ( '\\\\\"' )
+            			    	// PascalGrammar.g:65:8: '\\\\\"'
+            			    	{
+            			    		Match("\\\""); 
+
+
+            			    	}
+
+
+            			    }
+            			    break;
+            			case 2 :
+            			    // PascalGrammar.g:65:17: (~ '\"' )
+            			    {
+            			    	// PascalGrammar.g:65:17: (~ '\"' )
+            			    	// PascalGrammar.g:65:18: ~ '\"'
+            			    	{
+            			    		if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!') || (input.LA(1) >= '#' && input.LA(1) <= '\uFFFF') ) 
+            			    		{
+            			    		    input.Consume();
+
+            			    		}
+            			    		else 
+            			    		{
+            			    		    MismatchedSetException mse = new MismatchedSetException(null,input);
+            			    		    Recover(mse);
+            			    		    throw mse;}
+
+
+            			    	}
+
+
+            			    }
+            			    break;
+
+            			default:
+            			    goto loop11;
+            	    }
+            	} while (true);
+
+            	loop11:
+            		;	// Stops C# compiler whining that label 'loop11' has no statements
+
+            	Match('\"'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally 
+    	{
+        }
+    }
+    // $ANTLR end "STRING"
+
     // $ANTLR start "WS"
     public void mWS() // throws RecognitionException [2]
     {
@@ -1007,23 +1118,23 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = WS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:66:3: ( ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+ )
-            // PascalGrammar.g:67:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
+            // PascalGrammar.g:68:3: ( ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+ )
+            // PascalGrammar.g:69:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
             {
-            	// PascalGrammar.g:67:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
-            	int cnt11 = 0;
+            	// PascalGrammar.g:69:5: ( ' ' | '\\t' | '\\f' | '\\r' | '\\n' )+
+            	int cnt12 = 0;
             	do 
             	{
-            	    int alt11 = 2;
-            	    int LA11_0 = input.LA(1);
+            	    int alt12 = 2;
+            	    int LA12_0 = input.LA(1);
 
-            	    if ( ((LA11_0 >= '\t' && LA11_0 <= '\n') || (LA11_0 >= '\f' && LA11_0 <= '\r') || LA11_0 == ' ') )
+            	    if ( ((LA12_0 >= '\t' && LA12_0 <= '\n') || (LA12_0 >= '\f' && LA12_0 <= '\r') || LA12_0 == ' ') )
             	    {
-            	        alt11 = 1;
+            	        alt12 = 1;
             	    }
 
 
-            	    switch (alt11) 
+            	    switch (alt12) 
             		{
             			case 1 :
             			    // PascalGrammar.g:
@@ -1044,16 +1155,16 @@ public partial class PascalGrammarLexer : Lexer {
             			    break;
 
             			default:
-            			    if ( cnt11 >= 1 ) goto loop11;
-            		            EarlyExitException eee11 =
-            		                new EarlyExitException(11, input);
-            		            throw eee11;
+            			    if ( cnt12 >= 1 ) goto loop12;
+            		            EarlyExitException eee12 =
+            		                new EarlyExitException(12, input);
+            		            throw eee12;
             	    }
-            	    cnt11++;
+            	    cnt12++;
             	} while (true);
 
-            	loop11:
-            		;	// Stops C# compiler whining that label 'loop11' has no statements
+            	loop12:
+            		;	// Stops C# compiler whining that label 'loop12' has no statements
 
             	_channel=HIDDEN;
 
@@ -1075,8 +1186,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = ADD;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:70:4: ( '+' )
-            // PascalGrammar.g:70:9: '+'
+            // PascalGrammar.g:72:4: ( '+' )
+            // PascalGrammar.g:72:9: '+'
             {
             	Match('+'); 
 
@@ -1098,8 +1209,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = SUB;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:71:4: ( '-' )
-            // PascalGrammar.g:71:9: '-'
+            // PascalGrammar.g:73:4: ( '-' )
+            // PascalGrammar.g:73:9: '-'
             {
             	Match('-'); 
 
@@ -1121,8 +1232,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = MUL;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:72:4: ( '*' )
-            // PascalGrammar.g:72:9: '*'
+            // PascalGrammar.g:74:4: ( '*' )
+            // PascalGrammar.g:74:9: '*'
             {
             	Match('*'); 
 
@@ -1144,8 +1255,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = DIV;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:73:4: ( '/' )
-            // PascalGrammar.g:73:9: '/'
+            // PascalGrammar.g:75:4: ( '/' )
+            // PascalGrammar.g:75:9: '/'
             {
             	Match('/'); 
 
@@ -1167,8 +1278,8 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = ASSIGN;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:74:7: ( ':=' )
-            // PascalGrammar.g:74:9: ':='
+            // PascalGrammar.g:76:7: ( ':=' )
+            // PascalGrammar.g:76:9: ':='
             {
             	Match(":="); 
 
@@ -1191,64 +1302,64 @@ public partial class PascalGrammarLexer : Lexer {
     		{
             int _type = COMPARE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // PascalGrammar.g:75:8: ( '>' | '>=' | '<' | '<=' | '=' | '!=' )
-            int alt12 = 6;
+            // PascalGrammar.g:77:8: ( '>' | '>=' | '<' | '<=' | '=' | '!=' )
+            int alt13 = 6;
             switch ( input.LA(1) ) 
             {
             case '>':
             	{
-                int LA12_1 = input.LA(2);
+                int LA13_1 = input.LA(2);
 
-                if ( (LA12_1 == '=') )
+                if ( (LA13_1 == '=') )
                 {
-                    alt12 = 2;
+                    alt13 = 2;
                 }
                 else 
                 {
-                    alt12 = 1;}
+                    alt13 = 1;}
                 }
                 break;
             case '<':
             	{
-                int LA12_2 = input.LA(2);
+                int LA13_2 = input.LA(2);
 
-                if ( (LA12_2 == '=') )
+                if ( (LA13_2 == '=') )
                 {
-                    alt12 = 4;
+                    alt13 = 4;
                 }
                 else 
                 {
-                    alt12 = 3;}
+                    alt13 = 3;}
                 }
                 break;
             case '=':
             	{
-                alt12 = 5;
+                alt13 = 5;
                 }
                 break;
             case '!':
             	{
-                alt12 = 6;
+                alt13 = 6;
                 }
                 break;
             	default:
-            	    NoViableAltException nvae_d12s0 =
-            	        new NoViableAltException("", 12, 0, input);
+            	    NoViableAltException nvae_d13s0 =
+            	        new NoViableAltException("", 13, 0, input);
 
-            	    throw nvae_d12s0;
+            	    throw nvae_d13s0;
             }
 
-            switch (alt12) 
+            switch (alt13) 
             {
                 case 1 :
-                    // PascalGrammar.g:75:10: '>'
+                    // PascalGrammar.g:77:10: '>'
                     {
                     	Match('>'); 
 
                     }
                     break;
                 case 2 :
-                    // PascalGrammar.g:75:16: '>='
+                    // PascalGrammar.g:77:16: '>='
                     {
                     	Match(">="); 
 
@@ -1256,14 +1367,14 @@ public partial class PascalGrammarLexer : Lexer {
                     }
                     break;
                 case 3 :
-                    // PascalGrammar.g:75:23: '<'
+                    // PascalGrammar.g:77:23: '<'
                     {
                     	Match('<'); 
 
                     }
                     break;
                 case 4 :
-                    // PascalGrammar.g:75:29: '<='
+                    // PascalGrammar.g:77:29: '<='
                     {
                     	Match("<="); 
 
@@ -1271,14 +1382,14 @@ public partial class PascalGrammarLexer : Lexer {
                     }
                     break;
                 case 5 :
-                    // PascalGrammar.g:75:36: '='
+                    // PascalGrammar.g:77:36: '='
                     {
                     	Match('='); 
 
                     }
                     break;
                 case 6 :
-                    // PascalGrammar.g:75:42: '!='
+                    // PascalGrammar.g:77:42: '!='
                     {
                     	Match("!="); 
 
@@ -1298,10 +1409,10 @@ public partial class PascalGrammarLexer : Lexer {
 
     override public void mTokens() // throws RecognitionException 
     {
-        // PascalGrammar.g:1:8: ( PROGRAM | VAR | SEMICOLON | BLOCKOPEN | BLOCKEND | FUNCTION | PROCEDURE | IF | THEN | ELSE | FOR | TO | DO | WHILE | AND | OR | XOR | T__36 | T__37 | T__38 | T__39 | T__40 | IDENT | NUMBER | COMMENT | WS | ADD | SUB | MUL | DIV | ASSIGN | COMPARE )
-        int alt13 = 32;
-        alt13 = dfa13.Predict(input);
-        switch (alt13) 
+        // PascalGrammar.g:1:8: ( PROGRAM | VAR | SEMICOLON | BLOCKOPEN | BLOCKEND | FUNCTION | PROCEDURE | IF | THEN | ELSE | FOR | TO | DO | WHILE | AND | OR | XOR | T__37 | T__38 | T__39 | T__40 | T__41 | IDENT | NUMBER | COMMENT | STRING | WS | ADD | SUB | MUL | DIV | ASSIGN | COMPARE )
+        int alt14 = 33;
+        alt14 = dfa14.Predict(input);
+        switch (alt14) 
         {
             case 1 :
                 // PascalGrammar.g:1:10: PROGRAM
@@ -1423,37 +1534,37 @@ public partial class PascalGrammarLexer : Lexer {
                 }
                 break;
             case 18 :
-                // PascalGrammar.g:1:110: T__36
-                {
-                	mT__36(); 
-
-                }
-                break;
-            case 19 :
-                // PascalGrammar.g:1:116: T__37
+                // PascalGrammar.g:1:110: T__37
                 {
                 	mT__37(); 
 
                 }
                 break;
-            case 20 :
-                // PascalGrammar.g:1:122: T__38
+            case 19 :
+                // PascalGrammar.g:1:116: T__38
                 {
                 	mT__38(); 
 
                 }
                 break;
-            case 21 :
-                // PascalGrammar.g:1:128: T__39
+            case 20 :
+                // PascalGrammar.g:1:122: T__39
                 {
                 	mT__39(); 
 
                 }
                 break;
-            case 22 :
-                // PascalGrammar.g:1:134: T__40
+            case 21 :
+                // PascalGrammar.g:1:128: T__40
                 {
                 	mT__40(); 
+
+                }
+                break;
+            case 22 :
+                // PascalGrammar.g:1:134: T__41
+                {
+                	mT__41(); 
 
                 }
                 break;
@@ -1479,49 +1590,56 @@ public partial class PascalGrammarLexer : Lexer {
                 }
                 break;
             case 26 :
-                // PascalGrammar.g:1:161: WS
+                // PascalGrammar.g:1:161: STRING
+                {
+                	mSTRING(); 
+
+                }
+                break;
+            case 27 :
+                // PascalGrammar.g:1:168: WS
                 {
                 	mWS(); 
 
                 }
                 break;
-            case 27 :
-                // PascalGrammar.g:1:164: ADD
+            case 28 :
+                // PascalGrammar.g:1:171: ADD
                 {
                 	mADD(); 
 
                 }
                 break;
-            case 28 :
-                // PascalGrammar.g:1:168: SUB
+            case 29 :
+                // PascalGrammar.g:1:175: SUB
                 {
                 	mSUB(); 
 
                 }
                 break;
-            case 29 :
-                // PascalGrammar.g:1:172: MUL
+            case 30 :
+                // PascalGrammar.g:1:179: MUL
                 {
                 	mMUL(); 
 
                 }
                 break;
-            case 30 :
-                // PascalGrammar.g:1:176: DIV
+            case 31 :
+                // PascalGrammar.g:1:183: DIV
                 {
                 	mDIV(); 
 
                 }
                 break;
-            case 31 :
-                // PascalGrammar.g:1:180: ASSIGN
+            case 32 :
+                // PascalGrammar.g:1:187: ASSIGN
                 {
                 	mASSIGN(); 
 
                 }
                 break;
-            case 32 :
-                // PascalGrammar.g:1:187: COMPARE
+            case 33 :
+                // PascalGrammar.g:1:194: COMPARE
                 {
                 	mCOMPARE(); 
 
@@ -1533,27 +1651,27 @@ public partial class PascalGrammarLexer : Lexer {
     }
 
 
-    protected DFA13 dfa13;
+    protected DFA14 dfa14;
 	private void InitializeCyclicDFAs()
 	{
-	    this.dfa13 = new DFA13(this);
+	    this.dfa14 = new DFA14(this);
 	}
 
-    const string DFA13_eotS =
-        "\x01\uffff\x02\x13\x01\uffff\x0a\x13\x03\uffff\x01\x2c\x01\x2d"+
-        "\x02\uffff\x01\x2e\x06\uffff\x07\x13\x01\x36\x01\x13\x01\x38\x01"+
-        "\x39\x02\x13\x01\x3c\x01\x13\x04\uffff\x01\x13\x01\x40\x01\x13\x01"+
-        "\x42\x02\x13\x01\x45\x01\uffff\x01\x13\x02\uffff\x01\x13\x01\x48"+
-        "\x01\uffff\x01\x49\x02\x13\x01\uffff\x01\x13\x01\uffff\x01\x4d\x01"+
-        "\x13\x01\uffff\x01\x4f\x01\x13\x02\uffff\x02\x13\x01\x53\x01\uffff"+
-        "\x01\x13\x01\uffff\x01\x55\x02\x13\x01\uffff\x01\x13\x01\uffff\x01"+
-        "\x59\x02\x13\x01\uffff\x01\x13\x01\x5d\x01\x5e\x02\uffff";
-    const string DFA13_eofS =
-        "\x5f\uffff";
-    const string DFA13_minS =
+    const string DFA14_eotS =
+        "\x01\uffff\x02\x13\x01\uffff\x0a\x13\x03\uffff\x01\x2d\x01\x2e"+
+        "\x02\uffff\x01\x2f\x07\uffff\x07\x13\x01\x37\x01\x13\x01\x39\x01"+
+        "\x3a\x02\x13\x01\x3d\x01\x13\x04\uffff\x01\x13\x01\x41\x01\x13\x01"+
+        "\x43\x02\x13\x01\x46\x01\uffff\x01\x13\x02\uffff\x01\x13\x01\x49"+
+        "\x01\uffff\x01\x4a\x02\x13\x01\uffff\x01\x13\x01\uffff\x01\x4e\x01"+
+        "\x13\x01\uffff\x01\x50\x01\x13\x02\uffff\x02\x13\x01\x54\x01\uffff"+
+        "\x01\x13\x01\uffff\x01\x56\x02\x13\x01\uffff\x01\x13\x01\uffff\x01"+
+        "\x5a\x02\x13\x01\uffff\x01\x13\x01\x5e\x01\x5f\x02\uffff";
+    const string DFA14_eofS =
+        "\x60\uffff";
+    const string DFA14_minS =
         "\x01\x09\x01\x72\x01\x61\x01\uffff\x01\x65\x01\x6c\x01\x6f\x01"+
         "\x66\x01\x68\x01\x6f\x01\x68\x01\x6e\x01\x72\x01\x6f\x03\uffff\x01"+
-        "\x3d\x01\x30\x02\uffff\x01\x2f\x06\uffff\x01\x6f\x01\x72\x01\x67"+
+        "\x3d\x01\x30\x02\uffff\x01\x2f\x07\uffff\x01\x6f\x01\x72\x01\x67"+
         "\x01\x64\x01\x73\x01\x6e\x01\x72\x01\x30\x01\x65\x02\x30\x01\x69"+
         "\x01\x64\x01\x30\x01\x72\x04\uffff\x01\x63\x01\x30\x01\x69\x01\x30"+
         "\x01\x65\x01\x63\x01\x30\x01\uffff\x01\x6e\x02\uffff\x01\x6c\x01"+
@@ -1562,10 +1680,10 @@ public partial class PascalGrammarLexer : Lexer {
         "\x64\x01\x30\x01\uffff\x01\x69\x01\uffff\x01\x30\x01\x6d\x01\x75"+
         "\x01\uffff\x01\x6f\x01\uffff\x01\x30\x01\x72\x01\x6e\x01\uffff\x01"+
         "\x65\x02\x30\x02\uffff";
-    const string DFA13_maxS =
+    const string DFA14_maxS =
         "\x01\x7b\x01\x72\x01\x61\x01\uffff\x01\x65\x01\x6e\x01\x75\x01"+
         "\x66\x02\x6f\x01\x68\x01\x6e\x01\x72\x01\x6f\x03\uffff\x01\x3d\x01"+
-        "\x39\x02\uffff\x01\x2f\x06\uffff\x01\x6f\x01\x72\x01\x67\x01\x64"+
+        "\x39\x02\uffff\x01\x2f\x07\uffff\x01\x6f\x01\x72\x01\x67\x01\x64"+
         "\x01\x73\x01\x6e\x01\x72\x01\x7a\x01\x65\x02\x7a\x01\x69\x01\x64"+
         "\x01\x7a\x01\x72\x04\uffff\x01\x67\x01\x7a\x01\x69\x01\x7a\x01\x65"+
         "\x01\x63\x01\x7a\x01\uffff\x01\x6e\x02\uffff\x01\x6c\x01\x7a\x01"+
@@ -1574,40 +1692,40 @@ public partial class PascalGrammarLexer : Lexer {
         "\x7a\x01\uffff\x01\x69\x01\uffff\x01\x7a\x01\x6d\x01\x75\x01\uffff"+
         "\x01\x6f\x01\uffff\x01\x7a\x01\x72\x01\x6e\x01\uffff\x01\x65\x02"+
         "\x7a\x02\uffff";
-    const string DFA13_acceptS =
+    const string DFA14_acceptS =
         "\x03\uffff\x01\x03\x0a\uffff\x01\x12\x01\x13\x01\x14\x02\uffff"+
         "\x01\x17\x01\x18\x01\uffff\x01\x19\x01\x1a\x01\x1b\x01\x1c\x01\x1d"+
-        "\x01\x20\x0f\uffff\x01\x1f\x01\x15\x01\x16\x01\x1e\x07\uffff\x01"+
-        "\x08\x01\uffff\x01\x0c\x01\x0d\x02\uffff\x01\x10\x03\uffff\x01\x02"+
-        "\x01\uffff\x01\x05\x02\uffff\x01\x0b\x02\uffff\x01\x0f\x01\x11\x03"+
-        "\uffff\x01\x0a\x01\uffff\x01\x09\x03\uffff\x01\x04\x01\uffff\x01"+
-        "\x0e\x03\uffff\x01\x01\x03\uffff\x01\x06\x01\x07";
-    const string DFA13_specialS =
-        "\x5f\uffff}>";
-    static readonly string[] DFA13_transitionS = {
-            "\x02\x17\x01\uffff\x02\x17\x12\uffff\x01\x17\x01\x1b\x06\uffff"+
-            "\x01\x0e\x01\x0f\x01\x1a\x01\x18\x01\x10\x01\x19\x01\x12\x01"+
-            "\x15\x0a\x14\x01\x11\x01\x03\x03\x1b\x02\uffff\x1a\x13\x04\uffff"+
-            "\x01\x13\x01\uffff\x01\x0b\x01\x04\x01\x13\x01\x09\x01\x05\x01"+
-            "\x06\x02\x13\x01\x07\x05\x13\x01\x0c\x01\x01\x03\x13\x01\x08"+
-            "\x01\x13\x01\x02\x01\x0a\x01\x0d\x02\x13\x01\x16",
-            "\x01\x1c",
+        "\x01\x1e\x01\x21\x0f\uffff\x01\x20\x01\x15\x01\x16\x01\x1f\x07\uffff"+
+        "\x01\x08\x01\uffff\x01\x0c\x01\x0d\x02\uffff\x01\x10\x03\uffff\x01"+
+        "\x02\x01\uffff\x01\x05\x02\uffff\x01\x0b\x02\uffff\x01\x0f\x01\x11"+
+        "\x03\uffff\x01\x0a\x01\uffff\x01\x09\x03\uffff\x01\x04\x01\uffff"+
+        "\x01\x0e\x03\uffff\x01\x01\x03\uffff\x01\x06\x01\x07";
+    const string DFA14_specialS =
+        "\x60\uffff}>";
+    static readonly string[] DFA14_transitionS = {
+            "\x02\x18\x01\uffff\x02\x18\x12\uffff\x01\x18\x01\x1c\x01\x17"+
+            "\x05\uffff\x01\x0e\x01\x0f\x01\x1b\x01\x19\x01\x10\x01\x1a\x01"+
+            "\x12\x01\x15\x0a\x14\x01\x11\x01\x03\x03\x1c\x02\uffff\x1a\x13"+
+            "\x04\uffff\x01\x13\x01\uffff\x01\x0b\x01\x04\x01\x13\x01\x09"+
+            "\x01\x05\x01\x06\x02\x13\x01\x07\x05\x13\x01\x0c\x01\x01\x03"+
+            "\x13\x01\x08\x01\x13\x01\x02\x01\x0a\x01\x0d\x02\x13\x01\x16",
             "\x01\x1d",
-            "",
             "\x01\x1e",
-            "\x01\x20\x01\uffff\x01\x1f",
-            "\x01\x22\x05\uffff\x01\x21",
-            "\x01\x23",
-            "\x01\x24\x06\uffff\x01\x25",
-            "\x01\x26",
+            "",
+            "\x01\x1f",
+            "\x01\x21\x01\uffff\x01\x20",
+            "\x01\x23\x05\uffff\x01\x22",
+            "\x01\x24",
+            "\x01\x25\x06\uffff\x01\x26",
             "\x01\x27",
             "\x01\x28",
             "\x01\x29",
             "\x01\x2a",
-            "",
-            "",
-            "",
             "\x01\x2b",
+            "",
+            "",
+            "",
+            "\x01\x2c",
             "\x0a\x14",
             "",
             "",
@@ -1618,83 +1736,84 @@ public partial class PascalGrammarLexer : Lexer {
             "",
             "",
             "",
-            "\x01\x2f",
+            "",
             "\x01\x30",
             "\x01\x31",
             "\x01\x32",
             "\x01\x33",
             "\x01\x34",
             "\x01\x35",
+            "\x01\x36",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x37",
+            "\x01\x38",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x3a",
             "\x01\x3b",
+            "\x01\x3c",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x3d",
+            "\x01\x3e",
             "",
             "",
             "",
             "",
-            "\x01\x3f\x03\uffff\x01\x3e",
+            "\x01\x40\x03\uffff\x01\x3f",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x41",
+            "\x01\x42",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x43",
             "\x01\x44",
+            "\x01\x45",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "",
-            "\x01\x46",
-            "",
             "",
             "\x01\x47",
+            "",
+            "",
+            "\x01\x48",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
             "",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x4a",
             "\x01\x4b",
-            "",
             "\x01\x4c",
             "",
-            "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
-            "\x13",
-            "\x01\x4e",
+            "\x01\x4d",
             "",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x50",
+            "\x01\x4f",
             "",
-            "",
+            "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
+            "\x13",
             "\x01\x51",
+            "",
+            "",
             "\x01\x52",
+            "\x01\x53",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
             "",
-            "\x01\x54",
+            "\x01\x55",
             "",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x56",
             "\x01\x57",
-            "",
             "\x01\x58",
             "",
+            "\x01\x59",
+            "",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
-            "\x01\x5a",
             "\x01\x5b",
-            "",
             "\x01\x5c",
+            "",
+            "\x01\x5d",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
             "\x13",
             "\x0a\x13\x07\uffff\x1a\x13\x04\uffff\x01\x13\x01\uffff\x1a"+
@@ -1703,33 +1822,33 @@ public partial class PascalGrammarLexer : Lexer {
             ""
     };
 
-    static readonly short[] DFA13_eot = DFA.UnpackEncodedString(DFA13_eotS);
-    static readonly short[] DFA13_eof = DFA.UnpackEncodedString(DFA13_eofS);
-    static readonly char[] DFA13_min = DFA.UnpackEncodedStringToUnsignedChars(DFA13_minS);
-    static readonly char[] DFA13_max = DFA.UnpackEncodedStringToUnsignedChars(DFA13_maxS);
-    static readonly short[] DFA13_accept = DFA.UnpackEncodedString(DFA13_acceptS);
-    static readonly short[] DFA13_special = DFA.UnpackEncodedString(DFA13_specialS);
-    static readonly short[][] DFA13_transition = DFA.UnpackEncodedStringArray(DFA13_transitionS);
+    static readonly short[] DFA14_eot = DFA.UnpackEncodedString(DFA14_eotS);
+    static readonly short[] DFA14_eof = DFA.UnpackEncodedString(DFA14_eofS);
+    static readonly char[] DFA14_min = DFA.UnpackEncodedStringToUnsignedChars(DFA14_minS);
+    static readonly char[] DFA14_max = DFA.UnpackEncodedStringToUnsignedChars(DFA14_maxS);
+    static readonly short[] DFA14_accept = DFA.UnpackEncodedString(DFA14_acceptS);
+    static readonly short[] DFA14_special = DFA.UnpackEncodedString(DFA14_specialS);
+    static readonly short[][] DFA14_transition = DFA.UnpackEncodedStringArray(DFA14_transitionS);
 
-    protected class DFA13 : DFA
+    protected class DFA14 : DFA
     {
-        public DFA13(BaseRecognizer recognizer)
+        public DFA14(BaseRecognizer recognizer)
         {
             this.recognizer = recognizer;
-            this.decisionNumber = 13;
-            this.eot = DFA13_eot;
-            this.eof = DFA13_eof;
-            this.min = DFA13_min;
-            this.max = DFA13_max;
-            this.accept = DFA13_accept;
-            this.special = DFA13_special;
-            this.transition = DFA13_transition;
+            this.decisionNumber = 14;
+            this.eot = DFA14_eot;
+            this.eof = DFA14_eof;
+            this.min = DFA14_min;
+            this.max = DFA14_max;
+            this.accept = DFA14_accept;
+            this.special = DFA14_special;
+            this.transition = DFA14_transition;
 
         }
 
         override public string Description
         {
-            get { return "1:1: Tokens : ( PROGRAM | VAR | SEMICOLON | BLOCKOPEN | BLOCKEND | FUNCTION | PROCEDURE | IF | THEN | ELSE | FOR | TO | DO | WHILE | AND | OR | XOR | T__36 | T__37 | T__38 | T__39 | T__40 | IDENT | NUMBER | COMMENT | WS | ADD | SUB | MUL | DIV | ASSIGN | COMPARE );"; }
+            get { return "1:1: Tokens : ( PROGRAM | VAR | SEMICOLON | BLOCKOPEN | BLOCKEND | FUNCTION | PROCEDURE | IF | THEN | ELSE | FOR | TO | DO | WHILE | AND | OR | XOR | T__37 | T__38 | T__39 | T__40 | T__41 | IDENT | NUMBER | COMMENT | STRING | WS | ADD | SUB | MUL | DIV | ASSIGN | COMPARE );"; }
         }
 
     }

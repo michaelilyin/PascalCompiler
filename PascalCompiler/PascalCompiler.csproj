@@ -62,6 +62,7 @@
     <Compile Include="Semantic\ProgramContext\Variables\VariableType.cs" />
     <Compile Include="Semantic\SemAnalizer.cs" />
     <Compile Include="Semantic\SemanticException.cs" />
+    <Compile Include="StringAstNode.cs" />
     <Compile Include="TreePrinter.cs" />
   </ItemGroup>
   <ItemGroup>

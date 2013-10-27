@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-14 18:11:02
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 PascalGrammar.g 2013-10-27 19:17:34
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -56,6 +56,7 @@ public partial class PascalGrammarParser : Parser
 		"IDENT", 
 		"NUMBER", 
 		"COMMENT", 
+		"STRING", 
 		"WS", 
 		"ADD", 
 		"SUB", 
@@ -72,6 +73,7 @@ public partial class PascalGrammarParser : Parser
 
     public const int FUNCTION = 13;
     public const int T__40 = 40;
+    public const int T__41 = 41;
     public const int XOR = 25;
     public const int WHILE = 22;
     public const int TO = 20;
@@ -79,19 +81,18 @@ public partial class PascalGrammarParser : Parser
     public const int NUMBER = 27;
     public const int DO = 21;
     public const int FOR = 19;
-    public const int SUB = 31;
+    public const int SUB = 32;
     public const int SEMICOLON = 10;
     public const int AND = 23;
     public const int EOF = -1;
-    public const int MUL = 32;
+    public const int MUL = 33;
     public const int PROCEDURE = 14;
     public const int IF = 16;
     public const int FUNC_CALL = 15;
     public const int BLOCKOPEN = 11;
-    public const int WS = 29;
+    public const int WS = 30;
     public const int THEN = 17;
     public const int METHODS = 8;
-    public const int T__36 = 36;
     public const int T__37 = 37;
     public const int T__38 = 38;
     public const int T__39 = 39;
@@ -99,14 +100,15 @@ public partial class PascalGrammarParser : Parser
     public const int BLOCK = 6;
     public const int BLOCKEND = 12;
     public const int OR = 24;
-    public const int ASSIGN = 34;
-    public const int COMPARE = 35;
+    public const int ASSIGN = 35;
+    public const int COMPARE = 36;
     public const int IDENT = 26;
     public const int PROGRAM = 4;
     public const int VAR = 5;
-    public const int DIV = 33;
+    public const int DIV = 34;
     public const int COMMENT = 28;
-    public const int ADD = 30;
+    public const int STRING = 29;
+    public const int ADD = 31;
     public const int PARAMS = 7;
 
     // delegates
@@ -121,7 +123,7 @@ public partial class PascalGrammarParser : Parser
         public PascalGrammarParser(ITokenStream input, RecognizerSharedState state)
     		: base(input, state) {
             InitializeCyclicDFAs();
-            this.state.ruleMemo = new Hashtable[61+1];
+            this.state.ruleMemo = new Hashtable[62+1];
              
              
         }
@@ -161,7 +163,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "group"
-    // PascalGrammar.g:77:1: group : ( '(' term ')' | NUMBER -> NUMBER[double.Parse($NUMBER.text, NFI)] | func_call | IDENT );
+    // PascalGrammar.g:79:1: group : ( '(' term ')' | NUMBER -> NUMBER[double.Parse($NUMBER.text, NFI)] | func_call | IDENT | STRING -> STRING[$STRING.text] );
     public PascalGrammarParser.group_return group() // throws RecognitionException [1]
     {   
         PascalGrammarParser.group_return retval = new PascalGrammarParser.group_return();
@@ -173,6 +175,7 @@ public partial class PascalGrammarParser : Parser
         IToken char_literal3 = null;
         IToken NUMBER4 = null;
         IToken IDENT6 = null;
+        IToken STRING7 = null;
         PascalGrammarParser.term_return term2 = default(PascalGrammarParser.term_return);
 
         PascalGrammarParser.func_call_return func_call5 = default(PascalGrammarParser.func_call_return);
@@ -182,6 +185,8 @@ public partial class PascalGrammarParser : Parser
         object char_literal3_tree=null;
         object NUMBER4_tree=null;
         object IDENT6_tree=null;
+        object STRING7_tree=null;
+        RewriteRuleTokenStream stream_STRING = new RewriteRuleTokenStream(adaptor,"token STRING");
         RewriteRuleTokenStream stream_NUMBER = new RewriteRuleTokenStream(adaptor,"token NUMBER");
 
         try 
@@ -190,11 +195,11 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:78:2: ( '(' term ')' | NUMBER -> NUMBER[double.Parse($NUMBER.text, NFI)] | func_call | IDENT )
-            int alt1 = 4;
+            // PascalGrammar.g:80:2: ( '(' term ')' | NUMBER -> NUMBER[double.Parse($NUMBER.text, NFI)] | func_call | IDENT | STRING -> STRING[$STRING.text] )
+            int alt1 = 5;
             switch ( input.LA(1) ) 
             {
-            case 36:
+            case 37:
             	{
                 alt1 = 1;
                 }
@@ -208,13 +213,13 @@ public partial class PascalGrammarParser : Parser
             	{
                 int LA1_3 = input.LA(2);
 
-                if ( (LA1_3 == EOF || LA1_3 == SEMICOLON || LA1_3 == BLOCKEND || (LA1_3 >= THEN && LA1_3 <= ELSE) || (LA1_3 >= TO && LA1_3 <= XOR) || (LA1_3 >= ADD && LA1_3 <= DIV) || LA1_3 == COMPARE || (LA1_3 >= 37 && LA1_3 <= 38)) )
-                {
-                    alt1 = 4;
-                }
-                else if ( (LA1_3 == 36) )
+                if ( (LA1_3 == 37) )
                 {
                     alt1 = 3;
+                }
+                else if ( (LA1_3 == EOF || LA1_3 == SEMICOLON || LA1_3 == BLOCKEND || (LA1_3 >= THEN && LA1_3 <= ELSE) || (LA1_3 >= TO && LA1_3 <= XOR) || (LA1_3 >= ADD && LA1_3 <= DIV) || LA1_3 == COMPARE || (LA1_3 >= 38 && LA1_3 <= 39)) )
+                {
+                    alt1 = 4;
                 }
                 else 
                 {
@@ -224,6 +229,11 @@ public partial class PascalGrammarParser : Parser
 
                     throw nvae_d1s3;
                 }
+                }
+                break;
+            case STRING:
+            	{
+                alt1 = 5;
                 }
                 break;
             	default:
@@ -237,24 +247,24 @@ public partial class PascalGrammarParser : Parser
             switch (alt1) 
             {
                 case 1 :
-                    // PascalGrammar.g:79:2: '(' term ')'
+                    // PascalGrammar.g:81:2: '(' term ')'
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	char_literal1=(IToken)Match(input,36,FOLLOW_36_in_group530); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_term_in_group533);
+                    	char_literal1=(IToken)Match(input,37,FOLLOW_37_in_group555); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_term_in_group558);
                     	term2 = term();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
                     	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term2.Tree);
-                    	char_literal3=(IToken)Match(input,37,FOLLOW_37_in_group535); if (state.failed) return retval;
+                    	char_literal3=(IToken)Match(input,38,FOLLOW_38_in_group560); if (state.failed) return retval;
 
                     }
                     break;
                 case 2 :
-                    // PascalGrammar.g:80:4: NUMBER
+                    // PascalGrammar.g:82:4: NUMBER
                     {
-                    	NUMBER4=(IToken)Match(input,NUMBER,FOLLOW_NUMBER_in_group541); if (state.failed) return retval; 
+                    	NUMBER4=(IToken)Match(input,NUMBER,FOLLOW_NUMBER_in_group566); if (state.failed) return retval; 
                     	if ( (state.backtracking==0) ) stream_NUMBER.Add(NUMBER4);
 
 
@@ -271,7 +281,7 @@ public partial class PascalGrammarParser : Parser
                     	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
                     	root_0 = (object)adaptor.GetNilNode();
-                    	// 80:11: -> NUMBER[double.Parse($NUMBER.text, NFI)]
+                    	// 82:11: -> NUMBER[double.Parse($NUMBER.text, NFI)]
                     	{
                     	    adaptor.AddChild(root_0, new NumAstNode(NUMBER, double.Parse(((NUMBER4 != null) ? NUMBER4.Text : null), NFI)));
 
@@ -281,11 +291,11 @@ public partial class PascalGrammarParser : Parser
                     }
                     break;
                 case 3 :
-                    // PascalGrammar.g:81:4: func_call
+                    // PascalGrammar.g:83:4: func_call
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	PushFollow(FOLLOW_func_call_in_group554);
+                    	PushFollow(FOLLOW_func_call_in_group579);
                     	func_call5 = func_call();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
@@ -294,16 +304,45 @@ public partial class PascalGrammarParser : Parser
                     }
                     break;
                 case 4 :
-                    // PascalGrammar.g:82:4: IDENT
+                    // PascalGrammar.g:84:4: IDENT
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	IDENT6=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_group559); if (state.failed) return retval;
+                    	IDENT6=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_group584); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
                     	{IDENT6_tree = (object)adaptor.Create(IDENT6);
                     		adaptor.AddChild(root_0, IDENT6_tree);
                     	}
 
+                    }
+                    break;
+                case 5 :
+                    // PascalGrammar.g:85:4: STRING
+                    {
+                    	STRING7=(IToken)Match(input,STRING,FOLLOW_STRING_in_group589); if (state.failed) return retval; 
+                    	if ( (state.backtracking==0) ) stream_STRING.Add(STRING7);
+
+
+
+                    	// AST REWRITE
+                    	// elements:          STRING
+                    	// token labels:      
+                    	// rule labels:       retval
+                    	// token list labels: 
+                    	// rule list labels:  
+                    	// wildcard labels: 
+                    	if ( (state.backtracking==0) ) {
+                    	retval.Tree = root_0;
+                    	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
+
+                    	root_0 = (object)adaptor.GetNilNode();
+                    	// 85:11: -> STRING[$STRING.text]
+                    	{
+                    	    adaptor.AddChild(root_0, new StringAstNode(STRING, ((STRING7 != null) ? STRING7.Text : null)));
+
+                    	}
+
+                    	retval.Tree = root_0;retval.Tree = root_0;}
                     }
                     break;
 
@@ -344,7 +383,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "mult"
-    // PascalGrammar.g:86:1: mult : group ( ( MUL | DIV | AND ) group )* ;
+    // PascalGrammar.g:88:1: mult : group ( ( MUL | DIV | AND ) group )* ;
     public PascalGrammarParser.mult_return mult() // throws RecognitionException [1]
     {   
         PascalGrammarParser.mult_return retval = new PascalGrammarParser.mult_return();
@@ -352,13 +391,13 @@ public partial class PascalGrammarParser : Parser
         int mult_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken set8 = null;
-        PascalGrammarParser.group_return group7 = default(PascalGrammarParser.group_return);
+        IToken set9 = null;
+        PascalGrammarParser.group_return group8 = default(PascalGrammarParser.group_return);
 
-        PascalGrammarParser.group_return group9 = default(PascalGrammarParser.group_return);
+        PascalGrammarParser.group_return group10 = default(PascalGrammarParser.group_return);
 
 
-        object set8_tree=null;
+        object set9_tree=null;
 
         try 
     	{
@@ -366,17 +405,17 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:86:5: ( group ( ( MUL | DIV | AND ) group )* )
-            // PascalGrammar.g:86:7: group ( ( MUL | DIV | AND ) group )*
+            // PascalGrammar.g:88:5: ( group ( ( MUL | DIV | AND ) group )* )
+            // PascalGrammar.g:88:7: group ( ( MUL | DIV | AND ) group )*
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_group_in_mult576);
-            	group7 = group();
+            	PushFollow(FOLLOW_group_in_mult612);
+            	group8 = group();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, group7.Tree);
-            	// PascalGrammar.g:86:13: ( ( MUL | DIV | AND ) group )*
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, group8.Tree);
+            	// PascalGrammar.g:88:13: ( ( MUL | DIV | AND ) group )*
             	do 
             	{
             	    int alt2 = 2;
@@ -391,14 +430,14 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt2) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:86:15: ( MUL | DIV | AND ) group
+            			    // PascalGrammar.g:88:15: ( MUL | DIV | AND ) group
             			    {
-            			    	set8=(IToken)input.LT(1);
-            			    	set8 = (IToken)input.LT(1);
+            			    	set9=(IToken)input.LT(1);
+            			    	set9 = (IToken)input.LT(1);
             			    	if ( input.LA(1) == AND || (input.LA(1) >= MUL && input.LA(1) <= DIV) ) 
             			    	{
             			    	    input.Consume();
-            			    	    if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot((object)adaptor.Create(set8), root_0);
+            			    	    if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot((object)adaptor.Create(set9), root_0);
             			    	    state.errorRecovery = false;state.failed = false;
             			    	}
             			    	else 
@@ -408,11 +447,11 @@ public partial class PascalGrammarParser : Parser
             			    	    throw mse;
             			    	}
 
-            			    	PushFollow(FOLLOW_group_in_mult595);
-            			    	group9 = group();
+            			    	PushFollow(FOLLOW_group_in_mult631);
+            			    	group10 = group();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, group9.Tree);
+            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, group10.Tree);
 
             			    }
             			    break;
@@ -464,7 +503,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "add"
-    // PascalGrammar.g:87:1: add : mult ( ( ADD | SUB | OR | XOR ) mult )* ;
+    // PascalGrammar.g:89:1: add : mult ( ( ADD | SUB | OR | XOR ) mult )* ;
     public PascalGrammarParser.add_return add() // throws RecognitionException [1]
     {   
         PascalGrammarParser.add_return retval = new PascalGrammarParser.add_return();
@@ -472,13 +511,13 @@ public partial class PascalGrammarParser : Parser
         int add_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken set11 = null;
-        PascalGrammarParser.mult_return mult10 = default(PascalGrammarParser.mult_return);
+        IToken set12 = null;
+        PascalGrammarParser.mult_return mult11 = default(PascalGrammarParser.mult_return);
 
-        PascalGrammarParser.mult_return mult12 = default(PascalGrammarParser.mult_return);
+        PascalGrammarParser.mult_return mult13 = default(PascalGrammarParser.mult_return);
 
 
-        object set11_tree=null;
+        object set12_tree=null;
 
         try 
     	{
@@ -486,17 +525,17 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:87:4: ( mult ( ( ADD | SUB | OR | XOR ) mult )* )
-            // PascalGrammar.g:87:7: mult ( ( ADD | SUB | OR | XOR ) mult )*
+            // PascalGrammar.g:89:4: ( mult ( ( ADD | SUB | OR | XOR ) mult )* )
+            // PascalGrammar.g:89:7: mult ( ( ADD | SUB | OR | XOR ) mult )*
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_mult_in_add607);
-            	mult10 = mult();
+            	PushFollow(FOLLOW_mult_in_add643);
+            	mult11 = mult();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, mult10.Tree);
-            	// PascalGrammar.g:87:13: ( ( ADD | SUB | OR | XOR ) mult )*
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, mult11.Tree);
+            	// PascalGrammar.g:89:13: ( ( ADD | SUB | OR | XOR ) mult )*
             	do 
             	{
             	    int alt3 = 2;
@@ -511,14 +550,14 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt3) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:87:15: ( ADD | SUB | OR | XOR ) mult
+            			    // PascalGrammar.g:89:15: ( ADD | SUB | OR | XOR ) mult
             			    {
-            			    	set11=(IToken)input.LT(1);
-            			    	set11 = (IToken)input.LT(1);
+            			    	set12=(IToken)input.LT(1);
+            			    	set12 = (IToken)input.LT(1);
             			    	if ( (input.LA(1) >= OR && input.LA(1) <= XOR) || (input.LA(1) >= ADD && input.LA(1) <= SUB) ) 
             			    	{
             			    	    input.Consume();
-            			    	    if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot((object)adaptor.Create(set11), root_0);
+            			    	    if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot((object)adaptor.Create(set12), root_0);
             			    	    state.errorRecovery = false;state.failed = false;
             			    	}
             			    	else 
@@ -528,11 +567,11 @@ public partial class PascalGrammarParser : Parser
             			    	    throw mse;
             			    	}
 
-            			    	PushFollow(FOLLOW_mult_in_add631);
-            			    	mult12 = mult();
+            			    	PushFollow(FOLLOW_mult_in_add667);
+            			    	mult13 = mult();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, mult12.Tree);
+            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, mult13.Tree);
 
             			    }
             			    break;
@@ -584,7 +623,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "compare"
-    // PascalGrammar.g:88:1: compare : add ( COMPARE add )* ;
+    // PascalGrammar.g:90:1: compare : add ( COMPARE add )* ;
     public PascalGrammarParser.compare_return compare() // throws RecognitionException [1]
     {   
         PascalGrammarParser.compare_return retval = new PascalGrammarParser.compare_return();
@@ -592,13 +631,13 @@ public partial class PascalGrammarParser : Parser
         int compare_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken COMPARE14 = null;
-        PascalGrammarParser.add_return add13 = default(PascalGrammarParser.add_return);
+        IToken COMPARE15 = null;
+        PascalGrammarParser.add_return add14 = default(PascalGrammarParser.add_return);
 
-        PascalGrammarParser.add_return add15 = default(PascalGrammarParser.add_return);
+        PascalGrammarParser.add_return add16 = default(PascalGrammarParser.add_return);
 
 
-        object COMPARE14_tree=null;
+        object COMPARE15_tree=null;
 
         try 
     	{
@@ -606,17 +645,17 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:88:9: ( add ( COMPARE add )* )
-            // PascalGrammar.g:88:11: add ( COMPARE add )*
+            // PascalGrammar.g:90:9: ( add ( COMPARE add )* )
+            // PascalGrammar.g:90:11: add ( COMPARE add )*
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_add_in_compare644);
-            	add13 = add();
+            	PushFollow(FOLLOW_add_in_compare680);
+            	add14 = add();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add13.Tree);
-            	// PascalGrammar.g:88:15: ( COMPARE add )*
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add14.Tree);
+            	// PascalGrammar.g:90:15: ( COMPARE add )*
             	do 
             	{
             	    int alt4 = 2;
@@ -631,18 +670,18 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt4) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:88:17: COMPARE add
+            			    // PascalGrammar.g:90:17: COMPARE add
             			    {
-            			    	COMPARE14=(IToken)Match(input,COMPARE,FOLLOW_COMPARE_in_compare648); if (state.failed) return retval;
+            			    	COMPARE15=(IToken)Match(input,COMPARE,FOLLOW_COMPARE_in_compare684); if (state.failed) return retval;
             			    	if ( state.backtracking == 0 )
-            			    	{COMPARE14_tree = (object)adaptor.Create(COMPARE14);
-            			    		root_0 = (object)adaptor.BecomeRoot(COMPARE14_tree, root_0);
+            			    	{COMPARE15_tree = (object)adaptor.Create(COMPARE15);
+            			    		root_0 = (object)adaptor.BecomeRoot(COMPARE15_tree, root_0);
             			    	}
-            			    	PushFollow(FOLLOW_add_in_compare651);
-            			    	add15 = add();
+            			    	PushFollow(FOLLOW_add_in_compare687);
+            			    	add16 = add();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add15.Tree);
+            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add16.Tree);
 
             			    }
             			    break;
@@ -694,7 +733,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "term"
-    // PascalGrammar.g:89:1: term : compare ;
+    // PascalGrammar.g:91:1: term : compare ;
     public PascalGrammarParser.term_return term() // throws RecognitionException [1]
     {   
         PascalGrammarParser.term_return retval = new PascalGrammarParser.term_return();
@@ -702,7 +741,7 @@ public partial class PascalGrammarParser : Parser
         int term_StartIndex = input.Index();
         object root_0 = null;
 
-        PascalGrammarParser.compare_return compare16 = default(PascalGrammarParser.compare_return);
+        PascalGrammarParser.compare_return compare17 = default(PascalGrammarParser.compare_return);
 
 
 
@@ -712,16 +751,16 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:89:6: ( compare )
-            // PascalGrammar.g:89:8: compare
+            // PascalGrammar.g:91:6: ( compare )
+            // PascalGrammar.g:91:8: compare
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_compare_in_term660);
-            	compare16 = compare();
+            	PushFollow(FOLLOW_compare_in_term696);
+            	compare17 = compare();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare16.Tree);
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare17.Tree);
 
             }
 
@@ -761,7 +800,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "arg_list"
-    // PascalGrammar.g:91:1: arg_list : ( term ( ',' term )* )? ;
+    // PascalGrammar.g:93:1: arg_list : ( term ( ',' term )* )? ;
     public PascalGrammarParser.arg_list_return arg_list() // throws RecognitionException [1]
     {   
         PascalGrammarParser.arg_list_return retval = new PascalGrammarParser.arg_list_return();
@@ -769,13 +808,13 @@ public partial class PascalGrammarParser : Parser
         int arg_list_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken char_literal18 = null;
-        PascalGrammarParser.term_return term17 = default(PascalGrammarParser.term_return);
+        IToken char_literal19 = null;
+        PascalGrammarParser.term_return term18 = default(PascalGrammarParser.term_return);
 
-        PascalGrammarParser.term_return term19 = default(PascalGrammarParser.term_return);
+        PascalGrammarParser.term_return term20 = default(PascalGrammarParser.term_return);
 
 
-        object char_literal18_tree=null;
+        object char_literal19_tree=null;
 
         try 
     	{
@@ -783,36 +822,36 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:91:9: ( ( term ( ',' term )* )? )
-            // PascalGrammar.g:91:11: ( term ( ',' term )* )?
+            // PascalGrammar.g:93:9: ( ( term ( ',' term )* )? )
+            // PascalGrammar.g:93:11: ( term ( ',' term )* )?
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	// PascalGrammar.g:91:11: ( term ( ',' term )* )?
+            	// PascalGrammar.g:93:11: ( term ( ',' term )* )?
             	int alt6 = 2;
             	int LA6_0 = input.LA(1);
 
-            	if ( ((LA6_0 >= IDENT && LA6_0 <= NUMBER) || LA6_0 == 36) )
+            	if ( ((LA6_0 >= IDENT && LA6_0 <= NUMBER) || LA6_0 == STRING || LA6_0 == 37) )
             	{
             	    alt6 = 1;
             	}
             	switch (alt6) 
             	{
             	    case 1 :
-            	        // PascalGrammar.g:91:13: term ( ',' term )*
+            	        // PascalGrammar.g:93:13: term ( ',' term )*
             	        {
-            	        	PushFollow(FOLLOW_term_in_arg_list669);
-            	        	term17 = term();
+            	        	PushFollow(FOLLOW_term_in_arg_list705);
+            	        	term18 = term();
             	        	state.followingStackPointer--;
             	        	if (state.failed) return retval;
-            	        	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term17.Tree);
-            	        	// PascalGrammar.g:91:18: ( ',' term )*
+            	        	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term18.Tree);
+            	        	// PascalGrammar.g:93:18: ( ',' term )*
             	        	do 
             	        	{
             	        	    int alt5 = 2;
             	        	    int LA5_0 = input.LA(1);
 
-            	        	    if ( (LA5_0 == 38) )
+            	        	    if ( (LA5_0 == 39) )
             	        	    {
             	        	        alt5 = 1;
             	        	    }
@@ -821,14 +860,14 @@ public partial class PascalGrammarParser : Parser
             	        	    switch (alt5) 
             	        		{
             	        			case 1 :
-            	        			    // PascalGrammar.g:91:19: ',' term
+            	        			    // PascalGrammar.g:93:19: ',' term
             	        			    {
-            	        			    	char_literal18=(IToken)Match(input,38,FOLLOW_38_in_arg_list672); if (state.failed) return retval;
-            	        			    	PushFollow(FOLLOW_term_in_arg_list675);
-            	        			    	term19 = term();
+            	        			    	char_literal19=(IToken)Match(input,39,FOLLOW_39_in_arg_list708); if (state.failed) return retval;
+            	        			    	PushFollow(FOLLOW_term_in_arg_list711);
+            	        			    	term20 = term();
             	        			    	state.followingStackPointer--;
             	        			    	if (state.failed) return retval;
-            	        			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term19.Tree);
+            	        			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term20.Tree);
 
             	        			    }
             	        			    break;
@@ -886,7 +925,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "func_call"
-    // PascalGrammar.g:93:1: func_call : IDENT ( '(' arg_list ')' ) -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? ) ;
+    // PascalGrammar.g:95:1: func_call : IDENT ( '(' arg_list ')' ) -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? ) ;
     public PascalGrammarParser.func_call_return func_call() // throws RecognitionException [1]
     {   
         PascalGrammarParser.func_call_return retval = new PascalGrammarParser.func_call_return();
@@ -894,18 +933,18 @@ public partial class PascalGrammarParser : Parser
         int func_call_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken IDENT20 = null;
-        IToken char_literal21 = null;
-        IToken char_literal23 = null;
-        PascalGrammarParser.arg_list_return arg_list22 = default(PascalGrammarParser.arg_list_return);
+        IToken IDENT21 = null;
+        IToken char_literal22 = null;
+        IToken char_literal24 = null;
+        PascalGrammarParser.arg_list_return arg_list23 = default(PascalGrammarParser.arg_list_return);
 
 
-        object IDENT20_tree=null;
-        object char_literal21_tree=null;
-        object char_literal23_tree=null;
+        object IDENT21_tree=null;
+        object char_literal22_tree=null;
+        object char_literal24_tree=null;
         RewriteRuleTokenStream stream_IDENT = new RewriteRuleTokenStream(adaptor,"token IDENT");
-        RewriteRuleTokenStream stream_36 = new RewriteRuleTokenStream(adaptor,"token 36");
         RewriteRuleTokenStream stream_37 = new RewriteRuleTokenStream(adaptor,"token 37");
+        RewriteRuleTokenStream stream_38 = new RewriteRuleTokenStream(adaptor,"token 38");
         RewriteRuleSubtreeStream stream_arg_list = new RewriteRuleSubtreeStream(adaptor,"rule arg_list");
         try 
     	{
@@ -913,25 +952,25 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:94:2: ( IDENT ( '(' arg_list ')' ) -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? ) )
-            // PascalGrammar.g:95:2: IDENT ( '(' arg_list ')' )
+            // PascalGrammar.g:96:2: ( IDENT ( '(' arg_list ')' ) -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? ) )
+            // PascalGrammar.g:97:2: IDENT ( '(' arg_list ')' )
             {
-            	IDENT20=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_func_call691); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT20);
+            	IDENT21=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_func_call727); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT21);
 
-            	// PascalGrammar.g:95:8: ( '(' arg_list ')' )
-            	// PascalGrammar.g:95:9: '(' arg_list ')'
+            	// PascalGrammar.g:97:8: ( '(' arg_list ')' )
+            	// PascalGrammar.g:97:9: '(' arg_list ')'
             	{
-            		char_literal21=(IToken)Match(input,36,FOLLOW_36_in_func_call694); if (state.failed) return retval; 
-            		if ( (state.backtracking==0) ) stream_36.Add(char_literal21);
+            		char_literal22=(IToken)Match(input,37,FOLLOW_37_in_func_call730); if (state.failed) return retval; 
+            		if ( (state.backtracking==0) ) stream_37.Add(char_literal22);
 
-            		PushFollow(FOLLOW_arg_list_in_func_call696);
-            		arg_list22 = arg_list();
+            		PushFollow(FOLLOW_arg_list_in_func_call732);
+            		arg_list23 = arg_list();
             		state.followingStackPointer--;
             		if (state.failed) return retval;
-            		if ( (state.backtracking==0) ) stream_arg_list.Add(arg_list22.Tree);
-            		char_literal23=(IToken)Match(input,37,FOLLOW_37_in_func_call698); if (state.failed) return retval; 
-            		if ( (state.backtracking==0) ) stream_37.Add(char_literal23);
+            		if ( (state.backtracking==0) ) stream_arg_list.Add(arg_list23.Tree);
+            		char_literal24=(IToken)Match(input,38,FOLLOW_38_in_func_call734); if (state.failed) return retval; 
+            		if ( (state.backtracking==0) ) stream_38.Add(char_literal24);
 
 
             	}
@@ -950,18 +989,18 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 95:28: -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? )
+            	// 97:28: -> ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? )
             	{
-            	    // PascalGrammar.g:95:31: ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? )
+            	    // PascalGrammar.g:97:31: ^( FUNC_CALL IDENT ( ^( PARAMS arg_list ) )? )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(FUNC_CALL, "FUNC_CALL"), root_1);
 
             	    adaptor.AddChild(root_1, stream_IDENT.NextNode());
-            	    // PascalGrammar.g:95:49: ( ^( PARAMS arg_list ) )?
+            	    // PascalGrammar.g:97:49: ( ^( PARAMS arg_list ) )?
             	    if ( stream_arg_list.HasNext() )
             	    {
-            	        // PascalGrammar.g:95:49: ^( PARAMS arg_list )
+            	        // PascalGrammar.g:97:49: ^( PARAMS arg_list )
             	        {
             	        object root_2 = (object)adaptor.GetNilNode();
             	        root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(PARAMS, "PARAMS"), root_2);
@@ -1018,7 +1057,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "expr"
-    // PascalGrammar.g:98:1: expr : ( IDENT ASSIGN term | func_call | BLOCKOPEN expr_list BLOCKEND -> ^( BLOCK expr_list ) | IF compare THEN expr ( ELSE expr )? | FOR IDENT ASSIGN add TO add DO expr | WHILE compare DO expr | DO expr WHILE compare );
+    // PascalGrammar.g:100:1: expr : ( IDENT ASSIGN term | func_call | BLOCKOPEN expr_list BLOCKEND -> ^( BLOCK expr_list ) | IF compare THEN expr ( ELSE expr )? | FOR IDENT ASSIGN add TO add DO expr | WHILE compare DO expr | DO expr WHILE compare );
     public PascalGrammarParser.expr_return expr() // throws RecognitionException [1]
     {   
         PascalGrammarParser.expr_return retval = new PascalGrammarParser.expr_return();
@@ -1026,65 +1065,65 @@ public partial class PascalGrammarParser : Parser
         int expr_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken IDENT24 = null;
-        IToken ASSIGN25 = null;
-        IToken BLOCKOPEN28 = null;
-        IToken BLOCKEND30 = null;
-        IToken IF31 = null;
-        IToken THEN33 = null;
-        IToken ELSE35 = null;
-        IToken FOR37 = null;
-        IToken IDENT38 = null;
-        IToken ASSIGN39 = null;
-        IToken TO41 = null;
-        IToken DO43 = null;
-        IToken WHILE45 = null;
-        IToken DO47 = null;
-        IToken DO49 = null;
-        IToken WHILE51 = null;
-        PascalGrammarParser.term_return term26 = default(PascalGrammarParser.term_return);
+        IToken IDENT25 = null;
+        IToken ASSIGN26 = null;
+        IToken BLOCKOPEN29 = null;
+        IToken BLOCKEND31 = null;
+        IToken IF32 = null;
+        IToken THEN34 = null;
+        IToken ELSE36 = null;
+        IToken FOR38 = null;
+        IToken IDENT39 = null;
+        IToken ASSIGN40 = null;
+        IToken TO42 = null;
+        IToken DO44 = null;
+        IToken WHILE46 = null;
+        IToken DO48 = null;
+        IToken DO50 = null;
+        IToken WHILE52 = null;
+        PascalGrammarParser.term_return term27 = default(PascalGrammarParser.term_return);
 
-        PascalGrammarParser.func_call_return func_call27 = default(PascalGrammarParser.func_call_return);
+        PascalGrammarParser.func_call_return func_call28 = default(PascalGrammarParser.func_call_return);
 
-        PascalGrammarParser.expr_list_return expr_list29 = default(PascalGrammarParser.expr_list_return);
+        PascalGrammarParser.expr_list_return expr_list30 = default(PascalGrammarParser.expr_list_return);
 
-        PascalGrammarParser.compare_return compare32 = default(PascalGrammarParser.compare_return);
+        PascalGrammarParser.compare_return compare33 = default(PascalGrammarParser.compare_return);
 
-        PascalGrammarParser.expr_return expr34 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr35 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.expr_return expr36 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr37 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.add_return add40 = default(PascalGrammarParser.add_return);
+        PascalGrammarParser.add_return add41 = default(PascalGrammarParser.add_return);
 
-        PascalGrammarParser.add_return add42 = default(PascalGrammarParser.add_return);
+        PascalGrammarParser.add_return add43 = default(PascalGrammarParser.add_return);
 
-        PascalGrammarParser.expr_return expr44 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr45 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.compare_return compare46 = default(PascalGrammarParser.compare_return);
+        PascalGrammarParser.compare_return compare47 = default(PascalGrammarParser.compare_return);
 
-        PascalGrammarParser.expr_return expr48 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr49 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.expr_return expr50 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr51 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.compare_return compare52 = default(PascalGrammarParser.compare_return);
+        PascalGrammarParser.compare_return compare53 = default(PascalGrammarParser.compare_return);
 
 
-        object IDENT24_tree=null;
-        object ASSIGN25_tree=null;
-        object BLOCKOPEN28_tree=null;
-        object BLOCKEND30_tree=null;
-        object IF31_tree=null;
-        object THEN33_tree=null;
-        object ELSE35_tree=null;
-        object FOR37_tree=null;
-        object IDENT38_tree=null;
-        object ASSIGN39_tree=null;
-        object TO41_tree=null;
-        object DO43_tree=null;
-        object WHILE45_tree=null;
-        object DO47_tree=null;
-        object DO49_tree=null;
-        object WHILE51_tree=null;
+        object IDENT25_tree=null;
+        object ASSIGN26_tree=null;
+        object BLOCKOPEN29_tree=null;
+        object BLOCKEND31_tree=null;
+        object IF32_tree=null;
+        object THEN34_tree=null;
+        object ELSE36_tree=null;
+        object FOR38_tree=null;
+        object IDENT39_tree=null;
+        object ASSIGN40_tree=null;
+        object TO42_tree=null;
+        object DO44_tree=null;
+        object WHILE46_tree=null;
+        object DO48_tree=null;
+        object DO50_tree=null;
+        object WHILE52_tree=null;
         RewriteRuleTokenStream stream_BLOCKOPEN = new RewriteRuleTokenStream(adaptor,"token BLOCKOPEN");
         RewriteRuleTokenStream stream_BLOCKEND = new RewriteRuleTokenStream(adaptor,"token BLOCKEND");
         RewriteRuleSubtreeStream stream_expr_list = new RewriteRuleSubtreeStream(adaptor,"rule expr_list");
@@ -1094,7 +1133,7 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:98:6: ( IDENT ASSIGN term | func_call | BLOCKOPEN expr_list BLOCKEND -> ^( BLOCK expr_list ) | IF compare THEN expr ( ELSE expr )? | FOR IDENT ASSIGN add TO add DO expr | WHILE compare DO expr | DO expr WHILE compare )
+            // PascalGrammar.g:100:6: ( IDENT ASSIGN term | func_call | BLOCKOPEN expr_list BLOCKEND -> ^( BLOCK expr_list ) | IF compare THEN expr ( ELSE expr )? | FOR IDENT ASSIGN add TO add DO expr | WHILE compare DO expr | DO expr WHILE compare )
             int alt8 = 7;
             switch ( input.LA(1) ) 
             {
@@ -1106,7 +1145,7 @@ public partial class PascalGrammarParser : Parser
                 {
                     alt8 = 1;
                 }
-                else if ( (LA8_1 == 36) )
+                else if ( (LA8_1 == 37) )
                 {
                     alt8 = 2;
                 }
@@ -1156,54 +1195,54 @@ public partial class PascalGrammarParser : Parser
             switch (alt8) 
             {
                 case 1 :
-                    // PascalGrammar.g:99:2: IDENT ASSIGN term
+                    // PascalGrammar.g:101:2: IDENT ASSIGN term
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	IDENT24=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_expr726); if (state.failed) return retval;
+                    	IDENT25=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_expr762); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{IDENT24_tree = (object)adaptor.Create(IDENT24);
-                    		adaptor.AddChild(root_0, IDENT24_tree);
+                    	{IDENT25_tree = (object)adaptor.Create(IDENT25);
+                    		adaptor.AddChild(root_0, IDENT25_tree);
                     	}
-                    	ASSIGN25=(IToken)Match(input,ASSIGN,FOLLOW_ASSIGN_in_expr728); if (state.failed) return retval;
+                    	ASSIGN26=(IToken)Match(input,ASSIGN,FOLLOW_ASSIGN_in_expr764); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{ASSIGN25_tree = (object)adaptor.Create(ASSIGN25);
-                    		root_0 = (object)adaptor.BecomeRoot(ASSIGN25_tree, root_0);
+                    	{ASSIGN26_tree = (object)adaptor.Create(ASSIGN26);
+                    		root_0 = (object)adaptor.BecomeRoot(ASSIGN26_tree, root_0);
                     	}
-                    	PushFollow(FOLLOW_term_in_expr731);
-                    	term26 = term();
+                    	PushFollow(FOLLOW_term_in_expr767);
+                    	term27 = term();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term26.Tree);
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term27.Tree);
 
                     }
                     break;
                 case 2 :
-                    // PascalGrammar.g:101:4: func_call
+                    // PascalGrammar.g:102:4: func_call
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	PushFollow(FOLLOW_func_call_in_expr737);
-                    	func_call27 = func_call();
+                    	PushFollow(FOLLOW_func_call_in_expr772);
+                    	func_call28 = func_call();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_call27.Tree);
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_call28.Tree);
 
                     }
                     break;
                 case 3 :
-                    // PascalGrammar.g:102:4: BLOCKOPEN expr_list BLOCKEND
+                    // PascalGrammar.g:103:4: BLOCKOPEN expr_list BLOCKEND
                     {
-                    	BLOCKOPEN28=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_expr742); if (state.failed) return retval; 
-                    	if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN28);
+                    	BLOCKOPEN29=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_expr777); if (state.failed) return retval; 
+                    	if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN29);
 
-                    	PushFollow(FOLLOW_expr_list_in_expr744);
-                    	expr_list29 = expr_list();
+                    	PushFollow(FOLLOW_expr_list_in_expr779);
+                    	expr_list30 = expr_list();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list29.Tree);
-                    	BLOCKEND30=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_expr746); if (state.failed) return retval; 
-                    	if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND30);
+                    	if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list30.Tree);
+                    	BLOCKEND31=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_expr781); if (state.failed) return retval; 
+                    	if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND31);
 
 
 
@@ -1219,9 +1258,9 @@ public partial class PascalGrammarParser : Parser
                     	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
                     	root_0 = (object)adaptor.GetNilNode();
-                    	// 102:33: -> ^( BLOCK expr_list )
+                    	// 103:33: -> ^( BLOCK expr_list )
                     	{
-                    	    // PascalGrammar.g:102:36: ^( BLOCK expr_list )
+                    	    // PascalGrammar.g:103:36: ^( BLOCK expr_list )
                     	    {
                     	    object root_1 = (object)adaptor.GetNilNode();
                     	    root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(BLOCK, "BLOCK"), root_1);
@@ -1237,27 +1276,27 @@ public partial class PascalGrammarParser : Parser
                     }
                     break;
                 case 4 :
-                    // PascalGrammar.g:103:4: IF compare THEN expr ( ELSE expr )?
+                    // PascalGrammar.g:104:4: IF compare THEN expr ( ELSE expr )?
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	IF31=(IToken)Match(input,IF,FOLLOW_IF_in_expr759); if (state.failed) return retval;
+                    	IF32=(IToken)Match(input,IF,FOLLOW_IF_in_expr794); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{IF31_tree = (object)adaptor.Create(IF31);
-                    		root_0 = (object)adaptor.BecomeRoot(IF31_tree, root_0);
+                    	{IF32_tree = (object)adaptor.Create(IF32);
+                    		root_0 = (object)adaptor.BecomeRoot(IF32_tree, root_0);
                     	}
-                    	PushFollow(FOLLOW_compare_in_expr762);
-                    	compare32 = compare();
+                    	PushFollow(FOLLOW_compare_in_expr797);
+                    	compare33 = compare();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare32.Tree);
-                    	THEN33=(IToken)Match(input,THEN,FOLLOW_THEN_in_expr764); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_expr_in_expr767);
-                    	expr34 = expr();
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare33.Tree);
+                    	THEN34=(IToken)Match(input,THEN,FOLLOW_THEN_in_expr799); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_expr_in_expr802);
+                    	expr35 = expr();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr34.Tree);
-                    	// PascalGrammar.g:103:27: ( ELSE expr )?
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr35.Tree);
+                    	// PascalGrammar.g:104:27: ( ELSE expr )?
                     	int alt7 = 2;
                     	int LA7_0 = input.LA(1);
 
@@ -1265,7 +1304,7 @@ public partial class PascalGrammarParser : Parser
                     	{
                     	    int LA7_1 = input.LA(2);
 
-                    	    if ( (synpred17_PascalGrammar()) )
+                    	    if ( (synpred18_PascalGrammar()) )
                     	    {
                     	        alt7 = 1;
                     	    }
@@ -1273,14 +1312,14 @@ public partial class PascalGrammarParser : Parser
                     	switch (alt7) 
                     	{
                     	    case 1 :
-                    	        // PascalGrammar.g:103:28: ELSE expr
+                    	        // PascalGrammar.g:104:28: ELSE expr
                     	        {
-                    	        	ELSE35=(IToken)Match(input,ELSE,FOLLOW_ELSE_in_expr770); if (state.failed) return retval;
-                    	        	PushFollow(FOLLOW_expr_in_expr773);
-                    	        	expr36 = expr();
+                    	        	ELSE36=(IToken)Match(input,ELSE,FOLLOW_ELSE_in_expr805); if (state.failed) return retval;
+                    	        	PushFollow(FOLLOW_expr_in_expr808);
+                    	        	expr37 = expr();
                     	        	state.followingStackPointer--;
                     	        	if (state.failed) return retval;
-                    	        	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr36.Tree);
+                    	        	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr37.Tree);
 
                     	        }
                     	        break;
@@ -1291,86 +1330,86 @@ public partial class PascalGrammarParser : Parser
                     }
                     break;
                 case 5 :
-                    // PascalGrammar.g:104:4: FOR IDENT ASSIGN add TO add DO expr
+                    // PascalGrammar.g:105:4: FOR IDENT ASSIGN add TO add DO expr
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	FOR37=(IToken)Match(input,FOR,FOLLOW_FOR_in_expr780); if (state.failed) return retval;
+                    	FOR38=(IToken)Match(input,FOR,FOLLOW_FOR_in_expr815); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{FOR37_tree = (object)adaptor.Create(FOR37);
-                    		root_0 = (object)adaptor.BecomeRoot(FOR37_tree, root_0);
+                    	{FOR38_tree = (object)adaptor.Create(FOR38);
+                    		root_0 = (object)adaptor.BecomeRoot(FOR38_tree, root_0);
                     	}
-                    	IDENT38=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_expr783); if (state.failed) return retval;
+                    	IDENT39=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_expr818); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{IDENT38_tree = (object)adaptor.Create(IDENT38);
-                    		adaptor.AddChild(root_0, IDENT38_tree);
+                    	{IDENT39_tree = (object)adaptor.Create(IDENT39);
+                    		adaptor.AddChild(root_0, IDENT39_tree);
                     	}
-                    	ASSIGN39=(IToken)Match(input,ASSIGN,FOLLOW_ASSIGN_in_expr785); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_add_in_expr788);
-                    	add40 = add();
+                    	ASSIGN40=(IToken)Match(input,ASSIGN,FOLLOW_ASSIGN_in_expr820); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_add_in_expr823);
+                    	add41 = add();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add40.Tree);
-                    	TO41=(IToken)Match(input,TO,FOLLOW_TO_in_expr790); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_add_in_expr793);
-                    	add42 = add();
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add41.Tree);
+                    	TO42=(IToken)Match(input,TO,FOLLOW_TO_in_expr825); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_add_in_expr828);
+                    	add43 = add();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add42.Tree);
-                    	DO43=(IToken)Match(input,DO,FOLLOW_DO_in_expr795); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_expr_in_expr798);
-                    	expr44 = expr();
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, add43.Tree);
+                    	DO44=(IToken)Match(input,DO,FOLLOW_DO_in_expr830); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_expr_in_expr833);
+                    	expr45 = expr();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr44.Tree);
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr45.Tree);
 
                     }
                     break;
                 case 6 :
-                    // PascalGrammar.g:105:4: WHILE compare DO expr
+                    // PascalGrammar.g:106:4: WHILE compare DO expr
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	WHILE45=(IToken)Match(input,WHILE,FOLLOW_WHILE_in_expr803); if (state.failed) return retval;
+                    	WHILE46=(IToken)Match(input,WHILE,FOLLOW_WHILE_in_expr838); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{WHILE45_tree = (object)adaptor.Create(WHILE45);
-                    		root_0 = (object)adaptor.BecomeRoot(WHILE45_tree, root_0);
+                    	{WHILE46_tree = (object)adaptor.Create(WHILE46);
+                    		root_0 = (object)adaptor.BecomeRoot(WHILE46_tree, root_0);
                     	}
-                    	PushFollow(FOLLOW_compare_in_expr806);
-                    	compare46 = compare();
+                    	PushFollow(FOLLOW_compare_in_expr841);
+                    	compare47 = compare();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare46.Tree);
-                    	DO47=(IToken)Match(input,DO,FOLLOW_DO_in_expr808); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_expr_in_expr811);
-                    	expr48 = expr();
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare47.Tree);
+                    	DO48=(IToken)Match(input,DO,FOLLOW_DO_in_expr843); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_expr_in_expr846);
+                    	expr49 = expr();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr48.Tree);
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr49.Tree);
 
                     }
                     break;
                 case 7 :
-                    // PascalGrammar.g:106:4: DO expr WHILE compare
+                    // PascalGrammar.g:107:4: DO expr WHILE compare
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	DO49=(IToken)Match(input,DO,FOLLOW_DO_in_expr816); if (state.failed) return retval;
+                    	DO50=(IToken)Match(input,DO,FOLLOW_DO_in_expr851); if (state.failed) return retval;
                     	if ( state.backtracking == 0 )
-                    	{DO49_tree = (object)adaptor.Create(DO49);
-                    		root_0 = (object)adaptor.BecomeRoot(DO49_tree, root_0);
+                    	{DO50_tree = (object)adaptor.Create(DO50);
+                    		root_0 = (object)adaptor.BecomeRoot(DO50_tree, root_0);
                     	}
-                    	PushFollow(FOLLOW_expr_in_expr819);
-                    	expr50 = expr();
+                    	PushFollow(FOLLOW_expr_in_expr854);
+                    	expr51 = expr();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr50.Tree);
-                    	WHILE51=(IToken)Match(input,WHILE,FOLLOW_WHILE_in_expr821); if (state.failed) return retval;
-                    	PushFollow(FOLLOW_compare_in_expr824);
-                    	compare52 = compare();
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr51.Tree);
+                    	WHILE52=(IToken)Match(input,WHILE,FOLLOW_WHILE_in_expr856); if (state.failed) return retval;
+                    	PushFollow(FOLLOW_compare_in_expr859);
+                    	compare53 = compare();
                     	state.followingStackPointer--;
                     	if (state.failed) return retval;
-                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare52.Tree);
+                    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, compare53.Tree);
 
                     }
                     break;
@@ -1412,7 +1451,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "expr_list"
-    // PascalGrammar.g:109:1: expr_list : ( ';' )* expr ( ( ';' )+ expr )* ( ';' )* ;
+    // PascalGrammar.g:110:1: expr_list : ( ';' )* expr ( ( ';' )+ expr )* ( ';' )* ;
     public PascalGrammarParser.expr_list_return expr_list() // throws RecognitionException [1]
     {   
         PascalGrammarParser.expr_list_return retval = new PascalGrammarParser.expr_list_return();
@@ -1420,17 +1459,17 @@ public partial class PascalGrammarParser : Parser
         int expr_list_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken char_literal53 = null;
-        IToken char_literal55 = null;
-        IToken char_literal57 = null;
-        PascalGrammarParser.expr_return expr54 = default(PascalGrammarParser.expr_return);
+        IToken char_literal54 = null;
+        IToken char_literal56 = null;
+        IToken char_literal58 = null;
+        PascalGrammarParser.expr_return expr55 = default(PascalGrammarParser.expr_return);
 
-        PascalGrammarParser.expr_return expr56 = default(PascalGrammarParser.expr_return);
+        PascalGrammarParser.expr_return expr57 = default(PascalGrammarParser.expr_return);
 
 
-        object char_literal53_tree=null;
-        object char_literal55_tree=null;
-        object char_literal57_tree=null;
+        object char_literal54_tree=null;
+        object char_literal56_tree=null;
+        object char_literal58_tree=null;
 
         try 
     	{
@@ -1438,12 +1477,12 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:110:2: ( ( ';' )* expr ( ( ';' )+ expr )* ( ';' )* )
-            // PascalGrammar.g:111:2: ( ';' )* expr ( ( ';' )+ expr )* ( ';' )*
+            // PascalGrammar.g:111:2: ( ( ';' )* expr ( ( ';' )+ expr )* ( ';' )* )
+            // PascalGrammar.g:112:2: ( ';' )* expr ( ( ';' )+ expr )* ( ';' )*
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	// PascalGrammar.g:111:2: ( ';' )*
+            	// PascalGrammar.g:112:2: ( ';' )*
             	do 
             	{
             	    int alt9 = 2;
@@ -1458,9 +1497,9 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt9) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:111:3: ';'
+            			    // PascalGrammar.g:112:3: ';'
             			    {
-            			    	char_literal53=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list842); if (state.failed) return retval;
+            			    	char_literal54=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list877); if (state.failed) return retval;
 
             			    }
             			    break;
@@ -1473,12 +1512,12 @@ public partial class PascalGrammarParser : Parser
             	loop9:
             		;	// Stops C# compiler whining that label 'loop9' has no statements
 
-            	PushFollow(FOLLOW_expr_in_expr_list847);
-            	expr54 = expr();
+            	PushFollow(FOLLOW_expr_in_expr_list882);
+            	expr55 = expr();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr54.Tree);
-            	// PascalGrammar.g:111:15: ( ( ';' )+ expr )*
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr55.Tree);
+            	// PascalGrammar.g:112:15: ( ( ';' )+ expr )*
             	do 
             	{
             	    int alt11 = 2;
@@ -1486,9 +1525,9 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt11) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:111:17: ( ';' )+ expr
+            			    // PascalGrammar.g:112:17: ( ';' )+ expr
             			    {
-            			    	// PascalGrammar.g:111:17: ( ';' )+
+            			    	// PascalGrammar.g:112:17: ( ';' )+
             			    	int cnt10 = 0;
             			    	do 
             			    	{
@@ -1504,9 +1543,9 @@ public partial class PascalGrammarParser : Parser
             			    	    switch (alt10) 
             			    		{
             			    			case 1 :
-            			    			    // PascalGrammar.g:111:18: ';'
+            			    			    // PascalGrammar.g:112:18: ';'
             			    			    {
-            			    			    	char_literal55=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list852); if (state.failed) return retval;
+            			    			    	char_literal56=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list887); if (state.failed) return retval;
 
             			    			    }
             			    			    break;
@@ -1524,11 +1563,11 @@ public partial class PascalGrammarParser : Parser
             			    	loop10:
             			    		;	// Stops C# compiler whining that label 'loop10' has no statements
 
-            			    	PushFollow(FOLLOW_expr_in_expr_list857);
-            			    	expr56 = expr();
+            			    	PushFollow(FOLLOW_expr_in_expr_list892);
+            			    	expr57 = expr();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr56.Tree);
+            			    	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, expr57.Tree);
 
             			    }
             			    break;
@@ -1541,7 +1580,7 @@ public partial class PascalGrammarParser : Parser
             	loop11:
             		;	// Stops C# compiler whining that label 'loop11' has no statements
 
-            	// PascalGrammar.g:111:33: ( ';' )*
+            	// PascalGrammar.g:112:33: ( ';' )*
             	do 
             	{
             	    int alt12 = 2;
@@ -1556,9 +1595,9 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt12) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:111:34: ';'
+            			    // PascalGrammar.g:112:34: ';'
             			    {
-            			    	char_literal57=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list863); if (state.failed) return retval;
+            			    	char_literal58=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expr_list898); if (state.failed) return retval;
 
             			    }
             			    break;
@@ -1610,7 +1649,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "program_body"
-    // PascalGrammar.g:114:1: program_body : expr_list -> ^( BLOCK expr_list ) ;
+    // PascalGrammar.g:115:1: program_body : expr_list -> ^( BLOCK expr_list ) ;
     public PascalGrammarParser.program_body_return program_body() // throws RecognitionException [1]
     {   
         PascalGrammarParser.program_body_return retval = new PascalGrammarParser.program_body_return();
@@ -1618,7 +1657,7 @@ public partial class PascalGrammarParser : Parser
         int program_body_StartIndex = input.Index();
         object root_0 = null;
 
-        PascalGrammarParser.expr_list_return expr_list58 = default(PascalGrammarParser.expr_list_return);
+        PascalGrammarParser.expr_list_return expr_list59 = default(PascalGrammarParser.expr_list_return);
 
 
         RewriteRuleSubtreeStream stream_expr_list = new RewriteRuleSubtreeStream(adaptor,"rule expr_list");
@@ -1628,14 +1667,14 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:115:2: ( expr_list -> ^( BLOCK expr_list ) )
-            // PascalGrammar.g:116:2: expr_list
+            // PascalGrammar.g:116:2: ( expr_list -> ^( BLOCK expr_list ) )
+            // PascalGrammar.g:117:2: expr_list
             {
-            	PushFollow(FOLLOW_expr_list_in_program_body880);
-            	expr_list58 = expr_list();
+            	PushFollow(FOLLOW_expr_list_in_program_body915);
+            	expr_list59 = expr_list();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list58.Tree);
+            	if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list59.Tree);
 
 
             	// AST REWRITE
@@ -1650,9 +1689,9 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 116:12: -> ^( BLOCK expr_list )
+            	// 117:12: -> ^( BLOCK expr_list )
             	{
-            	    // PascalGrammar.g:116:15: ^( BLOCK expr_list )
+            	    // PascalGrammar.g:117:15: ^( BLOCK expr_list )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(BLOCK, "BLOCK"), root_1);
@@ -1703,7 +1742,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "ident_list"
-    // PascalGrammar.g:119:1: ident_list : IDENT ( ',' IDENT )* ;
+    // PascalGrammar.g:120:1: ident_list : IDENT ( ',' IDENT )* ;
     public PascalGrammarParser.ident_list_return ident_list() // throws RecognitionException [1]
     {   
         PascalGrammarParser.ident_list_return retval = new PascalGrammarParser.ident_list_return();
@@ -1711,13 +1750,13 @@ public partial class PascalGrammarParser : Parser
         int ident_list_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken IDENT59 = null;
-        IToken char_literal60 = null;
-        IToken IDENT61 = null;
+        IToken IDENT60 = null;
+        IToken char_literal61 = null;
+        IToken IDENT62 = null;
 
-        object IDENT59_tree=null;
-        object char_literal60_tree=null;
-        object IDENT61_tree=null;
+        object IDENT60_tree=null;
+        object char_literal61_tree=null;
+        object IDENT62_tree=null;
 
         try 
     	{
@@ -1725,23 +1764,23 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:120:2: ( IDENT ( ',' IDENT )* )
-            // PascalGrammar.g:121:2: IDENT ( ',' IDENT )*
+            // PascalGrammar.g:121:2: ( IDENT ( ',' IDENT )* )
+            // PascalGrammar.g:122:2: IDENT ( ',' IDENT )*
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	IDENT59=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_ident_list902); if (state.failed) return retval;
+            	IDENT60=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_ident_list937); if (state.failed) return retval;
             	if ( state.backtracking == 0 )
-            	{IDENT59_tree = (object)adaptor.Create(IDENT59);
-            		adaptor.AddChild(root_0, IDENT59_tree);
+            	{IDENT60_tree = (object)adaptor.Create(IDENT60);
+            		adaptor.AddChild(root_0, IDENT60_tree);
             	}
-            	// PascalGrammar.g:121:8: ( ',' IDENT )*
+            	// PascalGrammar.g:122:8: ( ',' IDENT )*
             	do 
             	{
             	    int alt13 = 2;
             	    int LA13_0 = input.LA(1);
 
-            	    if ( (LA13_0 == 38) )
+            	    if ( (LA13_0 == 39) )
             	    {
             	        alt13 = 1;
             	    }
@@ -1750,13 +1789,13 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt13) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:121:9: ',' IDENT
+            			    // PascalGrammar.g:122:9: ',' IDENT
             			    {
-            			    	char_literal60=(IToken)Match(input,38,FOLLOW_38_in_ident_list905); if (state.failed) return retval;
-            			    	IDENT61=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_ident_list908); if (state.failed) return retval;
+            			    	char_literal61=(IToken)Match(input,39,FOLLOW_39_in_ident_list940); if (state.failed) return retval;
+            			    	IDENT62=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_ident_list943); if (state.failed) return retval;
             			    	if ( state.backtracking == 0 )
-            			    	{IDENT61_tree = (object)adaptor.Create(IDENT61);
-            			    		adaptor.AddChild(root_0, IDENT61_tree);
+            			    	{IDENT62_tree = (object)adaptor.Create(IDENT62);
+            			    		adaptor.AddChild(root_0, IDENT62_tree);
             			    	}
 
             			    }
@@ -1809,7 +1848,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "type"
-    // PascalGrammar.g:124:1: type : ':' IDENT -> ^( IDENT ) ;
+    // PascalGrammar.g:125:1: type : ':' IDENT -> ^( IDENT ) ;
     public PascalGrammarParser.type_return type() // throws RecognitionException [1]
     {   
         PascalGrammarParser.type_return retval = new PascalGrammarParser.type_return();
@@ -1817,13 +1856,13 @@ public partial class PascalGrammarParser : Parser
         int type_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken char_literal62 = null;
-        IToken IDENT63 = null;
+        IToken char_literal63 = null;
+        IToken IDENT64 = null;
 
-        object char_literal62_tree=null;
-        object IDENT63_tree=null;
+        object char_literal63_tree=null;
+        object IDENT64_tree=null;
         RewriteRuleTokenStream stream_IDENT = new RewriteRuleTokenStream(adaptor,"token IDENT");
-        RewriteRuleTokenStream stream_39 = new RewriteRuleTokenStream(adaptor,"token 39");
+        RewriteRuleTokenStream stream_40 = new RewriteRuleTokenStream(adaptor,"token 40");
 
         try 
     	{
@@ -1831,14 +1870,14 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:124:6: ( ':' IDENT -> ^( IDENT ) )
-            // PascalGrammar.g:125:2: ':' IDENT
+            // PascalGrammar.g:125:6: ( ':' IDENT -> ^( IDENT ) )
+            // PascalGrammar.g:126:2: ':' IDENT
             {
-            	char_literal62=(IToken)Match(input,39,FOLLOW_39_in_type923); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_39.Add(char_literal62);
+            	char_literal63=(IToken)Match(input,40,FOLLOW_40_in_type958); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_40.Add(char_literal63);
 
-            	IDENT63=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_type925); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT63);
+            	IDENT64=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_type960); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT64);
 
 
 
@@ -1854,9 +1893,9 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 125:12: -> ^( IDENT )
+            	// 126:12: -> ^( IDENT )
             	{
-            	    // PascalGrammar.g:125:15: ^( IDENT )
+            	    // PascalGrammar.g:126:15: ^( IDENT )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot(stream_IDENT.NextNode(), root_1);
@@ -1905,7 +1944,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "variables_definition"
-    // PascalGrammar.g:128:1: variables_definition : VAR ( ident_list type ( SEMICOLON )+ )+ -> ^( VAR ( ^( type ident_list ) )+ ) ;
+    // PascalGrammar.g:129:1: variables_definition : VAR ( ident_list type ( SEMICOLON )+ )+ -> ^( VAR ( ^( type ident_list ) )+ ) ;
     public PascalGrammarParser.variables_definition_return variables_definition() // throws RecognitionException [1]
     {   
         PascalGrammarParser.variables_definition_return retval = new PascalGrammarParser.variables_definition_return();
@@ -1913,15 +1952,15 @@ public partial class PascalGrammarParser : Parser
         int variables_definition_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken VAR64 = null;
-        IToken SEMICOLON67 = null;
-        PascalGrammarParser.ident_list_return ident_list65 = default(PascalGrammarParser.ident_list_return);
+        IToken VAR65 = null;
+        IToken SEMICOLON68 = null;
+        PascalGrammarParser.ident_list_return ident_list66 = default(PascalGrammarParser.ident_list_return);
 
-        PascalGrammarParser.type_return type66 = default(PascalGrammarParser.type_return);
+        PascalGrammarParser.type_return type67 = default(PascalGrammarParser.type_return);
 
 
-        object VAR64_tree=null;
-        object SEMICOLON67_tree=null;
+        object VAR65_tree=null;
+        object SEMICOLON68_tree=null;
         RewriteRuleTokenStream stream_VAR = new RewriteRuleTokenStream(adaptor,"token VAR");
         RewriteRuleTokenStream stream_SEMICOLON = new RewriteRuleTokenStream(adaptor,"token SEMICOLON");
         RewriteRuleSubtreeStream stream_ident_list = new RewriteRuleSubtreeStream(adaptor,"rule ident_list");
@@ -1932,13 +1971,13 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:129:2: ( VAR ( ident_list type ( SEMICOLON )+ )+ -> ^( VAR ( ^( type ident_list ) )+ ) )
-            // PascalGrammar.g:130:2: VAR ( ident_list type ( SEMICOLON )+ )+
+            // PascalGrammar.g:130:2: ( VAR ( ident_list type ( SEMICOLON )+ )+ -> ^( VAR ( ^( type ident_list ) )+ ) )
+            // PascalGrammar.g:131:2: VAR ( ident_list type ( SEMICOLON )+ )+
             {
-            	VAR64=(IToken)Match(input,VAR,FOLLOW_VAR_in_variables_definition944); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_VAR.Add(VAR64);
+            	VAR65=(IToken)Match(input,VAR,FOLLOW_VAR_in_variables_definition979); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_VAR.Add(VAR65);
 
-            	// PascalGrammar.g:130:6: ( ident_list type ( SEMICOLON )+ )+
+            	// PascalGrammar.g:131:6: ( ident_list type ( SEMICOLON )+ )+
             	int cnt15 = 0;
             	do 
             	{
@@ -1954,19 +1993,19 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt15) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:130:7: ident_list type ( SEMICOLON )+
+            			    // PascalGrammar.g:131:7: ident_list type ( SEMICOLON )+
             			    {
-            			    	PushFollow(FOLLOW_ident_list_in_variables_definition947);
-            			    	ident_list65 = ident_list();
+            			    	PushFollow(FOLLOW_ident_list_in_variables_definition982);
+            			    	ident_list66 = ident_list();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( (state.backtracking==0) ) stream_ident_list.Add(ident_list65.Tree);
-            			    	PushFollow(FOLLOW_type_in_variables_definition949);
-            			    	type66 = type();
+            			    	if ( (state.backtracking==0) ) stream_ident_list.Add(ident_list66.Tree);
+            			    	PushFollow(FOLLOW_type_in_variables_definition984);
+            			    	type67 = type();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( (state.backtracking==0) ) stream_type.Add(type66.Tree);
-            			    	// PascalGrammar.g:130:23: ( SEMICOLON )+
+            			    	if ( (state.backtracking==0) ) stream_type.Add(type67.Tree);
+            			    	// PascalGrammar.g:131:23: ( SEMICOLON )+
             			    	int cnt14 = 0;
             			    	do 
             			    	{
@@ -1984,8 +2023,8 @@ public partial class PascalGrammarParser : Parser
             			    			case 1 :
             			    			    // PascalGrammar.g:0:0: SEMICOLON
             			    			    {
-            			    			    	SEMICOLON67=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_variables_definition951); if (state.failed) return retval; 
-            			    			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON67);
+            			    			    	SEMICOLON68=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_variables_definition986); if (state.failed) return retval; 
+            			    			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON68);
 
 
             			    			    }
@@ -2024,7 +2063,7 @@ public partial class PascalGrammarParser : Parser
 
 
             	// AST REWRITE
-            	// elements:          ident_list, type, VAR
+            	// elements:          VAR, ident_list, type
             	// token labels:      
             	// rule labels:       retval
             	// token list labels: 
@@ -2035,9 +2074,9 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 130:36: -> ^( VAR ( ^( type ident_list ) )+ )
+            	// 131:36: -> ^( VAR ( ^( type ident_list ) )+ )
             	{
-            	    // PascalGrammar.g:130:39: ^( VAR ( ^( type ident_list ) )+ )
+            	    // PascalGrammar.g:131:39: ^( VAR ( ^( type ident_list ) )+ )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot(stream_VAR.NextNode(), root_1);
@@ -2047,7 +2086,7 @@ public partial class PascalGrammarParser : Parser
             	    }
             	    while ( stream_ident_list.HasNext() || stream_type.HasNext() )
             	    {
-            	        // PascalGrammar.g:130:45: ^( type ident_list )
+            	        // PascalGrammar.g:131:45: ^( type ident_list )
             	        {
             	        object root_2 = (object)adaptor.GetNilNode();
             	        root_2 = (object)adaptor.BecomeRoot(stream_type.NextNode(), root_2);
@@ -2105,7 +2144,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "params_definition"
-    // PascalGrammar.g:133:1: params_definition : ( ident_list type ) -> ^( type ident_list ) ;
+    // PascalGrammar.g:134:1: params_definition : ( ident_list type ) -> ^( type ident_list ) ;
     public PascalGrammarParser.params_definition_return params_definition() // throws RecognitionException [1]
     {   
         PascalGrammarParser.params_definition_return retval = new PascalGrammarParser.params_definition_return();
@@ -2113,9 +2152,9 @@ public partial class PascalGrammarParser : Parser
         int params_definition_StartIndex = input.Index();
         object root_0 = null;
 
-        PascalGrammarParser.ident_list_return ident_list68 = default(PascalGrammarParser.ident_list_return);
+        PascalGrammarParser.ident_list_return ident_list69 = default(PascalGrammarParser.ident_list_return);
 
-        PascalGrammarParser.type_return type69 = default(PascalGrammarParser.type_return);
+        PascalGrammarParser.type_return type70 = default(PascalGrammarParser.type_return);
 
 
         RewriteRuleSubtreeStream stream_ident_list = new RewriteRuleSubtreeStream(adaptor,"rule ident_list");
@@ -2126,22 +2165,22 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:134:2: ( ( ident_list type ) -> ^( type ident_list ) )
-            // PascalGrammar.g:135:2: ( ident_list type )
+            // PascalGrammar.g:135:2: ( ( ident_list type ) -> ^( type ident_list ) )
+            // PascalGrammar.g:136:2: ( ident_list type )
             {
-            	// PascalGrammar.g:135:2: ( ident_list type )
-            	// PascalGrammar.g:135:3: ident_list type
+            	// PascalGrammar.g:136:2: ( ident_list type )
+            	// PascalGrammar.g:136:3: ident_list type
             	{
-            		PushFollow(FOLLOW_ident_list_in_params_definition982);
-            		ident_list68 = ident_list();
+            		PushFollow(FOLLOW_ident_list_in_params_definition1017);
+            		ident_list69 = ident_list();
             		state.followingStackPointer--;
             		if (state.failed) return retval;
-            		if ( (state.backtracking==0) ) stream_ident_list.Add(ident_list68.Tree);
-            		PushFollow(FOLLOW_type_in_params_definition984);
-            		type69 = type();
+            		if ( (state.backtracking==0) ) stream_ident_list.Add(ident_list69.Tree);
+            		PushFollow(FOLLOW_type_in_params_definition1019);
+            		type70 = type();
             		state.followingStackPointer--;
             		if (state.failed) return retval;
-            		if ( (state.backtracking==0) ) stream_type.Add(type69.Tree);
+            		if ( (state.backtracking==0) ) stream_type.Add(type70.Tree);
 
             	}
 
@@ -2159,9 +2198,9 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 135:20: -> ^( type ident_list )
+            	// 136:20: -> ^( type ident_list )
             	{
-            	    // PascalGrammar.g:135:23: ^( type ident_list )
+            	    // PascalGrammar.g:136:23: ^( type ident_list )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot(stream_type.NextNode(), root_1);
@@ -2212,7 +2251,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "method_definition"
-    // PascalGrammar.g:138:1: method_definition : ( ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) | ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) );
+    // PascalGrammar.g:139:1: method_definition : ( ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) | ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) );
     public PascalGrammarParser.method_definition_return method_definition() // throws RecognitionException [1]
     {   
         PascalGrammarParser.method_definition_return retval = new PascalGrammarParser.method_definition_return();
@@ -2220,69 +2259,69 @@ public partial class PascalGrammarParser : Parser
         int method_definition_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken PROCEDURE70 = null;
-        IToken IDENT71 = null;
-        IToken char_literal72 = null;
-        IToken char_literal74 = null;
-        IToken char_literal76 = null;
-        IToken SEMICOLON77 = null;
-        IToken BLOCKOPEN80 = null;
-        IToken BLOCKEND82 = null;
-        IToken FUNCTION83 = null;
-        IToken IDENT84 = null;
-        IToken char_literal85 = null;
-        IToken char_literal87 = null;
-        IToken char_literal89 = null;
-        IToken SEMICOLON91 = null;
-        IToken BLOCKOPEN94 = null;
-        IToken BLOCKEND96 = null;
-        PascalGrammarParser.params_definition_return params_definition73 = default(PascalGrammarParser.params_definition_return);
+        IToken PROCEDURE71 = null;
+        IToken IDENT72 = null;
+        IToken char_literal73 = null;
+        IToken char_literal75 = null;
+        IToken char_literal77 = null;
+        IToken SEMICOLON78 = null;
+        IToken BLOCKOPEN81 = null;
+        IToken BLOCKEND83 = null;
+        IToken FUNCTION84 = null;
+        IToken IDENT85 = null;
+        IToken char_literal86 = null;
+        IToken char_literal88 = null;
+        IToken char_literal90 = null;
+        IToken SEMICOLON92 = null;
+        IToken BLOCKOPEN95 = null;
+        IToken BLOCKEND97 = null;
+        PascalGrammarParser.params_definition_return params_definition74 = default(PascalGrammarParser.params_definition_return);
 
-        PascalGrammarParser.params_definition_return params_definition75 = default(PascalGrammarParser.params_definition_return);
+        PascalGrammarParser.params_definition_return params_definition76 = default(PascalGrammarParser.params_definition_return);
 
-        PascalGrammarParser.methods_definition_return methods_definition78 = default(PascalGrammarParser.methods_definition_return);
+        PascalGrammarParser.methods_definition_return methods_definition79 = default(PascalGrammarParser.methods_definition_return);
 
-        PascalGrammarParser.variables_definition_return variables_definition79 = default(PascalGrammarParser.variables_definition_return);
+        PascalGrammarParser.variables_definition_return variables_definition80 = default(PascalGrammarParser.variables_definition_return);
 
-        PascalGrammarParser.expr_list_return expr_list81 = default(PascalGrammarParser.expr_list_return);
+        PascalGrammarParser.expr_list_return expr_list82 = default(PascalGrammarParser.expr_list_return);
 
-        PascalGrammarParser.params_definition_return params_definition86 = default(PascalGrammarParser.params_definition_return);
+        PascalGrammarParser.params_definition_return params_definition87 = default(PascalGrammarParser.params_definition_return);
 
-        PascalGrammarParser.params_definition_return params_definition88 = default(PascalGrammarParser.params_definition_return);
+        PascalGrammarParser.params_definition_return params_definition89 = default(PascalGrammarParser.params_definition_return);
 
-        PascalGrammarParser.type_return type90 = default(PascalGrammarParser.type_return);
+        PascalGrammarParser.type_return type91 = default(PascalGrammarParser.type_return);
 
-        PascalGrammarParser.methods_definition_return methods_definition92 = default(PascalGrammarParser.methods_definition_return);
+        PascalGrammarParser.methods_definition_return methods_definition93 = default(PascalGrammarParser.methods_definition_return);
 
-        PascalGrammarParser.variables_definition_return variables_definition93 = default(PascalGrammarParser.variables_definition_return);
+        PascalGrammarParser.variables_definition_return variables_definition94 = default(PascalGrammarParser.variables_definition_return);
 
-        PascalGrammarParser.expr_list_return expr_list95 = default(PascalGrammarParser.expr_list_return);
+        PascalGrammarParser.expr_list_return expr_list96 = default(PascalGrammarParser.expr_list_return);
 
 
-        object PROCEDURE70_tree=null;
-        object IDENT71_tree=null;
-        object char_literal72_tree=null;
-        object char_literal74_tree=null;
-        object char_literal76_tree=null;
-        object SEMICOLON77_tree=null;
-        object BLOCKOPEN80_tree=null;
-        object BLOCKEND82_tree=null;
-        object FUNCTION83_tree=null;
-        object IDENT84_tree=null;
-        object char_literal85_tree=null;
-        object char_literal87_tree=null;
-        object char_literal89_tree=null;
-        object SEMICOLON91_tree=null;
-        object BLOCKOPEN94_tree=null;
-        object BLOCKEND96_tree=null;
+        object PROCEDURE71_tree=null;
+        object IDENT72_tree=null;
+        object char_literal73_tree=null;
+        object char_literal75_tree=null;
+        object char_literal77_tree=null;
+        object SEMICOLON78_tree=null;
+        object BLOCKOPEN81_tree=null;
+        object BLOCKEND83_tree=null;
+        object FUNCTION84_tree=null;
+        object IDENT85_tree=null;
+        object char_literal86_tree=null;
+        object char_literal88_tree=null;
+        object char_literal90_tree=null;
+        object SEMICOLON92_tree=null;
+        object BLOCKOPEN95_tree=null;
+        object BLOCKEND97_tree=null;
         RewriteRuleTokenStream stream_FUNCTION = new RewriteRuleTokenStream(adaptor,"token FUNCTION");
         RewriteRuleTokenStream stream_BLOCKOPEN = new RewriteRuleTokenStream(adaptor,"token BLOCKOPEN");
         RewriteRuleTokenStream stream_IDENT = new RewriteRuleTokenStream(adaptor,"token IDENT");
         RewriteRuleTokenStream stream_SEMICOLON = new RewriteRuleTokenStream(adaptor,"token SEMICOLON");
-        RewriteRuleTokenStream stream_36 = new RewriteRuleTokenStream(adaptor,"token 36");
         RewriteRuleTokenStream stream_PROCEDURE = new RewriteRuleTokenStream(adaptor,"token PROCEDURE");
         RewriteRuleTokenStream stream_BLOCKEND = new RewriteRuleTokenStream(adaptor,"token BLOCKEND");
         RewriteRuleTokenStream stream_37 = new RewriteRuleTokenStream(adaptor,"token 37");
+        RewriteRuleTokenStream stream_38 = new RewriteRuleTokenStream(adaptor,"token 38");
         RewriteRuleSubtreeStream stream_methods_definition = new RewriteRuleSubtreeStream(adaptor,"rule methods_definition");
         RewriteRuleSubtreeStream stream_variables_definition = new RewriteRuleSubtreeStream(adaptor,"rule variables_definition");
         RewriteRuleSubtreeStream stream_type = new RewriteRuleSubtreeStream(adaptor,"rule type");
@@ -2294,7 +2333,7 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:139:2: ( ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) | ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) )
+            // PascalGrammar.g:140:2: ( ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) | ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND ) -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) ) )
             int alt26 = 2;
             int LA26_0 = input.LA(1);
 
@@ -2317,34 +2356,34 @@ public partial class PascalGrammarParser : Parser
             switch (alt26) 
             {
                 case 1 :
-                    // PascalGrammar.g:140:2: ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
+                    // PascalGrammar.g:141:2: ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
                     {
-                    	// PascalGrammar.g:140:2: ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
-                    	// PascalGrammar.g:140:3: PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND
+                    	// PascalGrammar.g:141:2: ( PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
+                    	// PascalGrammar.g:141:3: PROCEDURE IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND
                     	{
-                    		PROCEDURE70=(IToken)Match(input,PROCEDURE,FOLLOW_PROCEDURE_in_method_definition1008); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_PROCEDURE.Add(PROCEDURE70);
+                    		PROCEDURE71=(IToken)Match(input,PROCEDURE,FOLLOW_PROCEDURE_in_method_definition1043); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_PROCEDURE.Add(PROCEDURE71);
 
-                    		IDENT71=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_method_definition1010); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT71);
+                    		IDENT72=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_method_definition1045); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT72);
 
-                    		// PascalGrammar.g:140:19: ( '(' ( params_definition ( ';' params_definition )* )? ')' )?
+                    		// PascalGrammar.g:141:19: ( '(' ( params_definition ( ';' params_definition )* )? ')' )?
                     		int alt18 = 2;
                     		int LA18_0 = input.LA(1);
 
-                    		if ( (LA18_0 == 36) )
+                    		if ( (LA18_0 == 37) )
                     		{
                     		    alt18 = 1;
                     		}
                     		switch (alt18) 
                     		{
                     		    case 1 :
-                    		        // PascalGrammar.g:140:20: '(' ( params_definition ( ';' params_definition )* )? ')'
+                    		        // PascalGrammar.g:141:20: '(' ( params_definition ( ';' params_definition )* )? ')'
                     		        {
-                    		        	char_literal72=(IToken)Match(input,36,FOLLOW_36_in_method_definition1013); if (state.failed) return retval; 
-                    		        	if ( (state.backtracking==0) ) stream_36.Add(char_literal72);
+                    		        	char_literal73=(IToken)Match(input,37,FOLLOW_37_in_method_definition1048); if (state.failed) return retval; 
+                    		        	if ( (state.backtracking==0) ) stream_37.Add(char_literal73);
 
-                    		        	// PascalGrammar.g:140:24: ( params_definition ( ';' params_definition )* )?
+                    		        	// PascalGrammar.g:141:24: ( params_definition ( ';' params_definition )* )?
                     		        	int alt17 = 2;
                     		        	int LA17_0 = input.LA(1);
 
@@ -2355,14 +2394,14 @@ public partial class PascalGrammarParser : Parser
                     		        	switch (alt17) 
                     		        	{
                     		        	    case 1 :
-                    		        	        // PascalGrammar.g:140:25: params_definition ( ';' params_definition )*
+                    		        	        // PascalGrammar.g:141:25: params_definition ( ';' params_definition )*
                     		        	        {
-                    		        	        	PushFollow(FOLLOW_params_definition_in_method_definition1016);
-                    		        	        	params_definition73 = params_definition();
+                    		        	        	PushFollow(FOLLOW_params_definition_in_method_definition1051);
+                    		        	        	params_definition74 = params_definition();
                     		        	        	state.followingStackPointer--;
                     		        	        	if (state.failed) return retval;
-                    		        	        	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition73.Tree);
-                    		        	        	// PascalGrammar.g:140:43: ( ';' params_definition )*
+                    		        	        	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition74.Tree);
+                    		        	        	// PascalGrammar.g:141:43: ( ';' params_definition )*
                     		        	        	do 
                     		        	        	{
                     		        	        	    int alt16 = 2;
@@ -2377,16 +2416,16 @@ public partial class PascalGrammarParser : Parser
                     		        	        	    switch (alt16) 
                     		        	        		{
                     		        	        			case 1 :
-                    		        	        			    // PascalGrammar.g:140:44: ';' params_definition
+                    		        	        			    // PascalGrammar.g:141:44: ';' params_definition
                     		        	        			    {
-                    		        	        			    	char_literal74=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1019); if (state.failed) return retval; 
-                    		        	        			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(char_literal74);
+                    		        	        			    	char_literal75=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1054); if (state.failed) return retval; 
+                    		        	        			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(char_literal75);
 
-                    		        	        			    	PushFollow(FOLLOW_params_definition_in_method_definition1021);
-                    		        	        			    	params_definition75 = params_definition();
+                    		        	        			    	PushFollow(FOLLOW_params_definition_in_method_definition1056);
+                    		        	        			    	params_definition76 = params_definition();
                     		        	        			    	state.followingStackPointer--;
                     		        	        			    	if (state.failed) return retval;
-                    		        	        			    	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition75.Tree);
+                    		        	        			    	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition76.Tree);
 
                     		        	        			    }
                     		        	        			    break;
@@ -2405,8 +2444,8 @@ public partial class PascalGrammarParser : Parser
 
                     		        	}
 
-                    		        	char_literal76=(IToken)Match(input,37,FOLLOW_37_in_method_definition1027); if (state.failed) return retval; 
-                    		        	if ( (state.backtracking==0) ) stream_37.Add(char_literal76);
+                    		        	char_literal77=(IToken)Match(input,38,FOLLOW_38_in_method_definition1062); if (state.failed) return retval; 
+                    		        	if ( (state.backtracking==0) ) stream_38.Add(char_literal77);
 
 
                     		        }
@@ -2414,10 +2453,10 @@ public partial class PascalGrammarParser : Parser
 
                     		}
 
-                    		SEMICOLON77=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1031); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON77);
+                    		SEMICOLON78=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1066); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON78);
 
-                    		// PascalGrammar.g:140:86: ( methods_definition )?
+                    		// PascalGrammar.g:141:86: ( methods_definition )?
                     		int alt19 = 2;
                     		int LA19_0 = input.LA(1);
 
@@ -2430,18 +2469,18 @@ public partial class PascalGrammarParser : Parser
                     		    case 1 :
                     		        // PascalGrammar.g:0:0: methods_definition
                     		        {
-                    		        	PushFollow(FOLLOW_methods_definition_in_method_definition1033);
-                    		        	methods_definition78 = methods_definition();
+                    		        	PushFollow(FOLLOW_methods_definition_in_method_definition1068);
+                    		        	methods_definition79 = methods_definition();
                     		        	state.followingStackPointer--;
                     		        	if (state.failed) return retval;
-                    		        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition78.Tree);
+                    		        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition79.Tree);
 
                     		        }
                     		        break;
 
                     		}
 
-                    		// PascalGrammar.g:141:2: ( variables_definition )?
+                    		// PascalGrammar.g:142:2: ( variables_definition )?
                     		int alt20 = 2;
                     		int LA20_0 = input.LA(1);
 
@@ -2454,27 +2493,27 @@ public partial class PascalGrammarParser : Parser
                     		    case 1 :
                     		        // PascalGrammar.g:0:0: variables_definition
                     		        {
-                    		        	PushFollow(FOLLOW_variables_definition_in_method_definition1038);
-                    		        	variables_definition79 = variables_definition();
+                    		        	PushFollow(FOLLOW_variables_definition_in_method_definition1073);
+                    		        	variables_definition80 = variables_definition();
                     		        	state.followingStackPointer--;
                     		        	if (state.failed) return retval;
-                    		        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition79.Tree);
+                    		        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition80.Tree);
 
                     		        }
                     		        break;
 
                     		}
 
-                    		BLOCKOPEN80=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_method_definition1041); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN80);
+                    		BLOCKOPEN81=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_method_definition1076); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN81);
 
-                    		PushFollow(FOLLOW_expr_list_in_method_definition1043);
-                    		expr_list81 = expr_list();
+                    		PushFollow(FOLLOW_expr_list_in_method_definition1078);
+                    		expr_list82 = expr_list();
                     		state.followingStackPointer--;
                     		if (state.failed) return retval;
-                    		if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list81.Tree);
-                    		BLOCKEND82=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_method_definition1045); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND82);
+                    		if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list82.Tree);
+                    		BLOCKEND83=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_method_definition1080); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND83);
 
 
                     	}
@@ -2482,7 +2521,7 @@ public partial class PascalGrammarParser : Parser
 
 
                     	// AST REWRITE
-                    	// elements:          expr_list, PROCEDURE, variables_definition, methods_definition, params_definition
+                    	// elements:          expr_list, params_definition, variables_definition, PROCEDURE, methods_definition
                     	// token labels:      
                     	// rule labels:       retval
                     	// token list labels: 
@@ -2493,22 +2532,22 @@ public partial class PascalGrammarParser : Parser
                     	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
                     	root_0 = (object)adaptor.GetNilNode();
-                    	// 142:2: -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
+                    	// 143:2: -> ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
                     	{
-                    	    // PascalGrammar.g:142:5: ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
+                    	    // PascalGrammar.g:143:5: ^( PROCEDURE[$IDENT.text] ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
                     	    {
                     	    object root_1 = (object)adaptor.GetNilNode();
-                    	    root_1 = (object)adaptor.BecomeRoot(new ProcedureAstNode(PROCEDURE, ((IDENT71 != null) ? IDENT71.Text : null)), root_1);
+                    	    root_1 = (object)adaptor.BecomeRoot(new ProcedureAstNode(PROCEDURE, ((IDENT72 != null) ? IDENT72.Text : null)), root_1);
 
-                    	    // PascalGrammar.g:142:48: ( ^( PARAMS ( params_definition )* ) )?
+                    	    // PascalGrammar.g:143:48: ( ^( PARAMS ( params_definition )* ) )?
                     	    if ( stream_params_definition.HasNext() )
                     	    {
-                    	        // PascalGrammar.g:142:48: ^( PARAMS ( params_definition )* )
+                    	        // PascalGrammar.g:143:48: ^( PARAMS ( params_definition )* )
                     	        {
                     	        object root_2 = (object)adaptor.GetNilNode();
                     	        root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(PARAMS, "PARAMS"), root_2);
 
-                    	        // PascalGrammar.g:142:57: ( params_definition )*
+                    	        // PascalGrammar.g:143:57: ( params_definition )*
                     	        while ( stream_params_definition.HasNext() )
                     	        {
                     	            adaptor.AddChild(root_2, stream_params_definition.NextTree());
@@ -2521,21 +2560,21 @@ public partial class PascalGrammarParser : Parser
 
                     	    }
                     	    stream_params_definition.Reset();
-                    	    // PascalGrammar.g:142:78: ( methods_definition )?
+                    	    // PascalGrammar.g:143:78: ( methods_definition )?
                     	    if ( stream_methods_definition.HasNext() )
                     	    {
                     	        adaptor.AddChild(root_1, stream_methods_definition.NextTree());
 
                     	    }
                     	    stream_methods_definition.Reset();
-                    	    // PascalGrammar.g:142:98: ( variables_definition )?
+                    	    // PascalGrammar.g:143:98: ( variables_definition )?
                     	    if ( stream_variables_definition.HasNext() )
                     	    {
                     	        adaptor.AddChild(root_1, stream_variables_definition.NextTree());
 
                     	    }
                     	    stream_variables_definition.Reset();
-                    	    // PascalGrammar.g:142:120: ^( BLOCK expr_list )
+                    	    // PascalGrammar.g:143:120: ^( BLOCK expr_list )
                     	    {
                     	    object root_2 = (object)adaptor.GetNilNode();
                     	    root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(BLOCK, "BLOCK"), root_2);
@@ -2554,34 +2593,34 @@ public partial class PascalGrammarParser : Parser
                     }
                     break;
                 case 2 :
-                    // PascalGrammar.g:144:2: ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
+                    // PascalGrammar.g:145:2: ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
                     {
-                    	// PascalGrammar.g:144:2: ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
-                    	// PascalGrammar.g:144:3: FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND
+                    	// PascalGrammar.g:145:2: ( FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND )
+                    	// PascalGrammar.g:145:3: FUNCTION IDENT ( '(' ( params_definition ( ';' params_definition )* )? ')' )? type SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN expr_list BLOCKEND
                     	{
-                    		FUNCTION83=(IToken)Match(input,FUNCTION,FOLLOW_FUNCTION_in_method_definition1085); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_FUNCTION.Add(FUNCTION83);
+                    		FUNCTION84=(IToken)Match(input,FUNCTION,FOLLOW_FUNCTION_in_method_definition1120); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_FUNCTION.Add(FUNCTION84);
 
-                    		IDENT84=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_method_definition1087); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT84);
+                    		IDENT85=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_method_definition1122); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT85);
 
-                    		// PascalGrammar.g:144:18: ( '(' ( params_definition ( ';' params_definition )* )? ')' )?
+                    		// PascalGrammar.g:145:18: ( '(' ( params_definition ( ';' params_definition )* )? ')' )?
                     		int alt23 = 2;
                     		int LA23_0 = input.LA(1);
 
-                    		if ( (LA23_0 == 36) )
+                    		if ( (LA23_0 == 37) )
                     		{
                     		    alt23 = 1;
                     		}
                     		switch (alt23) 
                     		{
                     		    case 1 :
-                    		        // PascalGrammar.g:144:19: '(' ( params_definition ( ';' params_definition )* )? ')'
+                    		        // PascalGrammar.g:145:19: '(' ( params_definition ( ';' params_definition )* )? ')'
                     		        {
-                    		        	char_literal85=(IToken)Match(input,36,FOLLOW_36_in_method_definition1090); if (state.failed) return retval; 
-                    		        	if ( (state.backtracking==0) ) stream_36.Add(char_literal85);
+                    		        	char_literal86=(IToken)Match(input,37,FOLLOW_37_in_method_definition1125); if (state.failed) return retval; 
+                    		        	if ( (state.backtracking==0) ) stream_37.Add(char_literal86);
 
-                    		        	// PascalGrammar.g:144:23: ( params_definition ( ';' params_definition )* )?
+                    		        	// PascalGrammar.g:145:23: ( params_definition ( ';' params_definition )* )?
                     		        	int alt22 = 2;
                     		        	int LA22_0 = input.LA(1);
 
@@ -2592,14 +2631,14 @@ public partial class PascalGrammarParser : Parser
                     		        	switch (alt22) 
                     		        	{
                     		        	    case 1 :
-                    		        	        // PascalGrammar.g:144:24: params_definition ( ';' params_definition )*
+                    		        	        // PascalGrammar.g:145:24: params_definition ( ';' params_definition )*
                     		        	        {
-                    		        	        	PushFollow(FOLLOW_params_definition_in_method_definition1093);
-                    		        	        	params_definition86 = params_definition();
+                    		        	        	PushFollow(FOLLOW_params_definition_in_method_definition1128);
+                    		        	        	params_definition87 = params_definition();
                     		        	        	state.followingStackPointer--;
                     		        	        	if (state.failed) return retval;
-                    		        	        	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition86.Tree);
-                    		        	        	// PascalGrammar.g:144:42: ( ';' params_definition )*
+                    		        	        	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition87.Tree);
+                    		        	        	// PascalGrammar.g:145:42: ( ';' params_definition )*
                     		        	        	do 
                     		        	        	{
                     		        	        	    int alt21 = 2;
@@ -2614,16 +2653,16 @@ public partial class PascalGrammarParser : Parser
                     		        	        	    switch (alt21) 
                     		        	        		{
                     		        	        			case 1 :
-                    		        	        			    // PascalGrammar.g:144:43: ';' params_definition
+                    		        	        			    // PascalGrammar.g:145:43: ';' params_definition
                     		        	        			    {
-                    		        	        			    	char_literal87=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1096); if (state.failed) return retval; 
-                    		        	        			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(char_literal87);
+                    		        	        			    	char_literal88=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1131); if (state.failed) return retval; 
+                    		        	        			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(char_literal88);
 
-                    		        	        			    	PushFollow(FOLLOW_params_definition_in_method_definition1098);
-                    		        	        			    	params_definition88 = params_definition();
+                    		        	        			    	PushFollow(FOLLOW_params_definition_in_method_definition1133);
+                    		        	        			    	params_definition89 = params_definition();
                     		        	        			    	state.followingStackPointer--;
                     		        	        			    	if (state.failed) return retval;
-                    		        	        			    	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition88.Tree);
+                    		        	        			    	if ( (state.backtracking==0) ) stream_params_definition.Add(params_definition89.Tree);
 
                     		        	        			    }
                     		        	        			    break;
@@ -2642,8 +2681,8 @@ public partial class PascalGrammarParser : Parser
 
                     		        	}
 
-                    		        	char_literal89=(IToken)Match(input,37,FOLLOW_37_in_method_definition1104); if (state.failed) return retval; 
-                    		        	if ( (state.backtracking==0) ) stream_37.Add(char_literal89);
+                    		        	char_literal90=(IToken)Match(input,38,FOLLOW_38_in_method_definition1139); if (state.failed) return retval; 
+                    		        	if ( (state.backtracking==0) ) stream_38.Add(char_literal90);
 
 
                     		        }
@@ -2651,15 +2690,15 @@ public partial class PascalGrammarParser : Parser
 
                     		}
 
-                    		PushFollow(FOLLOW_type_in_method_definition1108);
-                    		type90 = type();
+                    		PushFollow(FOLLOW_type_in_method_definition1143);
+                    		type91 = type();
                     		state.followingStackPointer--;
                     		if (state.failed) return retval;
-                    		if ( (state.backtracking==0) ) stream_type.Add(type90.Tree);
-                    		SEMICOLON91=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1110); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON91);
+                    		if ( (state.backtracking==0) ) stream_type.Add(type91.Tree);
+                    		SEMICOLON92=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_method_definition1145); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON92);
 
-                    		// PascalGrammar.g:144:90: ( methods_definition )?
+                    		// PascalGrammar.g:145:90: ( methods_definition )?
                     		int alt24 = 2;
                     		int LA24_0 = input.LA(1);
 
@@ -2672,18 +2711,18 @@ public partial class PascalGrammarParser : Parser
                     		    case 1 :
                     		        // PascalGrammar.g:0:0: methods_definition
                     		        {
-                    		        	PushFollow(FOLLOW_methods_definition_in_method_definition1112);
-                    		        	methods_definition92 = methods_definition();
+                    		        	PushFollow(FOLLOW_methods_definition_in_method_definition1147);
+                    		        	methods_definition93 = methods_definition();
                     		        	state.followingStackPointer--;
                     		        	if (state.failed) return retval;
-                    		        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition92.Tree);
+                    		        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition93.Tree);
 
                     		        }
                     		        break;
 
                     		}
 
-                    		// PascalGrammar.g:145:2: ( variables_definition )?
+                    		// PascalGrammar.g:146:2: ( variables_definition )?
                     		int alt25 = 2;
                     		int LA25_0 = input.LA(1);
 
@@ -2696,27 +2735,27 @@ public partial class PascalGrammarParser : Parser
                     		    case 1 :
                     		        // PascalGrammar.g:0:0: variables_definition
                     		        {
-                    		        	PushFollow(FOLLOW_variables_definition_in_method_definition1117);
-                    		        	variables_definition93 = variables_definition();
+                    		        	PushFollow(FOLLOW_variables_definition_in_method_definition1152);
+                    		        	variables_definition94 = variables_definition();
                     		        	state.followingStackPointer--;
                     		        	if (state.failed) return retval;
-                    		        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition93.Tree);
+                    		        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition94.Tree);
 
                     		        }
                     		        break;
 
                     		}
 
-                    		BLOCKOPEN94=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_method_definition1120); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN94);
+                    		BLOCKOPEN95=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_method_definition1155); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN95);
 
-                    		PushFollow(FOLLOW_expr_list_in_method_definition1122);
-                    		expr_list95 = expr_list();
+                    		PushFollow(FOLLOW_expr_list_in_method_definition1157);
+                    		expr_list96 = expr_list();
                     		state.followingStackPointer--;
                     		if (state.failed) return retval;
-                    		if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list95.Tree);
-                    		BLOCKEND96=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_method_definition1124); if (state.failed) return retval; 
-                    		if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND96);
+                    		if ( (state.backtracking==0) ) stream_expr_list.Add(expr_list96.Tree);
+                    		BLOCKEND97=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_method_definition1159); if (state.failed) return retval; 
+                    		if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND97);
 
 
                     	}
@@ -2724,7 +2763,7 @@ public partial class PascalGrammarParser : Parser
 
 
                     	// AST REWRITE
-                    	// elements:          type, params_definition, variables_definition, expr_list, FUNCTION, methods_definition
+                    	// elements:          expr_list, variables_definition, params_definition, FUNCTION, methods_definition, type
                     	// token labels:      
                     	// rule labels:       retval
                     	// token list labels: 
@@ -2735,23 +2774,23 @@ public partial class PascalGrammarParser : Parser
                     	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
                     	root_0 = (object)adaptor.GetNilNode();
-                    	// 146:2: -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
+                    	// 147:2: -> ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
                     	{
-                    	    // PascalGrammar.g:146:5: ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
+                    	    // PascalGrammar.g:147:5: ^( FUNCTION[$IDENT.text, \"\"] type ( ^( PARAMS ( params_definition )* ) )? ( methods_definition )? ( variables_definition )? ^( BLOCK expr_list ) )
                     	    {
                     	    object root_1 = (object)adaptor.GetNilNode();
-                    	    root_1 = (object)adaptor.BecomeRoot(new FunctionAstNode(FUNCTION, ((IDENT84 != null) ? IDENT84.Text : null), ""), root_1);
+                    	    root_1 = (object)adaptor.BecomeRoot(new FunctionAstNode(FUNCTION, ((IDENT85 != null) ? IDENT85.Text : null), ""), root_1);
 
                     	    adaptor.AddChild(root_1, stream_type.NextTree());
-                    	    // PascalGrammar.g:146:55: ( ^( PARAMS ( params_definition )* ) )?
+                    	    // PascalGrammar.g:147:55: ( ^( PARAMS ( params_definition )* ) )?
                     	    if ( stream_params_definition.HasNext() )
                     	    {
-                    	        // PascalGrammar.g:146:55: ^( PARAMS ( params_definition )* )
+                    	        // PascalGrammar.g:147:55: ^( PARAMS ( params_definition )* )
                     	        {
                     	        object root_2 = (object)adaptor.GetNilNode();
                     	        root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(PARAMS, "PARAMS"), root_2);
 
-                    	        // PascalGrammar.g:146:64: ( params_definition )*
+                    	        // PascalGrammar.g:147:64: ( params_definition )*
                     	        while ( stream_params_definition.HasNext() )
                     	        {
                     	            adaptor.AddChild(root_2, stream_params_definition.NextTree());
@@ -2764,21 +2803,21 @@ public partial class PascalGrammarParser : Parser
 
                     	    }
                     	    stream_params_definition.Reset();
-                    	    // PascalGrammar.g:146:85: ( methods_definition )?
+                    	    // PascalGrammar.g:147:85: ( methods_definition )?
                     	    if ( stream_methods_definition.HasNext() )
                     	    {
                     	        adaptor.AddChild(root_1, stream_methods_definition.NextTree());
 
                     	    }
                     	    stream_methods_definition.Reset();
-                    	    // PascalGrammar.g:146:105: ( variables_definition )?
+                    	    // PascalGrammar.g:147:105: ( variables_definition )?
                     	    if ( stream_variables_definition.HasNext() )
                     	    {
                     	        adaptor.AddChild(root_1, stream_variables_definition.NextTree());
 
                     	    }
                     	    stream_variables_definition.Reset();
-                    	    // PascalGrammar.g:146:127: ^( BLOCK expr_list )
+                    	    // PascalGrammar.g:147:127: ^( BLOCK expr_list )
                     	    {
                     	    object root_2 = (object)adaptor.GetNilNode();
                     	    root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(BLOCK, "BLOCK"), root_2);
@@ -2834,7 +2873,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "methods_definition"
-    // PascalGrammar.g:149:1: methods_definition : method_definition ( SEMICOLON method_definition )* ( SEMICOLON )* -> ^( METHODS ( method_definition )* ) ;
+    // PascalGrammar.g:150:1: methods_definition : method_definition ( SEMICOLON method_definition )* ( SEMICOLON )* -> ^( METHODS ( method_definition )* ) ;
     public PascalGrammarParser.methods_definition_return methods_definition() // throws RecognitionException [1]
     {   
         PascalGrammarParser.methods_definition_return retval = new PascalGrammarParser.methods_definition_return();
@@ -2842,15 +2881,15 @@ public partial class PascalGrammarParser : Parser
         int methods_definition_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken SEMICOLON98 = null;
-        IToken SEMICOLON100 = null;
-        PascalGrammarParser.method_definition_return method_definition97 = default(PascalGrammarParser.method_definition_return);
+        IToken SEMICOLON99 = null;
+        IToken SEMICOLON101 = null;
+        PascalGrammarParser.method_definition_return method_definition98 = default(PascalGrammarParser.method_definition_return);
 
-        PascalGrammarParser.method_definition_return method_definition99 = default(PascalGrammarParser.method_definition_return);
+        PascalGrammarParser.method_definition_return method_definition100 = default(PascalGrammarParser.method_definition_return);
 
 
-        object SEMICOLON98_tree=null;
-        object SEMICOLON100_tree=null;
+        object SEMICOLON99_tree=null;
+        object SEMICOLON101_tree=null;
         RewriteRuleTokenStream stream_SEMICOLON = new RewriteRuleTokenStream(adaptor,"token SEMICOLON");
         RewriteRuleSubtreeStream stream_method_definition = new RewriteRuleSubtreeStream(adaptor,"rule method_definition");
         try 
@@ -2859,15 +2898,15 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:150:2: ( method_definition ( SEMICOLON method_definition )* ( SEMICOLON )* -> ^( METHODS ( method_definition )* ) )
-            // PascalGrammar.g:151:2: method_definition ( SEMICOLON method_definition )* ( SEMICOLON )*
+            // PascalGrammar.g:151:2: ( method_definition ( SEMICOLON method_definition )* ( SEMICOLON )* -> ^( METHODS ( method_definition )* ) )
+            // PascalGrammar.g:152:2: method_definition ( SEMICOLON method_definition )* ( SEMICOLON )*
             {
-            	PushFollow(FOLLOW_method_definition_in_methods_definition1173);
-            	method_definition97 = method_definition();
+            	PushFollow(FOLLOW_method_definition_in_methods_definition1208);
+            	method_definition98 = method_definition();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( (state.backtracking==0) ) stream_method_definition.Add(method_definition97.Tree);
-            	// PascalGrammar.g:151:20: ( SEMICOLON method_definition )*
+            	if ( (state.backtracking==0) ) stream_method_definition.Add(method_definition98.Tree);
+            	// PascalGrammar.g:152:20: ( SEMICOLON method_definition )*
             	do 
             	{
             	    int alt27 = 2;
@@ -2889,16 +2928,16 @@ public partial class PascalGrammarParser : Parser
             	    switch (alt27) 
             		{
             			case 1 :
-            			    // PascalGrammar.g:151:21: SEMICOLON method_definition
+            			    // PascalGrammar.g:152:21: SEMICOLON method_definition
             			    {
-            			    	SEMICOLON98=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_methods_definition1176); if (state.failed) return retval; 
-            			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON98);
+            			    	SEMICOLON99=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_methods_definition1211); if (state.failed) return retval; 
+            			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON99);
 
-            			    	PushFollow(FOLLOW_method_definition_in_methods_definition1178);
-            			    	method_definition99 = method_definition();
+            			    	PushFollow(FOLLOW_method_definition_in_methods_definition1213);
+            			    	method_definition100 = method_definition();
             			    	state.followingStackPointer--;
             			    	if (state.failed) return retval;
-            			    	if ( (state.backtracking==0) ) stream_method_definition.Add(method_definition99.Tree);
+            			    	if ( (state.backtracking==0) ) stream_method_definition.Add(method_definition100.Tree);
 
             			    }
             			    break;
@@ -2911,7 +2950,7 @@ public partial class PascalGrammarParser : Parser
             	loop27:
             		;	// Stops C# compiler whining that label 'loop27' has no statements
 
-            	// PascalGrammar.g:151:51: ( SEMICOLON )*
+            	// PascalGrammar.g:152:51: ( SEMICOLON )*
             	do 
             	{
             	    int alt28 = 2;
@@ -2928,8 +2967,8 @@ public partial class PascalGrammarParser : Parser
             			case 1 :
             			    // PascalGrammar.g:0:0: SEMICOLON
             			    {
-            			    	SEMICOLON100=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_methods_definition1182); if (state.failed) return retval; 
-            			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON100);
+            			    	SEMICOLON101=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_methods_definition1217); if (state.failed) return retval; 
+            			    	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON101);
 
 
             			    }
@@ -2957,14 +2996,14 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 151:62: -> ^( METHODS ( method_definition )* )
+            	// 152:62: -> ^( METHODS ( method_definition )* )
             	{
-            	    // PascalGrammar.g:151:65: ^( METHODS ( method_definition )* )
+            	    // PascalGrammar.g:152:65: ^( METHODS ( method_definition )* )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
             	    root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(METHODS, "METHODS"), root_1);
 
-            	    // PascalGrammar.g:151:75: ( method_definition )*
+            	    // PascalGrammar.g:152:75: ( method_definition )*
             	    while ( stream_method_definition.HasNext() )
             	    {
             	        adaptor.AddChild(root_1, stream_method_definition.NextTree());
@@ -3016,7 +3055,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "program"
-    // PascalGrammar.g:154:1: program : PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.' -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body ) ;
+    // PascalGrammar.g:155:1: program : PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.' -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body ) ;
     public PascalGrammarParser.program_return program() // throws RecognitionException [1]
     {   
         PascalGrammarParser.program_return retval = new PascalGrammarParser.program_return();
@@ -3024,30 +3063,30 @@ public partial class PascalGrammarParser : Parser
         int program_StartIndex = input.Index();
         object root_0 = null;
 
-        IToken PROGRAM101 = null;
-        IToken IDENT102 = null;
-        IToken SEMICOLON103 = null;
-        IToken BLOCKOPEN106 = null;
-        IToken BLOCKEND108 = null;
-        IToken char_literal109 = null;
-        PascalGrammarParser.methods_definition_return methods_definition104 = default(PascalGrammarParser.methods_definition_return);
+        IToken PROGRAM102 = null;
+        IToken IDENT103 = null;
+        IToken SEMICOLON104 = null;
+        IToken BLOCKOPEN107 = null;
+        IToken BLOCKEND109 = null;
+        IToken char_literal110 = null;
+        PascalGrammarParser.methods_definition_return methods_definition105 = default(PascalGrammarParser.methods_definition_return);
 
-        PascalGrammarParser.variables_definition_return variables_definition105 = default(PascalGrammarParser.variables_definition_return);
+        PascalGrammarParser.variables_definition_return variables_definition106 = default(PascalGrammarParser.variables_definition_return);
 
-        PascalGrammarParser.program_body_return program_body107 = default(PascalGrammarParser.program_body_return);
+        PascalGrammarParser.program_body_return program_body108 = default(PascalGrammarParser.program_body_return);
 
 
-        object PROGRAM101_tree=null;
-        object IDENT102_tree=null;
-        object SEMICOLON103_tree=null;
-        object BLOCKOPEN106_tree=null;
-        object BLOCKEND108_tree=null;
-        object char_literal109_tree=null;
+        object PROGRAM102_tree=null;
+        object IDENT103_tree=null;
+        object SEMICOLON104_tree=null;
+        object BLOCKOPEN107_tree=null;
+        object BLOCKEND109_tree=null;
+        object char_literal110_tree=null;
         RewriteRuleTokenStream stream_BLOCKOPEN = new RewriteRuleTokenStream(adaptor,"token BLOCKOPEN");
         RewriteRuleTokenStream stream_IDENT = new RewriteRuleTokenStream(adaptor,"token IDENT");
         RewriteRuleTokenStream stream_PROGRAM = new RewriteRuleTokenStream(adaptor,"token PROGRAM");
         RewriteRuleTokenStream stream_SEMICOLON = new RewriteRuleTokenStream(adaptor,"token SEMICOLON");
-        RewriteRuleTokenStream stream_40 = new RewriteRuleTokenStream(adaptor,"token 40");
+        RewriteRuleTokenStream stream_41 = new RewriteRuleTokenStream(adaptor,"token 41");
         RewriteRuleTokenStream stream_BLOCKEND = new RewriteRuleTokenStream(adaptor,"token BLOCKEND");
         RewriteRuleSubtreeStream stream_methods_definition = new RewriteRuleSubtreeStream(adaptor,"rule methods_definition");
         RewriteRuleSubtreeStream stream_program_body = new RewriteRuleSubtreeStream(adaptor,"rule program_body");
@@ -3058,19 +3097,19 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:155:2: ( PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.' -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body ) )
-            // PascalGrammar.g:156:2: PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.'
+            // PascalGrammar.g:156:2: ( PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.' -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body ) )
+            // PascalGrammar.g:157:2: PROGRAM IDENT SEMICOLON ( methods_definition )? ( variables_definition )? BLOCKOPEN program_body BLOCKEND '.'
             {
-            	PROGRAM101=(IToken)Match(input,PROGRAM,FOLLOW_PROGRAM_in_program1209); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_PROGRAM.Add(PROGRAM101);
+            	PROGRAM102=(IToken)Match(input,PROGRAM,FOLLOW_PROGRAM_in_program1244); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_PROGRAM.Add(PROGRAM102);
 
-            	IDENT102=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_program1211); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT102);
+            	IDENT103=(IToken)Match(input,IDENT,FOLLOW_IDENT_in_program1246); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_IDENT.Add(IDENT103);
 
-            	SEMICOLON103=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_program1213); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON103);
+            	SEMICOLON104=(IToken)Match(input,SEMICOLON,FOLLOW_SEMICOLON_in_program1248); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_SEMICOLON.Add(SEMICOLON104);
 
-            	// PascalGrammar.g:156:26: ( methods_definition )?
+            	// PascalGrammar.g:157:26: ( methods_definition )?
             	int alt29 = 2;
             	int LA29_0 = input.LA(1);
 
@@ -3083,18 +3122,18 @@ public partial class PascalGrammarParser : Parser
             	    case 1 :
             	        // PascalGrammar.g:0:0: methods_definition
             	        {
-            	        	PushFollow(FOLLOW_methods_definition_in_program1215);
-            	        	methods_definition104 = methods_definition();
+            	        	PushFollow(FOLLOW_methods_definition_in_program1250);
+            	        	methods_definition105 = methods_definition();
             	        	state.followingStackPointer--;
             	        	if (state.failed) return retval;
-            	        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition104.Tree);
+            	        	if ( (state.backtracking==0) ) stream_methods_definition.Add(methods_definition105.Tree);
 
             	        }
             	        break;
 
             	}
 
-            	// PascalGrammar.g:156:46: ( variables_definition )?
+            	// PascalGrammar.g:157:46: ( variables_definition )?
             	int alt30 = 2;
             	int LA30_0 = input.LA(1);
 
@@ -3107,35 +3146,35 @@ public partial class PascalGrammarParser : Parser
             	    case 1 :
             	        // PascalGrammar.g:0:0: variables_definition
             	        {
-            	        	PushFollow(FOLLOW_variables_definition_in_program1218);
-            	        	variables_definition105 = variables_definition();
+            	        	PushFollow(FOLLOW_variables_definition_in_program1253);
+            	        	variables_definition106 = variables_definition();
             	        	state.followingStackPointer--;
             	        	if (state.failed) return retval;
-            	        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition105.Tree);
+            	        	if ( (state.backtracking==0) ) stream_variables_definition.Add(variables_definition106.Tree);
 
             	        }
             	        break;
 
             	}
 
-            	BLOCKOPEN106=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_program1222); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN106);
+            	BLOCKOPEN107=(IToken)Match(input,BLOCKOPEN,FOLLOW_BLOCKOPEN_in_program1257); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_BLOCKOPEN.Add(BLOCKOPEN107);
 
-            	PushFollow(FOLLOW_program_body_in_program1224);
-            	program_body107 = program_body();
+            	PushFollow(FOLLOW_program_body_in_program1259);
+            	program_body108 = program_body();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( (state.backtracking==0) ) stream_program_body.Add(program_body107.Tree);
-            	BLOCKEND108=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_program1226); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND108);
+            	if ( (state.backtracking==0) ) stream_program_body.Add(program_body108.Tree);
+            	BLOCKEND109=(IToken)Match(input,BLOCKEND,FOLLOW_BLOCKEND_in_program1261); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_BLOCKEND.Add(BLOCKEND109);
 
-            	char_literal109=(IToken)Match(input,40,FOLLOW_40_in_program1228); if (state.failed) return retval; 
-            	if ( (state.backtracking==0) ) stream_40.Add(char_literal109);
+            	char_literal110=(IToken)Match(input,41,FOLLOW_41_in_program1263); if (state.failed) return retval; 
+            	if ( (state.backtracking==0) ) stream_41.Add(char_literal110);
 
 
 
             	// AST REWRITE
-            	// elements:          variables_definition, methods_definition, program_body, PROGRAM
+            	// elements:          variables_definition, PROGRAM, program_body, methods_definition
             	// token labels:      
             	// rule labels:       retval
             	// token list labels: 
@@ -3146,21 +3185,21 @@ public partial class PascalGrammarParser : Parser
             	RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval!=null ? retval.Tree : null);
 
             	root_0 = (object)adaptor.GetNilNode();
-            	// 157:3: -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body )
+            	// 158:3: -> ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body )
             	{
-            	    // PascalGrammar.g:157:6: ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body )
+            	    // PascalGrammar.g:158:6: ^( PROGRAM[$IDENT.text] ( methods_definition )? ( variables_definition )? program_body )
             	    {
             	    object root_1 = (object)adaptor.GetNilNode();
-            	    root_1 = (object)adaptor.BecomeRoot(new ProgAstNode(PROGRAM, ((IDENT102 != null) ? IDENT102.Text : null)), root_1);
+            	    root_1 = (object)adaptor.BecomeRoot(new ProgAstNode(PROGRAM, ((IDENT103 != null) ? IDENT103.Text : null)), root_1);
 
-            	    // PascalGrammar.g:157:42: ( methods_definition )?
+            	    // PascalGrammar.g:158:42: ( methods_definition )?
             	    if ( stream_methods_definition.HasNext() )
             	    {
             	        adaptor.AddChild(root_1, stream_methods_definition.NextTree());
 
             	    }
             	    stream_methods_definition.Reset();
-            	    // PascalGrammar.g:157:62: ( variables_definition )?
+            	    // PascalGrammar.g:158:62: ( variables_definition )?
             	    if ( stream_variables_definition.HasNext() )
             	    {
             	        adaptor.AddChild(root_1, stream_variables_definition.NextTree());
@@ -3213,7 +3252,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "result"
-    // PascalGrammar.g:160:1: result : program ;
+    // PascalGrammar.g:161:1: result : program ;
     public PascalGrammarParser.result_return result() // throws RecognitionException [1]
     {   
         PascalGrammarParser.result_return retval = new PascalGrammarParser.result_return();
@@ -3221,7 +3260,7 @@ public partial class PascalGrammarParser : Parser
         int result_StartIndex = input.Index();
         object root_0 = null;
 
-        PascalGrammarParser.program_return program110 = default(PascalGrammarParser.program_return);
+        PascalGrammarParser.program_return program111 = default(PascalGrammarParser.program_return);
 
 
 
@@ -3231,16 +3270,16 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:161:2: ( program )
-            // PascalGrammar.g:162:2: program
+            // PascalGrammar.g:162:2: ( program )
+            // PascalGrammar.g:163:2: program
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_program_in_result1266);
-            	program110 = program();
+            	PushFollow(FOLLOW_program_in_result1301);
+            	program111 = program();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, program110.Tree);
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, program111.Tree);
 
             }
 
@@ -3280,7 +3319,7 @@ public partial class PascalGrammarParser : Parser
     };
 
     // $ANTLR start "execute"
-    // PascalGrammar.g:165:1: execute : result ;
+    // PascalGrammar.g:166:1: execute : result ;
     public PascalGrammarParser.execute_return execute() // throws RecognitionException [1]
     {   
         PascalGrammarParser.execute_return retval = new PascalGrammarParser.execute_return();
@@ -3288,7 +3327,7 @@ public partial class PascalGrammarParser : Parser
         int execute_StartIndex = input.Index();
         object root_0 = null;
 
-        PascalGrammarParser.result_return result111 = default(PascalGrammarParser.result_return);
+        PascalGrammarParser.result_return result112 = default(PascalGrammarParser.result_return);
 
 
 
@@ -3298,16 +3337,16 @@ public partial class PascalGrammarParser : Parser
     	    {
     	    	return retval; 
     	    }
-            // PascalGrammar.g:166:2: ( result )
-            // PascalGrammar.g:167:2: result
+            // PascalGrammar.g:167:2: ( result )
+            // PascalGrammar.g:168:2: result
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	PushFollow(FOLLOW_result_in_execute1284);
-            	result111 = result();
+            	PushFollow(FOLLOW_result_in_execute1319);
+            	result112 = result();
             	state.followingStackPointer--;
             	if (state.failed) return retval;
-            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, result111.Tree);
+            	if ( state.backtracking == 0 ) adaptor.AddChild(root_0, result112.Tree);
 
             }
 
@@ -3336,30 +3375,30 @@ public partial class PascalGrammarParser : Parser
     }
     // $ANTLR end "execute"
 
-    // $ANTLR start "synpred17_PascalGrammar"
-    public void synpred17_PascalGrammar_fragment() {
-        // PascalGrammar.g:103:28: ( ELSE expr )
-        // PascalGrammar.g:103:28: ELSE expr
+    // $ANTLR start "synpred18_PascalGrammar"
+    public void synpred18_PascalGrammar_fragment() {
+        // PascalGrammar.g:104:28: ( ELSE expr )
+        // PascalGrammar.g:104:28: ELSE expr
         {
-        	Match(input,ELSE,FOLLOW_ELSE_in_synpred17_PascalGrammar770); if (state.failed) return ;
-        	PushFollow(FOLLOW_expr_in_synpred17_PascalGrammar773);
+        	Match(input,ELSE,FOLLOW_ELSE_in_synpred18_PascalGrammar805); if (state.failed) return ;
+        	PushFollow(FOLLOW_expr_in_synpred18_PascalGrammar808);
         	expr();
         	state.followingStackPointer--;
         	if (state.failed) return ;
 
         }
     }
-    // $ANTLR end "synpred17_PascalGrammar"
+    // $ANTLR end "synpred18_PascalGrammar"
 
     // Delegated rules
 
-   	public bool synpred17_PascalGrammar() 
+   	public bool synpred18_PascalGrammar() 
    	{
    	    state.backtracking++;
    	    int start = input.Mark();
    	    try 
    	    {
-   	        synpred17_PascalGrammar_fragment(); // can never throw exception
+   	        synpred18_PascalGrammar_fragment(); // can never throw exception
    	    }
    	    catch (RecognitionException re) 
    	    {
@@ -3425,126 +3464,127 @@ public partial class PascalGrammarParser : Parser
 
         override public string Description
         {
-            get { return "()* loopback of 111:15: ( ( ';' )+ expr )*"; }
+            get { return "()* loopback of 112:15: ( ( ';' )+ expr )*"; }
         }
 
     }
 
  
 
-    public static readonly BitSet FOLLOW_36_in_group530 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_term_in_group533 = new BitSet(new ulong[]{0x0000002000000000UL});
-    public static readonly BitSet FOLLOW_37_in_group535 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_NUMBER_in_group541 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_func_call_in_group554 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_IDENT_in_group559 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_group_in_mult576 = new BitSet(new ulong[]{0x0000000300800002UL});
-    public static readonly BitSet FOLLOW_set_in_mult580 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_group_in_mult595 = new BitSet(new ulong[]{0x0000000300800002UL});
-    public static readonly BitSet FOLLOW_mult_in_add607 = new BitSet(new ulong[]{0x00000000C3000002UL});
-    public static readonly BitSet FOLLOW_set_in_add612 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_mult_in_add631 = new BitSet(new ulong[]{0x00000000C3000002UL});
-    public static readonly BitSet FOLLOW_add_in_compare644 = new BitSet(new ulong[]{0x0000000800000002UL});
-    public static readonly BitSet FOLLOW_COMPARE_in_compare648 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_add_in_compare651 = new BitSet(new ulong[]{0x0000000800000002UL});
-    public static readonly BitSet FOLLOW_compare_in_term660 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_term_in_arg_list669 = new BitSet(new ulong[]{0x0000004000000002UL});
-    public static readonly BitSet FOLLOW_38_in_arg_list672 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_term_in_arg_list675 = new BitSet(new ulong[]{0x0000004000000002UL});
-    public static readonly BitSet FOLLOW_IDENT_in_func_call691 = new BitSet(new ulong[]{0x0000001000000000UL});
-    public static readonly BitSet FOLLOW_36_in_func_call694 = new BitSet(new ulong[]{0x000000300C000000UL});
-    public static readonly BitSet FOLLOW_arg_list_in_func_call696 = new BitSet(new ulong[]{0x0000002000000000UL});
-    public static readonly BitSet FOLLOW_37_in_func_call698 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_IDENT_in_expr726 = new BitSet(new ulong[]{0x0000000400000000UL});
-    public static readonly BitSet FOLLOW_ASSIGN_in_expr728 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_term_in_expr731 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_func_call_in_expr737 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_BLOCKOPEN_in_expr742 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_list_in_expr744 = new BitSet(new ulong[]{0x0000000000001000UL});
-    public static readonly BitSet FOLLOW_BLOCKEND_in_expr746 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_IF_in_expr759 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_compare_in_expr762 = new BitSet(new ulong[]{0x0000000000020000UL});
-    public static readonly BitSet FOLLOW_THEN_in_expr764 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr767 = new BitSet(new ulong[]{0x0000000000040002UL});
-    public static readonly BitSet FOLLOW_ELSE_in_expr770 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr773 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_FOR_in_expr780 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_expr783 = new BitSet(new ulong[]{0x0000000400000000UL});
-    public static readonly BitSet FOLLOW_ASSIGN_in_expr785 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_add_in_expr788 = new BitSet(new ulong[]{0x0000000000100000UL});
-    public static readonly BitSet FOLLOW_TO_in_expr790 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_add_in_expr793 = new BitSet(new ulong[]{0x0000000000200000UL});
-    public static readonly BitSet FOLLOW_DO_in_expr795 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr798 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_WHILE_in_expr803 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_compare_in_expr806 = new BitSet(new ulong[]{0x0000000000200000UL});
-    public static readonly BitSet FOLLOW_DO_in_expr808 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr811 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_DO_in_expr816 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr819 = new BitSet(new ulong[]{0x0000000000400000UL});
-    public static readonly BitSet FOLLOW_WHILE_in_expr821 = new BitSet(new ulong[]{0x000000100C000000UL});
-    public static readonly BitSet FOLLOW_compare_in_expr824 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list842 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr_list847 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list852 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_expr_list857 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list863 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_expr_list_in_program_body880 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_IDENT_in_ident_list902 = new BitSet(new ulong[]{0x0000004000000002UL});
-    public static readonly BitSet FOLLOW_38_in_ident_list905 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_ident_list908 = new BitSet(new ulong[]{0x0000004000000002UL});
-    public static readonly BitSet FOLLOW_39_in_type923 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_type925 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_VAR_in_variables_definition944 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_ident_list_in_variables_definition947 = new BitSet(new ulong[]{0x0000008000000000UL});
-    public static readonly BitSet FOLLOW_type_in_variables_definition949 = new BitSet(new ulong[]{0x0000000000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_variables_definition951 = new BitSet(new ulong[]{0x0000000004000402UL});
-    public static readonly BitSet FOLLOW_ident_list_in_params_definition982 = new BitSet(new ulong[]{0x0000008000000000UL});
-    public static readonly BitSet FOLLOW_type_in_params_definition984 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_PROCEDURE_in_method_definition1008 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_method_definition1010 = new BitSet(new ulong[]{0x0000001000000400UL});
-    public static readonly BitSet FOLLOW_36_in_method_definition1013 = new BitSet(new ulong[]{0x0000002004000000UL});
-    public static readonly BitSet FOLLOW_params_definition_in_method_definition1016 = new BitSet(new ulong[]{0x0000002000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1019 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_params_definition_in_method_definition1021 = new BitSet(new ulong[]{0x0000002000000400UL});
-    public static readonly BitSet FOLLOW_37_in_method_definition1027 = new BitSet(new ulong[]{0x0000000000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1031 = new BitSet(new ulong[]{0x0000000000006820UL});
-    public static readonly BitSet FOLLOW_methods_definition_in_method_definition1033 = new BitSet(new ulong[]{0x0000000000000820UL});
-    public static readonly BitSet FOLLOW_variables_definition_in_method_definition1038 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_BLOCKOPEN_in_method_definition1041 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_list_in_method_definition1043 = new BitSet(new ulong[]{0x0000000000001000UL});
-    public static readonly BitSet FOLLOW_BLOCKEND_in_method_definition1045 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_FUNCTION_in_method_definition1085 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_method_definition1087 = new BitSet(new ulong[]{0x0000009000000000UL});
-    public static readonly BitSet FOLLOW_36_in_method_definition1090 = new BitSet(new ulong[]{0x0000002004000000UL});
-    public static readonly BitSet FOLLOW_params_definition_in_method_definition1093 = new BitSet(new ulong[]{0x0000002000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1096 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_params_definition_in_method_definition1098 = new BitSet(new ulong[]{0x0000002000000400UL});
-    public static readonly BitSet FOLLOW_37_in_method_definition1104 = new BitSet(new ulong[]{0x0000008000000000UL});
-    public static readonly BitSet FOLLOW_type_in_method_definition1108 = new BitSet(new ulong[]{0x0000000000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1110 = new BitSet(new ulong[]{0x0000000000006820UL});
-    public static readonly BitSet FOLLOW_methods_definition_in_method_definition1112 = new BitSet(new ulong[]{0x0000000000000820UL});
-    public static readonly BitSet FOLLOW_variables_definition_in_method_definition1117 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_BLOCKOPEN_in_method_definition1120 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_list_in_method_definition1122 = new BitSet(new ulong[]{0x0000000000001000UL});
-    public static readonly BitSet FOLLOW_BLOCKEND_in_method_definition1124 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_method_definition_in_methods_definition1173 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_methods_definition1176 = new BitSet(new ulong[]{0x0000000000006000UL});
-    public static readonly BitSet FOLLOW_method_definition_in_methods_definition1178 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_methods_definition1182 = new BitSet(new ulong[]{0x0000000000000402UL});
-    public static readonly BitSet FOLLOW_PROGRAM_in_program1209 = new BitSet(new ulong[]{0x0000000004000000UL});
-    public static readonly BitSet FOLLOW_IDENT_in_program1211 = new BitSet(new ulong[]{0x0000000000000400UL});
-    public static readonly BitSet FOLLOW_SEMICOLON_in_program1213 = new BitSet(new ulong[]{0x0000000000006820UL});
-    public static readonly BitSet FOLLOW_methods_definition_in_program1215 = new BitSet(new ulong[]{0x0000000000000820UL});
-    public static readonly BitSet FOLLOW_variables_definition_in_program1218 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_BLOCKOPEN_in_program1222 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_program_body_in_program1224 = new BitSet(new ulong[]{0x0000000000001000UL});
-    public static readonly BitSet FOLLOW_BLOCKEND_in_program1226 = new BitSet(new ulong[]{0x0000010000000000UL});
-    public static readonly BitSet FOLLOW_40_in_program1228 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_program_in_result1266 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_result_in_execute1284 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_ELSE_in_synpred17_PascalGrammar770 = new BitSet(new ulong[]{0x0000000004690C00UL});
-    public static readonly BitSet FOLLOW_expr_in_synpred17_PascalGrammar773 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_37_in_group555 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_term_in_group558 = new BitSet(new ulong[]{0x0000004000000000UL});
+    public static readonly BitSet FOLLOW_38_in_group560 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_NUMBER_in_group566 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_func_call_in_group579 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_IDENT_in_group584 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_STRING_in_group589 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_group_in_mult612 = new BitSet(new ulong[]{0x0000000600800002UL});
+    public static readonly BitSet FOLLOW_set_in_mult616 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_group_in_mult631 = new BitSet(new ulong[]{0x0000000600800002UL});
+    public static readonly BitSet FOLLOW_mult_in_add643 = new BitSet(new ulong[]{0x0000000183000002UL});
+    public static readonly BitSet FOLLOW_set_in_add648 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_mult_in_add667 = new BitSet(new ulong[]{0x0000000183000002UL});
+    public static readonly BitSet FOLLOW_add_in_compare680 = new BitSet(new ulong[]{0x0000001000000002UL});
+    public static readonly BitSet FOLLOW_COMPARE_in_compare684 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_add_in_compare687 = new BitSet(new ulong[]{0x0000001000000002UL});
+    public static readonly BitSet FOLLOW_compare_in_term696 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_term_in_arg_list705 = new BitSet(new ulong[]{0x0000008000000002UL});
+    public static readonly BitSet FOLLOW_39_in_arg_list708 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_term_in_arg_list711 = new BitSet(new ulong[]{0x0000008000000002UL});
+    public static readonly BitSet FOLLOW_IDENT_in_func_call727 = new BitSet(new ulong[]{0x0000002000000000UL});
+    public static readonly BitSet FOLLOW_37_in_func_call730 = new BitSet(new ulong[]{0x000000602C000000UL});
+    public static readonly BitSet FOLLOW_arg_list_in_func_call732 = new BitSet(new ulong[]{0x0000004000000000UL});
+    public static readonly BitSet FOLLOW_38_in_func_call734 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_IDENT_in_expr762 = new BitSet(new ulong[]{0x0000000800000000UL});
+    public static readonly BitSet FOLLOW_ASSIGN_in_expr764 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_term_in_expr767 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_func_call_in_expr772 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_BLOCKOPEN_in_expr777 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_list_in_expr779 = new BitSet(new ulong[]{0x0000000000001000UL});
+    public static readonly BitSet FOLLOW_BLOCKEND_in_expr781 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_IF_in_expr794 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_compare_in_expr797 = new BitSet(new ulong[]{0x0000000000020000UL});
+    public static readonly BitSet FOLLOW_THEN_in_expr799 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr802 = new BitSet(new ulong[]{0x0000000000040002UL});
+    public static readonly BitSet FOLLOW_ELSE_in_expr805 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr808 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_FOR_in_expr815 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_expr818 = new BitSet(new ulong[]{0x0000000800000000UL});
+    public static readonly BitSet FOLLOW_ASSIGN_in_expr820 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_add_in_expr823 = new BitSet(new ulong[]{0x0000000000100000UL});
+    public static readonly BitSet FOLLOW_TO_in_expr825 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_add_in_expr828 = new BitSet(new ulong[]{0x0000000000200000UL});
+    public static readonly BitSet FOLLOW_DO_in_expr830 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr833 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_WHILE_in_expr838 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_compare_in_expr841 = new BitSet(new ulong[]{0x0000000000200000UL});
+    public static readonly BitSet FOLLOW_DO_in_expr843 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr846 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_DO_in_expr851 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr854 = new BitSet(new ulong[]{0x0000000000400000UL});
+    public static readonly BitSet FOLLOW_WHILE_in_expr856 = new BitSet(new ulong[]{0x000000202C000000UL});
+    public static readonly BitSet FOLLOW_compare_in_expr859 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list877 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr_list882 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list887 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_expr_list892 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_expr_list898 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_expr_list_in_program_body915 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_IDENT_in_ident_list937 = new BitSet(new ulong[]{0x0000008000000002UL});
+    public static readonly BitSet FOLLOW_39_in_ident_list940 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_ident_list943 = new BitSet(new ulong[]{0x0000008000000002UL});
+    public static readonly BitSet FOLLOW_40_in_type958 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_type960 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_VAR_in_variables_definition979 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_ident_list_in_variables_definition982 = new BitSet(new ulong[]{0x0000010000000000UL});
+    public static readonly BitSet FOLLOW_type_in_variables_definition984 = new BitSet(new ulong[]{0x0000000000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_variables_definition986 = new BitSet(new ulong[]{0x0000000004000402UL});
+    public static readonly BitSet FOLLOW_ident_list_in_params_definition1017 = new BitSet(new ulong[]{0x0000010000000000UL});
+    public static readonly BitSet FOLLOW_type_in_params_definition1019 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_PROCEDURE_in_method_definition1043 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_method_definition1045 = new BitSet(new ulong[]{0x0000002000000400UL});
+    public static readonly BitSet FOLLOW_37_in_method_definition1048 = new BitSet(new ulong[]{0x0000004004000000UL});
+    public static readonly BitSet FOLLOW_params_definition_in_method_definition1051 = new BitSet(new ulong[]{0x0000004000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1054 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_params_definition_in_method_definition1056 = new BitSet(new ulong[]{0x0000004000000400UL});
+    public static readonly BitSet FOLLOW_38_in_method_definition1062 = new BitSet(new ulong[]{0x0000000000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1066 = new BitSet(new ulong[]{0x0000000000006820UL});
+    public static readonly BitSet FOLLOW_methods_definition_in_method_definition1068 = new BitSet(new ulong[]{0x0000000000000820UL});
+    public static readonly BitSet FOLLOW_variables_definition_in_method_definition1073 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_BLOCKOPEN_in_method_definition1076 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_list_in_method_definition1078 = new BitSet(new ulong[]{0x0000000000001000UL});
+    public static readonly BitSet FOLLOW_BLOCKEND_in_method_definition1080 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_FUNCTION_in_method_definition1120 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_method_definition1122 = new BitSet(new ulong[]{0x0000012000000000UL});
+    public static readonly BitSet FOLLOW_37_in_method_definition1125 = new BitSet(new ulong[]{0x0000004004000000UL});
+    public static readonly BitSet FOLLOW_params_definition_in_method_definition1128 = new BitSet(new ulong[]{0x0000004000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1131 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_params_definition_in_method_definition1133 = new BitSet(new ulong[]{0x0000004000000400UL});
+    public static readonly BitSet FOLLOW_38_in_method_definition1139 = new BitSet(new ulong[]{0x0000010000000000UL});
+    public static readonly BitSet FOLLOW_type_in_method_definition1143 = new BitSet(new ulong[]{0x0000000000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_method_definition1145 = new BitSet(new ulong[]{0x0000000000006820UL});
+    public static readonly BitSet FOLLOW_methods_definition_in_method_definition1147 = new BitSet(new ulong[]{0x0000000000000820UL});
+    public static readonly BitSet FOLLOW_variables_definition_in_method_definition1152 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_BLOCKOPEN_in_method_definition1155 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_list_in_method_definition1157 = new BitSet(new ulong[]{0x0000000000001000UL});
+    public static readonly BitSet FOLLOW_BLOCKEND_in_method_definition1159 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_method_definition_in_methods_definition1208 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_methods_definition1211 = new BitSet(new ulong[]{0x0000000000006000UL});
+    public static readonly BitSet FOLLOW_method_definition_in_methods_definition1213 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_methods_definition1217 = new BitSet(new ulong[]{0x0000000000000402UL});
+    public static readonly BitSet FOLLOW_PROGRAM_in_program1244 = new BitSet(new ulong[]{0x0000000004000000UL});
+    public static readonly BitSet FOLLOW_IDENT_in_program1246 = new BitSet(new ulong[]{0x0000000000000400UL});
+    public static readonly BitSet FOLLOW_SEMICOLON_in_program1248 = new BitSet(new ulong[]{0x0000000000006820UL});
+    public static readonly BitSet FOLLOW_methods_definition_in_program1250 = new BitSet(new ulong[]{0x0000000000000820UL});
+    public static readonly BitSet FOLLOW_variables_definition_in_program1253 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_BLOCKOPEN_in_program1257 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_program_body_in_program1259 = new BitSet(new ulong[]{0x0000000000001000UL});
+    public static readonly BitSet FOLLOW_BLOCKEND_in_program1261 = new BitSet(new ulong[]{0x0000020000000000UL});
+    public static readonly BitSet FOLLOW_41_in_program1263 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_program_in_result1301 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_result_in_execute1319 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_ELSE_in_synpred18_PascalGrammar805 = new BitSet(new ulong[]{0x0000000004690C00UL});
+    public static readonly BitSet FOLLOW_expr_in_synpred18_PascalGrammar808 = new BitSet(new ulong[]{0x0000000000000002UL});
 
 }
 }

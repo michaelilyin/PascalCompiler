@@ -100,6 +100,46 @@ namespace PascalCompiler.Semantic
                         if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
                             throw new SemanticException("Illegal assign bool and none bool");
                     break;
+                case AstNodeType.FUNC_CALL:
+                    break;
+                case AstNodeType.NUMBER:
+                    NumAstNode n = (NumAstNode)node;
+                    switch (target.Type)
+                    {
+                        case VariableType.INT:
+                            try
+                            {
+                                int a = Convert.ToInt32(n.Value);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new SemanticException(String.Format("Can not convert {0} value to integer", n.Value));
+                            }
+                            break;
+                        case VariableType.FLOAT:
+                            break;
+                        default:
+                            throw new SemanticException(String.Format("Can not assign {0} value to variable {1}:{2}", n.Value, target.Name, target.Type));
+                    }
+                    break;
+                case AstNodeType.ADD:
+                    AnalizeTerm(target, node.GetChild(0), context);
+                    AnalizeTerm(target, node.GetChild(1), context);
+                    break;
+                case AstNodeType.SUB:
+                    AnalizeTerm(target, node.GetChild(0), context);
+                    AnalizeTerm(target, node.GetChild(1), context);
+                    break;
+                case AstNodeType.MUL:
+                    AnalizeTerm(target, node.GetChild(0), context);
+                    AnalizeTerm(target, node.GetChild(1), context);
+                    break;
+                case AstNodeType.DIV:
+                    AnalizeTerm(target, node.GetChild(0), context);
+                    AnalizeTerm(target, node.GetChild(1), context);
+                    break;
+                case AstNodeType.COMPARE:
+                    break;
             }
         }
 

@@ -4,9 +4,14 @@ var
 	c : boolean;
 	o, r : real;
 	e : real;
+	str : string;
 begin
 	a := 3;
+	str := "ololo hello \" tra ta ta";
 	r := 4.3;
 	r := a;
-	c := 1;
+	r := r + a;
+	b := a + (a * r);
+	printf();
+	print(1, 4, f);
 end.

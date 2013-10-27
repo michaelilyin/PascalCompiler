@@ -60,6 +60,10 @@ COMMENT
 	'//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
 	 |   '{' ( options {greedy=false;} : . )* '}' {$channel=HIDDEN;}
 	 ;
+	 
+STRING	:
+	'"' (('\\"') | (~'"'))* '"'
+	;
 
 WS:
     ( ' ' | '\t' | '\f'| '\r' | '\n' )+ {$channel=HIDDEN;}
@@ -78,7 +82,7 @@ group
 	| NUMBER -> NUMBER<NumAstNode>[double.Parse($NUMBER.text, NFI)]
 	| func_call
 	| IDENT
-	//| '\''  '\''
+	| STRING -> STRING<StringAstNode>[$STRING.text]
 	;
       
 mult: group ( ( MUL | DIV | AND )^ group )*  ;
@@ -95,7 +99,6 @@ func_call
 
 expr	:
 	IDENT ASSIGN^ term
-//	| IDENT ASSIGN^ STRING
 	| func_call
 	| BLOCKOPEN expr_list BLOCKEND -> ^(BLOCK expr_list)
 	| IF^ compare THEN! expr (ELSE! expr)?
