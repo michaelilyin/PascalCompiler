@@ -55,6 +55,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Semantic\ProgramContext\Context.cs" />
+    <Compile Include="Semantic\ProgramContext\Methods\Function.cs" />
+    <Compile Include="Semantic\ProgramContext\Methods\Procedure.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\BoolVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\FloatVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\IntVar.cs" />

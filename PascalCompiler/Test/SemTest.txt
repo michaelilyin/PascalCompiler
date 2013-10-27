@@ -1,21 +1,46 @@
 ﻿program test;
+
+procedure proc1(a, l: integer);
+var
+	b, c, d : integer;
+begin
+	a := 123;
+end;
+
+function func1(a, l: integer) : integer;
+	function check(a: integer) : boolean;
+	begin
+		result := true;
+	end;
+var
+	b, c, d : integer;
+begin
+	a := 123;
+	result := a;
+end;
+
 var
 	a, b: integer;
 	c : boolean;
 	o, r : real;
 	e : real;
 	s : string;
+
 begin
 	a := 3;
+	r := 3;
 	s := "ololo hello \" tra ta ta";
 	c := true;
 	r := 4.3;
-	r := a;
-	r := r + a;
-	//b := a + (a * r);
+	begin
+		r := a;
+		r := r + a;
+	end;
+	//b := a + (a * r); //error
 	s := r;
+	//println;
 	s := a;
-	//s := c;
+	//s := c; //error
 	printf();
 	print(1, 4, f);
 end.

@@ -103,7 +103,8 @@ func_call
 	;
 
 expr	:
-	IDENT ASSIGN^ term
+	IDENT
+	|IDENT ASSIGN^ term
 	| func_call
 	| BLOCKOPEN expr_list BLOCKEND -> ^(BLOCK expr_list)
 	| IF^ compare THEN! expr (ELSE! expr)?
