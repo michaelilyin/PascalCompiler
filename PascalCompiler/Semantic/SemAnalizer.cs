@@ -56,6 +56,13 @@ namespace PascalCompiler.Semantic
                             Console.WriteLine("Put float variable {0}", node.GetChild(i).GetChild(v).Text);
                         }
                         break;
+                    case "string":
+                        for (int v = 0; v < node.GetChild(i).ChildCount; v++)
+                        {
+                            context.PutVar(node.GetChild(i).GetChild(v).Text, VariableType.STRING);
+                            Console.WriteLine("Put string variable {0}", node.GetChild(i).GetChild(v).Text);
+                        }
+                        break;
                     default:
                         throw new SemanticException("Unknown type definition");
                 }
@@ -100,7 +107,14 @@ namespace PascalCompiler.Semantic
                         if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
                             throw new SemanticException("Illegal assign bool and none bool");
                     break;
+                case AstNodeType.BOOLEAN:
+
+                    break;
                 case AstNodeType.FUNC_CALL:
+                    break;
+                case AstNodeType.STRING:
+                    if (target.Type != VariableType.STRING)
+                        throw new SemanticException("The string value must be assigned only to string variable");
                     break;
                 case AstNodeType.NUMBER:
                     NumAstNode n = (NumAstNode)node;
@@ -117,6 +131,8 @@ namespace PascalCompiler.Semantic
                             }
                             break;
                         case VariableType.FLOAT:
+                            break;
+                        case VariableType.STRING:
                             break;
                         default:
                             throw new SemanticException(String.Format("Can not assign {0} value to variable {1}:{2}", n.Value, target.Name, target.Type));

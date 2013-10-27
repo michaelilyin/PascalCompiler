@@ -41,6 +41,9 @@ namespace PascalCompiler.Semantic.ProgramContext
                 case VariableType.BOOL:
                     variables.Add(new BoolVar(name));
                     break;
+                case VariableType.STRING:
+                    variables.Add(new StringVar(name));
+                    break;
             }
         }
 

@@ -45,6 +45,10 @@ tokens {
   public static readonly NumberFormatInfo NFI = new NumberFormatInfo();
   private Stack<String> stack = new Stack<String>();
   }
+  
+BOOLEAN :
+	('true')|('false')	
+	;
 
 IDENT:	
 	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
@@ -80,6 +84,7 @@ group
 	:
 	'('! term ')'!
 	| NUMBER -> NUMBER<NumAstNode>[double.Parse($NUMBER.text, NFI)]
+	| BOOLEAN
 	| func_call
 	| IDENT
 	| STRING -> STRING<StringAstNode>[$STRING.text]

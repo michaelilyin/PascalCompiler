@@ -58,6 +58,7 @@
     <Compile Include="Semantic\ProgramContext\Variables\BoolVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\FloatVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\IntVar.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\StringVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\Variable.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\VariableType.cs" />
     <Compile Include="Semantic\SemAnalizer.cs" />
