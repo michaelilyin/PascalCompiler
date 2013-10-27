@@ -108,7 +108,8 @@ namespace PascalCompiler.Semantic
                             throw new SemanticException("Illegal assign bool and none bool");
                     break;
                 case AstNodeType.BOOLEAN:
-
+                    if (target.Type != VariableType.BOOL)
+                        throw new SemanticException("The boolean value must be assignrd only to bolean variable");
                     break;
                 case AstNodeType.FUNC_CALL:
                     break;
@@ -169,6 +170,10 @@ namespace PascalCompiler.Semantic
                         throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(0).Text));
                     AnalizeTerm(v, node.GetChild(1), context);
                     v.Init();
+                    break;
+                case AstNodeType.BLOCK:
+                    Console.WriteLine("Inner block");
+                    AnalizeImplementation(node, context);
                     break;
             }
         }
