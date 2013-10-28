@@ -1,4 +1,5 @@
-﻿using Antlr.Runtime.Tree;
+﻿using Antlr.Runtime;
+using Antlr.Runtime.Tree;
 using PascalCompiler.Semantic.ProgramContext;
 using PascalCompiler.Semantic.ProgramContext.Methods;
 using PascalCompiler.Semantic.ProgramContext.Variables;
@@ -38,6 +39,23 @@ namespace PascalCompiler.Semantic
                     return VariableType.STRING;
                 default:
                     throw new SemanticException(String.Format("Unknown type definition {0}", type));
+            }
+        }
+
+        private string GetStringTypeFromType(VariableType type)
+        {
+            switch (type)
+            {
+                case VariableType.BOOL:
+                    return "boolean";
+                case VariableType.FLOAT:
+                    return "real";
+                case VariableType.INT:
+                    return "integer";
+                case VariableType.STRING:
+                    return "string";
+                default:
+                    return "none_type";
             }
         }
 
@@ -215,8 +233,20 @@ namespace PascalCompiler.Semantic
                         if (func == null)
                             throw new SemanticException(String.Format("Undefined function or variable {0}", node.Text));
                         else
+                        {
                             if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
                                 throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable", target.Type));
+                            //node.Type = AstNodeType.FUNC_CALL;
+                            //node.
+                            AstNode nnode = new AstNode(new CommonToken(AstNodeType.FUNC_CALL, "FUNC_CALL"));
+                            nnode.AddChild(new AstNode(new CommonToken(AstNodeType.IDENT, func.Name)));
+                            int pos = node.ChildIndex;
+                            Console.WriteLine(pos + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            ITree par = node.Parent;
+                            par.SetChild(pos, nnode);
+                            AnalizeTerm(target, nnode, context);
+#warning ololo
+                        }
                     }
                     else
                     {
@@ -239,10 +269,10 @@ namespace PascalCompiler.Semantic
                 case AstNodeType.FUNC_CALL:
                     {
                         Function func = context.findFunc(node.GetChild(0).Text);
-
+#warning check params
                         //проверить параметры!
                         if (func == null)
-                            throw new SemanticException(String.Format("Undefined function or variable {0}", node.GetChild(0).Text));
+                            throw new SemanticException(String.Format("Undefined function {0}", node.GetChild(0).Text));
                         else
                             if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
                                 throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable", target.Type));
@@ -307,21 +337,28 @@ namespace PascalCompiler.Semantic
                 case AstNodeType.IDENT:
                     if (context.FindVar(node.Text) != null)
                         throw new SemanticException(String.Format("Illegal use of Variable {0}", node.Text));
-                    if (false/*find func*/)
+                    Procedure p = context.findMethod(node.Text);
+                    if (p != null)
                     {
-                        //заменить узел на FUNC_CALL и проанализировать
+#warning заменить узел на FUNC_CALL и проанализировать
                     }
                     else
                         throw new SemanticException(String.Format("The {0} function is not found in a curren context", node.Text));
                     break;
                 case AstNodeType.FUNC_CALL:
+#warning function parameters
                     Procedure proc = context.findMethod(node.GetChild(0).Text);
                     if (proc == null)
                         throw new SemanticException(String.Format("Undefined function or procedure {0}", node.GetChild(0).Text));
+                    if (proc.ParamsTypes.Count != node.GetChild(1).ChildCount)
+                        throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", proc.Name));
                     for (int i = 0; i < node.GetChild(1).ChildCount; i++)
                     {
-                        if (GetTypeFromString(node.GetChild(1).GetChild(i).Text) > proc.ParamsTypes[i]
-                            || (GetTypeFromString(node.GetChild(1).GetChild(i).Text) == VariableType.BOOL && proc.ParamsTypes[i] != VariableType.BOOL))
+                        Variable par = context.FindVar(node.GetChild(1).GetChild(i).Text);
+                        if (par == null) 
+                            throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(1).GetChild(i).Text));
+                        if (par.Type > proc.ParamsTypes[i]
+                            || (par.Type == VariableType.BOOL && proc.ParamsTypes[i] != VariableType.BOOL))
                             throw new SemanticException("NESOVMESTIMIE PARAMETRI V ROT IH!");
                     }
                     break;

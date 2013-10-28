@@ -39,6 +39,7 @@ namespace PascalCompiler
                 output.Flush();
                 output.WriteLine("Completed Successfuly");
                 output.Flush();
+                TreePrinter.Print(program, output);
             }
             catch (SemanticException ex)
             {

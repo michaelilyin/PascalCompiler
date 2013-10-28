@@ -17,6 +17,7 @@ function func1(a, l: integer) : integer;
 	begin
 		result := true;
 		g := 23;
+		r := ololo;
 		r := ololo();
 	end;
 var
@@ -48,7 +49,8 @@ begin
 	end;
 	//b := a + (a * r); //error
 	s := r;
-	//println;
+	//writeln();
+	//readln(a); //Error! Check! null poiner
 	s := a;
 	//s := c; //error
 end.
