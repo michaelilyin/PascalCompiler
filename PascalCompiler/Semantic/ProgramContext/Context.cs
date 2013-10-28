@@ -26,7 +26,7 @@ namespace PascalCompiler.Semantic.ProgramContext
             methods = new List<Procedure>();
             if (parentContext == null)
             {
-                Procedure pr = new Procedure("wtire");
+                Procedure pr = new Procedure("write");
                 pr.addParamType(VariableType.STRING);
                 Procedure pr1 = new Procedure("writeln");
                 Procedure pr2 = new Procedure("read");

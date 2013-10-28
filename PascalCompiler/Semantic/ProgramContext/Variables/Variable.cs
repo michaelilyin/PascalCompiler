@@ -16,6 +16,11 @@ namespace PascalCompiler.Semantic.ProgramContext.Variables
             this.name = name;
         }
 
+        public Variable(VariableType type)
+        {
+            this.type = type;
+        }
+
         public string Name
         {
             get { return name; }
