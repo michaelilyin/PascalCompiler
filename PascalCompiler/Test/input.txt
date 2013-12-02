@@ -41,6 +41,7 @@
 
   var
   a,b,c,d:real;
+  bol: boolean;
 
 begin
   write ( "sdsdgtsd" );readln (a);
@@ -54,10 +55,10 @@ begin
         Ptreugolnik(b,c,a)
       else
         if a=c then
-          Ptreugolnik(a,c,b)
+          Ptreugolnik(a,c,7)
         else
-        write(neravnobedreni())
+        write("neravnobedreni")
   else
-    write(Netreugolnik);
+    write("Netreugolnik");
     readln(a);
 end.

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AstNode.cs" />
+    <Compile Include="ConvertAstNode.cs" />
     <Compile Include="FunctionAstNode.cs" />
     <Compile Include="NumAstNode.cs" />
     <Compile Include="PascalGrammarLexer.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Semantic\ProgramContext\Methods\Function.cs" />
     <Compile Include="Semantic\ProgramContext\Methods\Procedure.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\BoolVar.cs" />
+    <Compile Include="Semantic\ProgramContext\Variables\ConvertTable.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\FloatVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\IntVar.cs" />
     <Compile Include="Semantic\ProgramContext\Variables\StringVar.cs" />
@@ -76,6 +78,9 @@
   <ItemGroup>
     <Content Include="Test\input.txt" />
     <Content Include="Test\SemTest.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MSILGeneration\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -61,7 +61,6 @@ namespace PascalCompiler.Semantic
 
         private void AnalizeFunctionDefinition(ITree node, Context context)
         {
-            Console.WriteLine("I am a function!!");
             Context currentContext = new Context(context);
             currentContext.PutVar("result", GetTypeFromString(node.GetChild(0).Text));
             Function func = new Function(((FunctionAstNode)node).Name, GetTypeFromString(node.GetChild(0).Text));
@@ -69,7 +68,6 @@ namespace PascalCompiler.Semantic
             {
                 if(node.GetChild(i).Type == AstNodeType.PARAMS)
                 {
-                    Console.WriteLine("~~Analize params");
                     for (int j = 0; j < node.GetChild(i).ChildCount; j++)
                     {
                         for (int k = 0; k < node.GetChild(i).GetChild(j).ChildCount; k++)
@@ -82,7 +80,6 @@ namespace PascalCompiler.Semantic
             {
                     if (node.GetChild(i).Type == AstNodeType.VAR)
                     {
-                        Console.WriteLine("~~Analize variables");
                         AnalizeVariablesDefinition(node.GetChild(i), currentContext);
                     }
             }
@@ -90,7 +87,6 @@ namespace PascalCompiler.Semantic
             {
                 if (node.GetChild(i).Type == AstNodeType.METHODS)
                 {
-                    Console.WriteLine("~~Analize inner methods");
                     AnalizeMethodsDefinition(node.GetChild(i), currentContext);
                 }
             }
@@ -100,7 +96,6 @@ namespace PascalCompiler.Semantic
 
         private void AnalizeProcedureDefinition(ITree node, Context context)
         {
-            Console.WriteLine("I am a procedure!!");
             Context currentContext = context;
             bool contextChanged = false;
             Procedure proc = new Procedure(((ProcedureAstNode)node).Name);
@@ -108,7 +103,6 @@ namespace PascalCompiler.Semantic
             {
                 if (node.GetChild(i).Type == AstNodeType.PARAMS) 
                 {
-                    Console.WriteLine("~~Analize params");
                     if (!contextChanged)
                     {
                         currentContext = new Context(currentContext);
@@ -126,7 +120,6 @@ namespace PascalCompiler.Semantic
             {
                 if (node.GetChild(i).Type == AstNodeType.VAR)
                 {
-                    Console.WriteLine("~~Analize variables");
                     if (!contextChanged)
                     {
                         currentContext = new Context(currentContext);
@@ -139,7 +132,6 @@ namespace PascalCompiler.Semantic
             {
                 if (node.GetChild(i).Type == AstNodeType.METHODS)
                 {
-                        Console.WriteLine("~~Analize inner methods");
                         AnalizeMethodsDefinition(node.GetChild(i), currentContext);
                 }
             }
@@ -167,7 +159,6 @@ namespace PascalCompiler.Semantic
         {
             for (int i = 0; i < node.ChildCount; i++)
             {
-                Console.WriteLine("Variavles with type {0}", node.GetChild(i).Text);
                 string type = node.GetChild(i).Text;
                 switch (type)
                 {
@@ -175,28 +166,24 @@ namespace PascalCompiler.Semantic
                         for (int v = 0; v < node.GetChild(i).ChildCount; v++)
                         {
                             context.PutVar(node.GetChild(i).GetChild(v).Text, VariableType.INT);
-                            Console.WriteLine("Put int variable {0}", node.GetChild(i).GetChild(v).Text);
                         }
                         break;
                     case "boolean":
                         for (int v = 0; v < node.GetChild(i).ChildCount; v++)
                         {
                             context.PutVar(node.GetChild(i).GetChild(v).Text, VariableType.BOOL);
-                            Console.WriteLine("Put boolean variable {0}", node.GetChild(i).GetChild(v).Text);
                         }
                         break;
                     case "real":
                         for (int v = 0; v < node.GetChild(i).ChildCount; v++)
                         {
                             context.PutVar(node.GetChild(i).GetChild(v).Text, VariableType.FLOAT);
-                            Console.WriteLine("Put float variable {0}", node.GetChild(i).GetChild(v).Text);
                         }
                         break;
                     case "string":
                         for (int v = 0; v < node.GetChild(i).ChildCount; v++)
                         {
                             context.PutVar(node.GetChild(i).GetChild(v).Text, VariableType.STRING);
-                            Console.WriteLine("Put string variable {0}", node.GetChild(i).GetChild(v).Text);
                         }
                         break;
                     default:
@@ -211,11 +198,9 @@ namespace PascalCompiler.Semantic
             switch (node.Type)
             {
                 case AstNodeType.METHODS:
-                    Console.WriteLine("Is methods definitions");
                     AnalizeMethodsDefinition(node, context);
                     break;
                 case AstNodeType.VAR:
-                    Console.WriteLine("Is variables definitions");
                     AnalizeVariablesDefinition(node, context);
                     break;
                 default:
@@ -223,6 +208,24 @@ namespace PascalCompiler.Semantic
             }
         }
 
+        private void AnalizeConvertTypes(ITree node, VariableType nodeType, VariableType target)
+        {
+            ConvType ct = ConvertTable.IsConvertable(nodeType, target);
+            if (ct == ConvType.not_alowed)
+                throw new SemanticException(String.Format("{0} Can not convert the type of variable to target", node.Line));
+            if (ct != ConvType.none)
+                CreateConvertNode(node, ct);
+        }
+
+        private void CreateConvertNode(ITree node, ConvType conv)
+        {
+            AstNode nnode = new ConvertAstNode(AstNodeType.CONVERT, conv);
+           // nnode.AddChild(node);
+            int pos = node.ChildIndex;
+            ITree par = node.Parent;
+            par.SetChild(pos, nnode);
+            nnode.AddChild(node);
+        }
 
         /// <summary>
         /// Анализ выражения (математическое/пр) которое дает значение 
@@ -230,7 +233,7 @@ namespace PascalCompiler.Semantic
         /// <param name="target">Целевая переменная</param>
         /// <param name="node">Узел для анализа</param>
         /// <param name="context">Контекст программы</param>
-        private void AnalizeTerm(Variable target, ITree node, Context context)
+        private VariableType AnalizeTerm(ITree node, Context context, int line)
         {
             switch (node.Type)
             {
@@ -241,11 +244,9 @@ namespace PascalCompiler.Semantic
                     {
                         Function func = context.findFunc(node.Text); //Ищем функцию
                         if (func == null) // Если нет - ошщибка
-                            throw new SemanticException(String.Format("Undefined function or variable {0}", node.Text));
+                            throw new SemanticException(String.Format("{1} Undefined function or variable {0}", node.Text, node.Line));
                         else
-                        {   //Проверяем тип функции и тип цели
-                            if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
-                                throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable in line {1}", target.Type, node.Line));
+                        {  
                             //Меняем узел
                             AstNode nnode = new AstNode(new CommonToken(AstNodeType.FUNC_CALL, "FUNC_CALL"));
                             nnode.AddChild(new AstNode(new CommonToken(AstNodeType.IDENT, func.Name)));
@@ -253,103 +254,98 @@ namespace PascalCompiler.Semantic
                             ITree par = node.Parent;
                             par.SetChild(pos, nnode);
                             //Анализируем снова но уже как фкнкцию
-                            AnalizeTerm(target, nnode, context);
+                            return AnalizeTerm(nnode, context, line);
                         }
                     }
                     else //Иначе - если нашли переменную
-                    {
-                        if (source.Type > 0 && target.Type > 0) //Проверяем совместимость типов
-                        {
-                            if (source.Type > target.Type)
-                                throw new SemanticException(String.Format("Illegal assign {0} to {1} at linr {2}", source.Type.ToString(), target.Type.ToString(), node.Line));
-                        }
-                        else //И буленовских
-                            if (!(source.Type == VariableType.BOOL && target.Type == VariableType.BOOL))
-                                throw new SemanticException("Illegal assign bool and none bool");
-                    }
+                        return source.Type;
                     break;
                 //Логическая константа
                 case AstNodeType.BOOLEAN:
-                    //Проверяем типы
-                    if (target.Type != VariableType.BOOL)
-                        throw new SemanticException("The boolean value must be assignrd only to bolean variable");
+                    return VariableType.BOOL;
                     break;
                 //Вызов функции
+                #region func_call
                 case AstNodeType.FUNC_CALL:
                     {
                         //Ищем функцию
                         Function func = context.findFunc(node.GetChild(0).Text);
                         if (func == null) //не нашли - ошибка
-                            throw new SemanticException(String.Format("Undefined function {0}", node.GetChild(0).Text));
+                            throw new SemanticException(String.Format("{1} Undefined function {0}", node.GetChild(0).Text, node.Line));
                         else
-                        { //Проверяем типы
-                            if (func.ReturnType > target.Type || (func.ReturnType == VariableType.BOOL && target.Type != VariableType.BOOL))
-                                throw new SemanticException(String.Format("Coud not assign the return function value to {0} variable", target.Type));
+                        { 
                             if (node.ChildCount > 1) //Фактические параметры
                             {
                                 if (func.ParamsTypes.Count != node.GetChild(1).ChildCount)
-                                    throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", func.Name));
+                                    throw new SemanticException(String.Format("{1} Unallowed count of parameters in func {0}", func.Name, node.Line));
                                 for (int i = 0; i < node.GetChild(1).ChildCount; i++)
-                                    AnalizeTerm(new Variable(func.ParamsTypes[i]), node.GetChild(1).GetChild(i), context);
+                                {
+                                    AnalizeConvertTypes(node.GetChild(1).GetChild(i), AnalizeTerm(node.GetChild(1).GetChild(i), context, node.Line), func.ParamsTypes[i]);
+                                    //ConvType ct = ConvertTable.IsConvertable(AnalizeTerm(node.GetChild(1).GetChild(i), context, line), func.ParamsTypes[i]);
+                                    //if (ct == ConvType.not_alowed)
+                                    //    throw new SemanticException(String.Format("{0} Can not convert the parametr of function", node.Line));
+                                    //if (ct != ConvType.none)
+                                    //    CreateConvertNode(node.GetChild(1).GetChild(i), ct);
+
+                                }
                             }
                             else
                                 if (func.ParamsTypes.Count > 0) //нет фактических тно есть формальные
-                                    throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", func.Name));
+                                    throw new SemanticException(String.Format("{1} Unallowed count of parameters in func {0}", func.Name, node.Line));
+                            return func.ReturnType;
                         }
                         break;
                     }
+                #endregion
                 //Строковая константа
                 case AstNodeType.STRING:
-                    //Проверяем типы
-                    if (target.Type != VariableType.STRING)
-                        throw new SemanticException("The string value must be assigned only to string variable");
+                    return VariableType.STRING;
                     break;
                 //Числовая константа
                 case AstNodeType.NUMBER:
                     NumAstNode n = (NumAstNode)node;
-                    //Чекаем тип цели
-                    switch (target.Type)
-                    {
-                        case VariableType.INT:
-                            if (n.Value != (int)n.Value)
-                                throw new SemanticException(String.Format("Can not convert {0} value to integer", n.Value));      
-                            break;
-                        case VariableType.FLOAT:
-                            break;
-                        case VariableType.STRING:
-                            break;
-                        default:
-                            throw new SemanticException(String.Format("Can not assign {0} value to variable {1}:{2}", n.Value, target.Name, target.Type));
-                    }
+                    if (n.Value != (int)n.Value) return VariableType.FLOAT;
+                    else return VariableType.INT;
                     break;
                 case AstNodeType.ADD:
-                    AnalizeTerm(target, node.GetChild(0), context);
-                    AnalizeTerm(target, node.GetChild(1), context);
-                    break;
                 case AstNodeType.SUB:
-                    AnalizeTerm(target, node.GetChild(0), context);
-                    AnalizeTerm(target, node.GetChild(1), context);
-                    break;
                 case AstNodeType.MUL:
-                    AnalizeTerm(target, node.GetChild(0), context);
-                    AnalizeTerm(target, node.GetChild(1), context);
-                    break;
                 case AstNodeType.DIV:
-                    AnalizeTerm(target, node.GetChild(0), context);
-                    AnalizeTerm(target, node.GetChild(1), context);
+                    VariableType t1 = AnalizeTerm(node.GetChild(0), context, line);
+                    VariableType t2 = AnalizeTerm(node.GetChild(1), context, line);
+                    ConvType f1t2 = ConvertTable.IsConvertable(t1, t2);
+                    ConvType f2t1 = ConvertTable.IsConvertable(t2, t1);
+                    if (f1t2 == ConvType.not_alowed && f2t1 == ConvType.not_alowed)
+                        throw new SemanticException("Can not convert types");
+                    if (f1t2 != ConvType.not_alowed && f1t2 != ConvType.none)
+                    {
+                        CreateConvertNode(node.GetChild(0), f1t2);
+                        return t2;
+                    } else 
+                        if (f2t1 != ConvType.not_alowed && f2t1 != ConvType.none)
+                        {
+                            CreateConvertNode(node.GetChild(1), f2t1);
+                            return t1;
+                        }
+                    return VariableType.BOOL;
                     break;
-#warning тут опреации логические
                 case AstNodeType.COMPARE:
+                    if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))
+                        throw new SemanticException("Illegal comparision");
+                    return VariableType.BOOL;
                     break;
+                default:
+                    return VariableType.BOOL;
             }
         }
+
 
         /// <summary>
         /// Анализ выражения
         /// </summary>
         /// <param name="node">Узел для анализа</param>
         /// <param name="context">Контекст программы</param>
-        private void AnalizeExpression(ITree node, Context context)
+        private void AnalizeExpression(ITree node, Context context, int line)
         {
             switch (node.Type)
             {
@@ -357,21 +353,25 @@ namespace PascalCompiler.Semantic
                 case AstNodeType.ASSIGN:
                     Variable v = context.FindVar(node.GetChild(0).Text);
                     if (v == null) //переменной нет в контексте
-                        throw new SemanticException(String.Format("Undefined variable {0}", node.GetChild(0).Text));
+                        throw new SemanticException(String.Format("{1} Undefined variable {0}", node.GetChild(0).Text, node.Line));
                     //Анализ выражения которое присваивается к переменной
-                    AnalizeTerm(v, node.GetChild(1), context);
+                    //ConvType ct = ConvertTable.IsConvertable(AnalizeTerm(node.GetChild(1), context, line), v.Type);
+                    //if (ct == ConvType.not_alowed)
+                    //    throw new SemanticException(String.Format("{0} Different types in assign", node.Line));
+                    //if (ct != ConvType.none)
+                    //    CreateConvertNode(node.GetChild(1), ct);
+                    AnalizeConvertTypes(node.GetChild(1), AnalizeTerm(node.GetChild(1), context, line), v.Type);
                     //v.Init();
                     break;
                 //Блок
                 case AstNodeType.BLOCK:
-                    //Console.WriteLine("Inner block");
                     //Анализ внутреннего блока имплементации
                     AnalizeImplementation(node, context);
                     break;
                 //Идентефикатор
                 case AstNodeType.IDENT:
                     if (context.FindVar(node.Text) != null) //Если есть такая переменная то огибка использования
-                        throw new SemanticException(String.Format("Illegal use of Variable {0}", node.Text));
+                        throw new SemanticException(String.Format("{1} Illegal use of Variable {0}", node.Text, node.Line));
                     Procedure p = context.findMethod(node.Text);
                     if (p != null) //Есть процедура или функция с таким именем
                     {
@@ -382,29 +382,64 @@ namespace PascalCompiler.Semantic
                         ITree par = node.Parent;
                         par.SetChild(pos, nnode);
                         //И анализируем этот же узел с новыми параметрами
-                        AnalizeExpression(nnode, context);
+                        AnalizeExpression(nnode, context, line);
                     }
                     else
-                        throw new SemanticException(String.Format("The {0} function is not found in a curren context", node.Text));
+                        throw new SemanticException(String.Format("{1} The {0} function is not found in a curren context", node.Text, node.Line));
                     break;
                 //Вызов функции
                 case AstNodeType.FUNC_CALL:
                     Procedure proc = context.findMethod(node.GetChild(0).Text);
                     if (proc == null) //нет процедуры - ошибка
-                        throw new SemanticException(String.Format("Undefined function or procedure {0}", node.GetChild(0).Text));
+                        throw new SemanticException(String.Format("{1} Undefined function or procedure {0}", node.GetChild(0).Text, node.Line));
                     if (node.ChildCount > 1) //Если есть параметры при вызове
                     {
                         if (proc.ParamsTypes.Count != node.GetChild(1).ChildCount) //Если список формальных и фактических различен
-                            throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", proc.Name));
+                            throw new SemanticException(String.Format("{1} Unallowed count of parameters in func {0}", proc.Name, node.Line));
                         //анализируем каждый параметр который передаем
                         for (int i = 0; i < node.GetChild(1).ChildCount; i++)
-                            AnalizeTerm(new Variable(proc.ParamsTypes[i]), node.GetChild(1).GetChild(i), context);
+                        {
+                            //ct = ConvertTable.IsConvertable(AnalizeTerm(node.GetChild(1).GetChild(i), context, line), proc.ParamsTypes[i]);
+                            //if (ct == ConvType.not_alowed)
+                            //    throw new SemanticException(String.Format("{0} Can not convert the {1} parametr of procedure function", node.Line, i));
+                            //if (ct != ConvType.none)
+                            //    CreateConvertNode(node.GetChild(1).GetChild(i), ct);
+                            //Console.WriteLine(node.GetChild(1).GetChild(i) + " __ " + ct.ToString());
+                            AnalizeConvertTypes(node.GetChild(1).GetChild(i), AnalizeTerm(node.GetChild(1).GetChild(i), context, node.Line), proc.ParamsTypes[i]);
+                        }
                     }
                     else //нет параметров при вызове
                         if (proc.ParamsTypes.Count > 0) // но есть формальные
                             throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", proc.Name));
                     break;
 #warning тут конструкции языка
+                case AstNodeType.IF:
+                    if (AnalizeTerm(node.GetChild(0), context , node.GetChild(0).Line) != VariableType.BOOL)
+                        throw new SemanticException(String.Format("{0} The condition in operator\"if\" only must be BOOLEAN", node.GetChild(0).Line.ToString()));
+                        AnalizeExpression(node.GetChild(1), context, node.GetChild(1).Line);
+
+                    if (node.ChildCount == 3)
+                        AnalizeExpression(node.GetChild(2), context, node.GetChild(2).Line);
+                    break;
+                case AstNodeType.WHILE:
+                    if (AnalizeTerm(node.GetChild(0), context , node.GetChild(0).Line) != VariableType.BOOL)
+                        throw new SemanticException(String.Format("{0} The condition in operator\"while\" only must be BOOLEAN", node.GetChild(0).Line.ToString()));
+                        AnalizeExpression(node.GetChild(1), context, node.GetChild(1).Line);
+                    break;
+                case AstNodeType.DO:
+                    if (AnalizeTerm(node.GetChild(1), context , node.GetChild(1).Line) != VariableType.BOOL)
+                        throw new SemanticException(String.Format("{0} The condition in operator\"while\" only must be BOOLEAN", node.GetChild(1).Line.ToString()));
+                        AnalizeExpression(node.GetChild(0), context, node.GetChild(0).Line);
+                    break;
+                case AstNodeType.FOR:
+                    Variable var = context.FindVar(node.GetChild(0).Text);
+                    if (var == null)
+                        throw new SemanticException(String.Format("{1} Undefined variable {0}", node.GetChild(0).Text, node.Line));
+                    AnalizeConvertTypes(node.GetChild(1), AnalizeTerm(node.GetChild(1), context, node.Line), var.Type);
+                    AnalizeConvertTypes(node.GetChild(2), AnalizeTerm(node.GetChild(2), context, node.Line), var.Type);
+                    AnalizeExpression(node.GetChild(3), context, node.Line);
+                    break;
+
             }
         }
 
@@ -417,12 +452,9 @@ namespace PascalCompiler.Semantic
         {
             if (node.Type != AstNodeType.BLOCK)
                 throw new SemanticException("The block expected");
-            //Console.WriteLine("This block has {0} operations", node.ChildCount);
             //Анализ каждого выражения в блоке
             for (int i = 0; i < node.ChildCount; i++)
-            {
-                AnalizeExpression(node.GetChild(i), context);
-            }
+                AnalizeExpression(node.GetChild(i), context, node.Line);
         }
 
         /// <summary>
@@ -433,28 +465,16 @@ namespace PascalCompiler.Semantic
         public void Analize()
         {
             Context progContext = new Context();
-            //Console.WriteLine("Sem analize started");
-            //Console.WriteLine("The program has {0} childs", program.ChildCount);
             if (program.ChildCount < 1 || program.GetChild(program.ChildCount-1).Type != AstNodeType.BLOCK)
                 throw new SemanticException("The implementation block expected");
             //Анализ описания переменных
             for (int i = 0; i < program.ChildCount - 1; i++)
-            {
                 if (program.GetChild(i).Type == AstNodeType.VAR) 
-                {
-                    //Console.WriteLine("Analize {0} program children", i);
                     AnalizeDefinition(program.GetChild(i), progContext);
-                }
-            }
             //Анализ описания методов
             for (int i = 0; i < program.ChildCount - 1; i++)
-            {
                 if (program.GetChild(i).Type == AstNodeType.METHODS) 
-                {
-                    //Console.WriteLine("Analize {0} program children", i);
                     AnalizeDefinition(program.GetChild(i), progContext);
-                }
-            }
             //Анализ имплементации
             AnalizeImplementation(program.GetChild(program.ChildCount - 1), progContext);
         }

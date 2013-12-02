@@ -20,6 +20,7 @@ tokens {
 	FUNCTION = 'function';
 	PROCEDURE = 'procedure';
 	FUNC_CALL;
+	CONVERT;
 	IF = 'if';
 	THEN = 'then';
 	ELSE = 'else';

@@ -1,65 +1,18 @@
 ﻿program test;
 
-procedure proc1(a, l: integer; first, secont : real);
-var
-	b, c, d : integer;
+procedure testparams(i : real);
 begin
-	a := 123;
-end;
-
-function ololo: real;
-begin
-	result := 124.23;
-end;
-
-function func1(a, l: integer) : integer;
-	function check(a: integer) : boolean;
-	begin
-		result := true;
-		g := 23;
-		r := ololo;
-		r := ololo();
-	end;
-
-var
-	b, c, g : integer;
-	o : boolean;
-	oh : real;
-begin
-	a := 123;
-	o := check(c);
-	result := a;
-end;
-
-procedure testparams(i : integer);
-begin
-	write(i);
+	i := 8;
 end;
 
 var
 	a, b: integer;
 	c : boolean;
 	o, r : real;
-	e : real;
 	s : string;
 
 begin
-	func1(3, 6);
-	proc1(1, 2, 4.5, 6.7);
-	a := 3;
-	r := 3;
-	s := "ololo hello \" tra ta ta";
-	c := true;
-	r := 4.3;
-	begin
-		r := a;
-		r := r + a;
-	end;
-	//b := a + (a * r); //error
-	s := r;
-	writeln;
-	readln(4);
-	testparams(45);
-	s := a;
-	//s := c; //error
+	testparams(3);
+	s := true;
 end.
+

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PascalCompiler.Semantic.ProgramContext.Variables
 {
-    enum VariableType
+    public enum VariableType
     {
         STRING = 15,
         FLOAT = 10, 

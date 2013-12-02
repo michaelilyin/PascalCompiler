@@ -112,6 +112,7 @@ public partial class PascalGrammarParser : Parser
     public const int STRING = 30;
     public const int ADD = 32;
     public const int PARAMS = 7;
+    public const int CONVERT = 99;
 
     // delegates
     // delegators
