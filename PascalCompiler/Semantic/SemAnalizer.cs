@@ -194,7 +194,6 @@ namespace PascalCompiler.Semantic
 
         private void AnalizeDefinition(ITree node, Context context)
         {
-            Console.WriteLine("Definition analize started");
             switch (node.Type)
             {
                 case AstNodeType.METHODS:
@@ -220,7 +219,6 @@ namespace PascalCompiler.Semantic
         private void CreateConvertNode(ITree node, ConvType conv)
         {
             AstNode nnode = new ConvertAstNode(AstNodeType.CONVERT, conv);
-           // nnode.AddChild(node);
             int pos = node.ChildIndex;
             ITree par = node.Parent;
             par.SetChild(pos, nnode);
@@ -327,7 +325,7 @@ namespace PascalCompiler.Semantic
                             CreateConvertNode(node.GetChild(1), f2t1);
                             return t1;
                         }
-                    return VariableType.BOOL;
+                    return t1;
                     break;
                 case AstNodeType.COMPARE:
                     if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))

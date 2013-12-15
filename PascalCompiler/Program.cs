@@ -8,18 +8,27 @@ using Antlr.Runtime;
 using Antlr.Runtime.Tree;
 using System.IO;
 using PascalCompiler.Semantic;
+using PascalCompiler.MSILGeneration;
 
 namespace PascalCompiler
 {
     class Program
     {
+        private static bool _printTree = false;
+
         static void Main(string[] args)
         {
-            ICharStream input = args.Length >= 1 ? (ICharStream)new ANTLRFileStream(args[0])
+            IList<string> arguments = args.ToList();
+            if (arguments.Contains("-t")) _printTree = true;
+            int inpos = arguments.IndexOf("-src") + 1;
+            int outpos = arguments.IndexOf("-out") + 1;
+            int logpos = arguments.IndexOf("-log") + 1;
+            ICharStream input = inpos > 0 ? (ICharStream)new ANTLRFileStream(args[inpos])
                                                  : (ICharStream)new ANTLRReaderStream(Console.In);
-            TextWriter output = args.Length >= 2 ? new StreamWriter(new FileStream(args[1], FileMode.Create))
+            TextWriter output = logpos > 0 ? new StreamWriter(new FileStream(args[logpos], FileMode.Create))
                                                  : Console.Out;
-
+            TextWriter code = outpos > 0 ? new StreamWriter(new FileStream(args[outpos], FileMode.Create))
+                                                 : Console.Out;
             output.WriteLine("Compilation started");
             output.Write("Syntax....");
             output.Flush();
@@ -28,7 +37,7 @@ namespace PascalCompiler
             PascalGrammarParser parser = new PascalGrammarParser(tokens);
             ITree program = (ITree)parser.execute().Tree;
             output.WriteLine("OK!");
-            TreePrinter.Print(program, output);
+            //TreePrinter.Print(program, output);
             output.Write("Semantic....");
             output.Flush();
             try
@@ -39,7 +48,16 @@ namespace PascalCompiler
                 output.Flush();
                 output.WriteLine("Completed Successfuly");
                 output.Flush();
-                TreePrinter.Print(program, output);
+                if (_printTree)
+                    TreePrinter.Print(program, output);
+                string msil = MSILGenerator.GenerateMSIL(program);
+                char[] chs = msil.ToArray();
+                foreach (char ch in chs)
+                {
+                    code.Write(ch);
+                    code.Flush();
+                }
+                code.Close();
             }
             catch (SemanticException ex)
             {
@@ -51,7 +69,8 @@ namespace PascalCompiler
                 output.WriteLine("Unknown error! " + ex.Message);
                 output.Flush();
             }
-            Console.ReadKey();
+            if (logpos <= 0)
+                Console.ReadKey();
         }
     }
 }

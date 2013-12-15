@@ -49,6 +49,9 @@
     <Compile Include="AstNode.cs" />
     <Compile Include="ConvertAstNode.cs" />
     <Compile Include="FunctionAstNode.cs" />
+    <Compile Include="MSILGeneration\GenerationContext\Context.cs" />
+    <Compile Include="MSILGeneration\GenerationContext\Variables\Variable.cs" />
+    <Compile Include="MSILGeneration\MSILGenerator.cs" />
     <Compile Include="NumAstNode.cs" />
     <Compile Include="PascalGrammarLexer.cs" />
     <Compile Include="PascalGrammarParser.cs" />
@@ -76,12 +79,11 @@
     <None Include="PascalGrammar.g" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Test\comp_test.txt" />
     <Content Include="Test\input.txt" />
     <Content Include="Test\SemTest.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MSILGeneration\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

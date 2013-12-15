@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>..\..\Test\SemTest.txt</StartArguments>
+    <StartArguments>-src ..\..\Test\comp_test.txt -t -out ..\..\out.msil -log ..\..\log.txt</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
     <JavaHome>C:\Program Files\Java\jdk1.7.0_40</JavaHome>

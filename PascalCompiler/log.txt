@@ -1,0 +1,29 @@
+Compilation started
+Syntax....OK!
+Semantic....OK!
+Completed Successfuly
+test
+├ var
+│ ├ integer
+│ │ ├ i
+│ │ ├ j
+│ │ └ k
+│ ├ real
+│ │ └ r
+│ ├ boolean
+│ │ └ b
+│ └ string
+│   └ s
+└ BLOCK
+  ├ :=
+  │ ├ i
+  │ └ 6
+  ├ :=
+  │ ├ r
+  │ └ 2.5
+  ├ :=
+  │ ├ b
+  │ └ true
+  └ :=
+    ├ s
+    └ ello dear frien

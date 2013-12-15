@@ -1,0 +1,27 @@
+
+.assembly program
+{
+}
+
+.class public Program
+{   
+    .field private static int32 i, j, k;
+    .field private static float32 r;
+    .field private static bool b;
+    .field private static string s;
+
+    .method public static void Main() cil managed
+    {
+        .entrypoint
+    
+        IL_0000: ldc.i4.s 6
+        IL_0001: stsfld int32 Program::i
+        IL_0002: ldc.r4 2.5
+        IL_0003: stsfld float32 Program::r
+        IL_0004: ldc.i4.1
+        IL_0005: stsfld bool Program::b
+        IL_0006: ldstr "ello dear frien"
+        IL_0007: stsfld string Program::s
+        IL_0008: ret
+    }
+}

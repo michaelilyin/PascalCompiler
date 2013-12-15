@@ -1,64 +1,13 @@
-﻿program Project1;
-
-{$APPTYPE CONSOLE}
-{5.	Ввести три числа. Если они могут быть длинами сторон
-равнобедренного треугольника, вычислить длины его высот.
-Вывести длину основания и длины высот в порядке возрастания.}
-
-  function test(patram: integer): real;
-  begin
-	patram := 2;
-	result := patram;
-  end;
-
-  procedure Ptreugolnik(a,b,c:real);
-  var h1,h2,s,x:real;
-  begin
-    d:=(c/2);
-   // h1:=sqrt(sqr(a)-sqr(d));
-    s:=(d*h1);
-    h2:=((h1*c)/b);
-    if (h1<h2) then
-    begin
-      s:=h2;
-      h2:=h1;
-      h1:=s;
-    end;
-    if (h2<c) then
-    begin
-      s:=c;
-      c:=h2;
-      h2:=s;
-    end;
-    if (h1<h2) then
-    begin
-      s:=h2;
-      h2:=h1;
-      x:=s;
-    end;
-    write(c);
-  end;
-
-  var
-  a,b,c,d:real;
-  bol: boolean;
-
-begin
-  write ( "sdsdgtsd" );readln (a);
-  write ( "sdfsdgtsd" );readln (b);
-  write ( "sdgrdhydsh" );readln (c);
-  if (a>0) and (b>0) and (c>0) and ((a+b)>c)and ((b+c)>a)and ((b+c)>a)then
-    if (a=b) then
-      Ptreugolnik(a,b,c)
-    else
-      if b=c then
-        Ptreugolnik(b,c,a)
-      else
-        if a=c then
-          Ptreugolnik(a,c,7)
-        else
-        write("neravnobedreni")
-  else
-    write("Netreugolnik");
-    readln(a);
-end.
+Compilation started
+Syntax....OK!
+Semantic....OK!
+Completed Successfuly
+Project1
+├ var
+│ └ real
+│   └ a
+└ BLOCK
+  └ :=
+    ├ a
+    └ CONVERT: int_to_float
+      └ 8

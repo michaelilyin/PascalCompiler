@@ -1,0 +1,12 @@
+﻿program test;
+var
+	i, j, k : integer;
+	r : real;
+	b : boolean;
+	s : string;
+begin
+	i := 6;
+	r := 2.5;
+	b := true;
+	s := "hello dear friend";
+end.
