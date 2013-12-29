@@ -6,24 +6,23 @@ test
 ├ var
 │ ├ integer
 │ │ ├ i
-│ │ ├ j
-│ │ └ k
+│ │ └ j
 │ ├ real
-│ │ └ r
+│ │ ├ r
+│ │ └ k
 │ ├ boolean
-│ │ └ b
+│ │ ├ b
+│ │ └ t
 │ └ string
-│   └ s
+│   ├ s
+│   └ c
 └ BLOCK
-  ├ :=
-  │ ├ i
-  │ └ 6
-  ├ :=
-  │ ├ r
-  │ └ 2.5
-  ├ :=
-  │ ├ b
-  │ └ true
-  └ :=
-    ├ s
-    └ ello dear frien
+  └ for
+    ├ i
+    ├ 0
+    ├ 10
+    └ FUNC_CALL
+      ├ write
+      └ PARAMS
+        └ CONVERT: int_to_str
+          └ i

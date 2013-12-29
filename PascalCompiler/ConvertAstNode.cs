@@ -10,7 +10,7 @@ namespace PascalCompiler
 {
     class ConvertAstNode : AstNode
     {
-        ConvType type;
+        private ConvType type;
 
         public ConvertAstNode(IToken t)
             : base(t)
@@ -28,5 +28,7 @@ namespace PascalCompiler
         {
             return "CONVERT: " + type.ToString(); 
         }
+
+        public ConvType Type { get { return type; } }
     }
 }

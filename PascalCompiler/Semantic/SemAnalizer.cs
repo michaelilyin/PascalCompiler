@@ -328,8 +328,23 @@ namespace PascalCompiler.Semantic
                     return t1;
                     break;
                 case AstNodeType.COMPARE:
-                    if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))
-                        throw new SemanticException("Illegal comparision");
+                    //if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))
+                    //    throw new SemanticException("Illegal comparision");
+#warning test new comparision
+                    t1 = AnalizeTerm(node.GetChild(0), context, line);
+                    t2 = AnalizeTerm(node.GetChild(1), context, line);
+                    f1t2 = ConvertTable.IsConvertable(t1, t2);
+                    f2t1 = ConvertTable.IsConvertable(t2, t1);
+                    if (f1t2 == ConvType.not_alowed && f2t1 == ConvType.not_alowed)
+                        throw new SemanticException("Can not convert types in comparision");
+                    if (f1t2 != ConvType.not_alowed && f1t2 != ConvType.none)
+                    {
+                        CreateConvertNode(node.GetChild(0), f1t2);
+                    } else 
+                        if (f2t1 != ConvType.not_alowed && f2t1 != ConvType.none)
+                        {
+                            CreateConvertNode(node.GetChild(1), f2t1);
+                        }
                     return VariableType.BOOL;
                     break;
                 default:
@@ -433,6 +448,8 @@ namespace PascalCompiler.Semantic
                     Variable var = context.FindVar(node.GetChild(0).Text);
                     if (var == null)
                         throw new SemanticException(String.Format("{1} Undefined variable {0}", node.GetChild(0).Text, node.Line));
+                    if (var.Type != VariableType.INT)
+                        throw new SemanticException(String.Format("{1} Illegal type of variable variable {0}", node.GetChild(0).Text, node.Line));
                     AnalizeConvertTypes(node.GetChild(1), AnalizeTerm(node.GetChild(1), context, node.Line), var.Type);
                     AnalizeConvertTypes(node.GetChild(2), AnalizeTerm(node.GetChild(2), context, node.Line), var.Type);
                     AnalizeExpression(node.GetChild(3), context, node.Line);

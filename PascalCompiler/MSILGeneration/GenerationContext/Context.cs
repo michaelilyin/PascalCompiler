@@ -18,7 +18,7 @@ namespace PascalCompiler.MSILGeneration.GenerationContext
             if (parent == null)
                 ContextName = name;
             else
-                ContextName = parent.ContextName + "." + name;
+                ContextName = parent.ContextName + "/" + name;
             ParentContext = parent;
             variables = new List<Variables.Variable>();
         }
