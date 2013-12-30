@@ -3,6 +3,32 @@ Syntax....OK!
 Semantic....OK!
 Completed Successfuly
 test
+├ METHODS
+│ ├ proc Find
+│ │ ├ METHODS
+│ │ │ └ func getVal
+│ │ │   ├ boolean
+│ │ │   └ BLOCK
+│ │ │     └ :=
+│ │ │       ├ result
+│ │ │       └ true
+│ │ ├ var
+│ │ │ └ boolean
+│ │ │   └ b
+│ │ └ BLOCK
+│ │   └ while
+│ │     ├ =
+│ │     │ ├ b
+│ │     │ └ true
+│ │     └ :=
+│ │       ├ b
+│ │       └ false
+│ └ func Reset
+│   ├ integer
+│   └ BLOCK
+│     └ :=
+│       ├ result
+│       └ 0
 ├ var
 │ ├ integer
 │ │ ├ i

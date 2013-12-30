@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Tree;
 using PascalCompiler.MSILGeneration.GenerationContext;
+using PascalCompiler.MSILGeneration.GenerationContext.Methods;
 using PascalCompiler.MSILGeneration.GenerationContext.Variables;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,8 @@ using AstNodeType = PascalCompiler.PascalGrammarParser;
 
 namespace PascalCompiler.MSILGeneration
 {
-    class MSILGenerator
+    class MSILGenerator : Generator
     {
-        private ITree program;
         private StringBuilder msil;
         private int strIndex;
 
@@ -25,8 +25,8 @@ namespace PascalCompiler.MSILGeneration
         private Stack<int> forBodyStack;
 
         public MSILGenerator(ITree program) 
+            : base(program)
         {
-            this.program = program;
             msil = new StringBuilder("");
         }
 
@@ -66,6 +66,81 @@ namespace PascalCompiler.MSILGeneration
                             msil.Append(String.Format("    .field private {0} {1}\n", type, node.GetChild(j).GetChild(k).Text));
                             context.AddVar(node.GetChild(j).GetChild(k).Text, type);
                         }
+                    }
+                }
+            }
+        }
+
+        private void GenerateMethods(ITree node, Context context)
+        {
+            for (int i = 0; i < node.ChildCount; i++)
+            {
+                ITree child = node.GetChild(i);
+                if (child.Type == AstNodeType.METHODS)
+                {
+                    for (int j = 0; j < child.ChildCount; j++)
+                    {
+                        ITree m = child.GetChild(j);
+                        int ind = 0;
+                        string ret = "";
+                        string name = "";
+                        if (m.Type == AstNodeType.FUNCTION)
+                        {
+                            ret = ToCSTypes(m.GetChild(ind++).Text);
+                            name = ((FunctionAstNode)m).Name;
+                        }
+                        else
+                        {
+                            ret = "void";
+                            name = ((ProcedureAstNode)m).Name;
+                        }
+                        msil.Append(String.Format("\n.class auto ansi nested private beforefieldinit {0} extends [mscorlib]System.Object\n", name));
+                        msil.Append(@"{
+");                     
+                        List<string> types = new List<string>();
+                        ITree nod = m.GetChild(ind);
+                        if (nod.Type == AstNodeType.PARAMS)
+                        {
+                            for (int k = 0; k < nod.ChildCount; k++)
+                            {
+                                ITree type = nod.GetChild(k);
+                                for (int d = 0; d < type.ChildCount; d++)
+                                {
+                                    types.Add(ToCSTypes(type.Text));
+                                }
+                            }
+                            ind++;
+                        }
+                        context.AddMeth(name, types, ret);
+                        Context nCon = new Context(context, name);
+                        if (m.Type == AstNodeType.FUNCTION)
+                        {
+                            nCon.AddVar("result", ret);
+                        }
+                        GenerateVars(m, nCon);
+                        GenerateMethods(m, nCon);
+
+                        msil.Append(String.Format("    .method public hidebysig instance {0} Run() cil managed\n", ret));
+                        msil.Append("   {\n");
+                        GenerateLocalMethods(nCon);
+                        Generate(m.GetChild(m.ChildCount - 1), nCon);
+                        if (m.Type == AstNodeType.FUNCTION)
+                        {
+                            msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
+                            Variable v = nCon.FindVar("result");
+                            msil.Append(string.Format("        IL_{0:X4}: stfld {1} {2}\n", strIndex++, v.Type, v.FullName));
+                        }
+                        msil.Append(string.Format("        IL_{0:X4}: ret\n", strIndex++));
+                        msil.Append("   }\n");
+                        msil.Append(@"
+    .method public hidebysig specialname rtspecialname instance void .ctor() cil managed
+    {
+        IL_0000:  ldarg.0
+        IL_0001:  call instance void [mscorlib]System.Object::.ctor()
+        IL_0003:  ret
+    }
+}
+");
                     }
                 }
             }
@@ -245,7 +320,21 @@ namespace PascalCompiler.MSILGeneration
 #endregion
             }
         }
-        private void Generate()
+
+        private void GenerateLocalMethods(Context context)
+        {
+            context.GenerateMethodsCash();
+            msil.Append("       .locals init (\n");
+            for (int i = 0; i < context.MethodsCash.Count; i++)
+            {
+                msil.Append(String.Format("            [{0}] class {1} {2}", i, context.MethodsCash[i].FullName, context.MethodsCash[i].Name));
+                if (i != context.MethodsCash.Count - 1)
+                    msil.Append(",\n");
+            }
+            msil.Append("\n       )\n");
+        }
+
+        public override string Generate()
         {
             Context context = new Context(null, "Program");
             msil = new StringBuilder();
@@ -257,8 +346,7 @@ namespace PascalCompiler.MSILGeneration
             doBodyStack = new Stack<int>();
             forBodyStack = new Stack<int>();
             forCondStack = new Stack<string>();
-            msil.Append(@"
-.assembly program
+            msil.Append(@".assembly program
 {
 }
 
@@ -266,10 +354,12 @@ namespace PascalCompiler.MSILGeneration
 {   
 ");
             GenerateVars(program, context);
+            GenerateMethods(program, context);
             msil.Append(@"
     .method public hidebysig instance void  Run() cil managed
     {
 ");
+            GenerateLocalMethods(context);
             msil.Append(string.Format("        IL_{0:X4}: nop\n", strIndex++));
             Generate(program.GetChild(program.ChildCount - 1), context);
             msil.Append(string.Format("        IL_{0:X4}: ret", strIndex++));
@@ -298,13 +388,7 @@ namespace PascalCompiler.MSILGeneration
     }
 }
 ");
-        }
-
-        public static string GenerateMSIL(ITree programNode)
-        {
-            MSILGenerator g = new MSILGenerator(programNode);
-            g.Generate();
-            return g.msil.ToString();
+            return msil.ToString();
         }
     }
 }

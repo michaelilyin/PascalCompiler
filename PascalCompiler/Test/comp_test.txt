@@ -1,5 +1,23 @@
 ﻿program test;
 
+
+procedure Find();
+	function getVal(): boolean;
+	begin
+		result := true;
+	end;
+var 
+	b : boolean;
+begin
+	while (b = true) do
+		b := false;
+end;
+
+function Reset() : integer;
+begin
+	result := 0;
+end;
+
 var
 	i, j : integer;
 	r, k : real;
