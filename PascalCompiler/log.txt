@@ -4,31 +4,31 @@ Semantic....OK!
 Completed Successfuly
 test
 ├ METHODS
-│ ├ proc Find
-│ │ ├ METHODS
-│ │ │ └ func getVal
-│ │ │   ├ boolean
-│ │ │   └ BLOCK
-│ │ │     └ :=
-│ │ │       ├ result
-│ │ │       └ true
-│ │ ├ var
-│ │ │ └ boolean
-│ │ │   └ b
+│ ├ func Reset
+│ │ ├ integer
 │ │ └ BLOCK
-│ │   └ while
-│ │     ├ =
-│ │     │ ├ b
-│ │     │ └ true
-│ │     └ :=
-│ │       ├ b
-│ │       └ false
-│ └ func Reset
-│   ├ integer
+│ │   └ :=
+│ │     ├ result
+│ │     └ 0
+│ └ proc Find
+│   ├ METHODS
+│   │ └ func getVal
+│   │   ├ boolean
+│   │   └ BLOCK
+│   │     └ :=
+│   │       ├ result
+│   │       └ true
+│   ├ var
+│   │ └ boolean
+│   │   └ b
 │   └ BLOCK
-│     └ :=
-│       ├ result
-│       └ 0
+│     └ while
+│       ├ =
+│       │ ├ b
+│       │ └ true
+│       └ :=
+│         ├ b
+│         └ false
 ├ var
 │ ├ integer
 │ │ ├ i

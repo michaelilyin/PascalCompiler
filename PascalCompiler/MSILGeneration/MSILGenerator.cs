@@ -116,6 +116,7 @@ namespace PascalCompiler.MSILGeneration
                         if (m.Type == AstNodeType.FUNCTION)
                         {
                             nCon.AddVar("result", ret);
+                            msil.Append(String.Format("    .field private {0} {1}\n", ret, "result"));
                         }
                         GenerateVars(m, nCon);
                         GenerateMethods(m, nCon);

@@ -1,6 +1,11 @@
 ﻿program test;
 
 
+function Reset() : integer;
+begin
+	result := 0;
+end;
+
 procedure Find();
 	function getVal(): boolean;
 	begin
@@ -11,11 +16,6 @@ var
 begin
 	while (b = true) do
 		b := false;
-end;
-
-function Reset() : integer;
-begin
-	result := 0;
 end;
 
 var

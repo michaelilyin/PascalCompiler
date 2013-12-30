@@ -10,6 +10,7 @@ using System.IO;
 using PascalCompiler.Semantic;
 using PascalCompiler.MSILGeneration;
 using PascalCompiler.JavaGeneration;
+using PascalCompiler.Interpretation;
 
 namespace PascalCompiler
 {
@@ -83,7 +84,12 @@ namespace PascalCompiler
                     }
                     code.Close();
                 }
-            }
+                else
+                {
+                    Interpreter interpreter = new Interpreter(program);
+                    interpreter.Process(code);
+                }
+            } 
             catch (SemanticException ex)
             {
                 output.WriteLine("Semantic error! " + ex.Message);

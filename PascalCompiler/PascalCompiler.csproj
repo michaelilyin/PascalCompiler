@@ -50,6 +50,7 @@
     <Compile Include="ConvertAstNode.cs" />
     <Compile Include="FunctionAstNode.cs" />
     <Compile Include="Generator.cs" />
+    <Compile Include="Interpretation\Interpreter.cs" />
     <Compile Include="JavaGeneration\JavaGenerator.cs" />
     <Compile Include="MSILGeneration\GenerationContext\Context.cs" />
     <Compile Include="MSILGeneration\GenerationContext\Methods\Method.cs" />

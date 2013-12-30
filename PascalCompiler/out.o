@@ -13,24 +13,50 @@
     .field private string s
     .field private string c
 
+.class auto ansi nested private beforefieldinit Reset extends [mscorlib]System.Object
+{
+    .field private int32 result
+    .method public hidebysig instance int32 Run() cil managed
+   {
+       .locals init (
+            [0] class Program::Reset Reset
+       )
+        IL_0000: ldarg.0
+        IL_0001: ldc.i4.s 0
+        IL_0002: stfld int32 Program/Reset::result
+        IL_0003: ldarg.0
+        IL_0004: stfld int32 Program/Reset::result
+        IL_0005: ret
+   }
+
+    .method public hidebysig specialname rtspecialname instance void .ctor() cil managed
+    {
+        IL_0000:  ldarg.0
+        IL_0001:  call instance void [mscorlib]System.Object::.ctor()
+        IL_0003:  ret
+    }
+}
+
 .class auto ansi nested private beforefieldinit Find extends [mscorlib]System.Object
 {
     .field private bool b
 
 .class auto ansi nested private beforefieldinit getVal extends [mscorlib]System.Object
 {
+    .field private bool result
     .method public hidebysig instance bool Run() cil managed
    {
        .locals init (
             [0] class Program/Find::getVal getVal,
-            [1] class Program::Find Find
+            [1] class Program::Reset Reset,
+            [2] class Program::Find Find
        )
-        IL_0000: ldarg.0
-        IL_0001: ldc.i4.1
-        IL_0002: stfld bool Program/Find/getVal::result
-        IL_0003: ldarg.0
-        IL_0004: stfld bool Program/Find/getVal::result
-        IL_0005: ret
+        IL_0006: ldarg.0
+        IL_0007: ldc.i4.1
+        IL_0008: stfld bool Program/Find/getVal::result
+        IL_0009: ldarg.0
+        IL_000A: stfld bool Program/Find/getVal::result
+        IL_000B: ret
    }
 
     .method public hidebysig specialname rtspecialname instance void .ctor() cil managed
@@ -44,41 +70,18 @@
    {
        .locals init (
             [0] class Program/Find::getVal getVal,
-            [1] class Program::Find Find
+            [1] class Program::Reset Reset,
+            [2] class Program::Find Find
        )
-        IL_0006: br.s IL_000A
-        IL_0007: ldarg.0
-        IL_0008: ldc.i4.0
-        IL_0009: stfld bool Program/Find::b
-        IL_000A: ldarg.0
-        IL_000B: ldfld bool Program/Find::b 
-        IL_000C: ldc.i4.1
-        IL_000D: ceq
-        IL_000E: brtrue.s IL_0007
-        IL_000F: ret
-   }
-
-    .method public hidebysig specialname rtspecialname instance void .ctor() cil managed
-    {
-        IL_0000:  ldarg.0
-        IL_0001:  call instance void [mscorlib]System.Object::.ctor()
-        IL_0003:  ret
-    }
-}
-
-.class auto ansi nested private beforefieldinit Reset extends [mscorlib]System.Object
-{
-    .method public hidebysig instance int32 Run() cil managed
-   {
-       .locals init (
-            [0] class Program::Find Find,
-            [1] class Program::Reset Reset
-       )
+        IL_000C: br.s IL_0010
+        IL_000D: ldarg.0
+        IL_000E: ldc.i4.0
+        IL_000F: stfld bool Program/Find::b
         IL_0010: ldarg.0
-        IL_0011: ldc.i4.s 0
-        IL_0012: stfld int32 Program/Reset::result
-        IL_0013: ldarg.0
-        IL_0014: stfld int32 Program/Reset::result
+        IL_0011: ldfld bool Program/Find::b 
+        IL_0012: ldc.i4.1
+        IL_0013: ceq
+        IL_0014: brtrue.s IL_000D
         IL_0015: ret
    }
 
@@ -93,8 +96,8 @@
     .method public hidebysig instance void  Run() cil managed
     {
        .locals init (
-            [0] class Program::Find Find,
-            [1] class Program::Reset Reset
+            [0] class Program::Reset Reset,
+            [1] class Program::Find Find
        )
         IL_0016: nop
         IL_0017: ldarg.0
