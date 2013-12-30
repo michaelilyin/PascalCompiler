@@ -1,30 +1,16 @@
 ﻿program test;
 
-
-function Reset() : integer;
+function GetHello: string;
 begin
-	result := 0;
+	result := " Func return hello ";
 end;
 
-procedure Find();
-	function getVal(): boolean;
-	begin
-		result := true;
-	end;
-var 
-	b : boolean;
+procedure Hello;
 begin
-	while (b = true) do
-		b := false;
+	write(" Hello from proc! ");
 end;
 
-var
-	i, j : integer;
-	r, k : real;
-	b, t : boolean;
-	s, c : string;
-
-begin
-	for i := 0 to 10 do
-		write(i);
+begin	
+	Hello;
+	write(GetHello);
 end.

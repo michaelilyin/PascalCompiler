@@ -4,51 +4,23 @@ Semantic....OK!
 Completed Successfuly
 test
 ├ METHODS
-│ ├ func Reset
-│ │ ├ integer
+│ ├ func GetHello
+│ │ ├ string
 │ │ └ BLOCK
 │ │   └ :=
 │ │     ├ result
-│ │     └ 0
-│ └ proc Find
-│   ├ METHODS
-│   │ └ func getVal
-│   │   ├ boolean
-│   │   └ BLOCK
-│   │     └ :=
-│   │       ├ result
-│   │       └ true
-│   ├ var
-│   │ └ boolean
-│   │   └ b
+│ │     └ Func return hello
+│ └ proc Hello
 │   └ BLOCK
-│     └ while
-│       ├ =
-│       │ ├ b
-│       │ └ true
-│       └ :=
-│         ├ b
-│         └ false
-├ var
-│ ├ integer
-│ │ ├ i
-│ │ └ j
-│ ├ real
-│ │ ├ r
-│ │ └ k
-│ ├ boolean
-│ │ ├ b
-│ │ └ t
-│ └ string
-│   ├ s
-│   └ c
+│     └ FUNC_CALL
+│       ├ write
+│       └ PARAMS
+│         └ Hello from proc!
 └ BLOCK
-  └ for
-    ├ i
-    ├ 0
-    ├ 10
-    └ FUNC_CALL
-      ├ write
-      └ PARAMS
-        └ CONVERT: int_to_str
-          └ i
+  ├ FUNC_CALL
+  │ └ Hello
+  └ FUNC_CALL
+    ├ write
+    └ PARAMS
+      └ FUNC_CALL
+        └ GetHello

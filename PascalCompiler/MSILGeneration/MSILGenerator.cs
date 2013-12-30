@@ -129,7 +129,7 @@ namespace PascalCompiler.MSILGeneration
                         {
                             msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
                             Variable v = nCon.FindVar("result");
-                            msil.Append(string.Format("        IL_{0:X4}: stfld {1} {2}\n", strIndex++, v.Type, v.FullName));
+                            msil.Append(string.Format("        IL_{0:X4}: ldfld {1} {2}\n", strIndex++, v.Type, v.FullName));
                         }
                         msil.Append(string.Format("        IL_{0:X4}: ret\n", strIndex++));
                         msil.Append("   }\n");
@@ -202,9 +202,19 @@ namespace PascalCompiler.MSILGeneration
                     break;
                 case AstNodeType.FUNC_CALL:
 #warning TODO function calls
-                    Generate(node.GetChild(1).GetChild(0), context);
-                    msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::WriteLine(string)\n", strIndex++));
-                    msil.Append(string.Format("        IL_{0:X4}: nop\n", strIndex++));
+                    if (node.GetChild(0).Text == "write")
+                    {
+                        Generate(node.GetChild(1).GetChild(0), context);
+                        msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::WriteLine(string)\n", strIndex++));
+                        msil.Append(string.Format("        IL_{0:X4}: nop\n", strIndex++));
+                    } 
+                    else
+                    {
+                        Method m = context.FindMethod(node.GetChild(0).Text);
+                        int ind = context.MethodsCash.IndexOf(m);
+                        msil.Append(string.Format("        IL_{0:X4}: newobj instance void {1}::.ctor()\n", strIndex++, m.FullName));
+                        msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run()\n", strIndex++, m.Type, m.FullName));
+                    }
                     break;
 #region convert
                 case AstNodeType.CONVERT:
