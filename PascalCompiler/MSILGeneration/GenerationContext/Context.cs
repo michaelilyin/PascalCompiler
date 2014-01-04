@@ -39,9 +39,9 @@ namespace PascalCompiler.MSILGeneration.GenerationContext
 
         }
 
-        public void AddMeth(string name, List<string> types, string @return)
+        public void AddMeth(string name, List<string> names, List<string> types, string paramsStr, string @return)
         {
-            methods.Add(new Method(name, types, @return, ContextName + "/" + name));
+            methods.Add(new Method(name, names, types, paramsStr, @return, ContextName + "/" + name));
         }
 
         public Variables.Variable FindVar(string name)

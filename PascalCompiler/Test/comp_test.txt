@@ -1,27 +1,34 @@
 ﻿program test;
 
-procedure Generate();
-
-	procedure Loop;
+function Hello(a, b : string; f : boolean) : string;
+begin
+	while (f) do 
 	begin
-		write(" start ");
-		i := 0;
-		for i := 5 to 10 do
-			write(" hello ");
-		write(" end ");
+		write(a);
+		f := false;
+	end;
+	result := b;
+end;
+
+function Add(a, b : integer) : integer;
+
+	function Mul(): integer;
+	begin
+		result := a * b;
 	end;
 
-var
-	str : string;
 begin
-	str := " generated string ";
-	Loop();
-
+	result := a + b + Mul();
 end;
 
 var
-	i : integer;
+	i : string;
+	num : integer;
 
 begin	
-	Generate;
+	i := " zero ";
+	i := Hello(" Hello, ", " World! ", true);
+	num := Add(6, 4);
+	write(num);
+	write(i);
 end.

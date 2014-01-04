@@ -71,6 +71,35 @@ namespace PascalCompiler.MSILGeneration
             }
         }
 
+        private string GenerateParams(ITree node, Context context)
+        {
+            string @params = "";
+
+            ITree p;
+            int i = 0;
+            do
+            {
+                p = node.GetChild(i++);
+            } while (p.Type != AstNodeType.PARAMS && i < node.ChildCount);
+            if (p.Type != AstNodeType.PARAMS)
+                return @params;
+            for (i = 0; i < p.ChildCount; i++)
+            {
+                ITree @type = p.GetChild(i);
+                for (int j = 0; j < @type.ChildCount; j++)
+                {
+                    ITree var = @type.GetChild(j);
+                    context.AddVar(var.Text, ToCSTypes(@type.Text));
+                    msil.Append(String.Format("    .field private {0} {1}\n", ToCSTypes(@type.Text), var.Text));
+                    @params += ToCSTypes(@type.Text) + " " + var.Text + ",";
+                }
+            }
+                //    nCon.AddVar("result", ret);
+                //msil.Append(String.Format("    .field private {0} {1}\n", ret, "result"));
+            @params = @params.Remove(@params.Length - 1);
+            return @params;
+        }
+
         private void GenerateMethods(ITree node, Context context)
         {
             for (int i = 0; i < node.ChildCount; i++)
@@ -98,6 +127,7 @@ namespace PascalCompiler.MSILGeneration
                         msil.Append(@"{
 ");                     
                         List<string> types = new List<string>();
+                        List<string> names = new List<string>();
                         ITree nod = m.GetChild(ind);
                         if (nod.Type == AstNodeType.PARAMS)
                         {
@@ -107,12 +137,14 @@ namespace PascalCompiler.MSILGeneration
                                 for (int d = 0; d < type.ChildCount; d++)
                                 {
                                     types.Add(ToCSTypes(type.Text));
+                                    names.Add(type.GetChild(d).Text);
                                 }
                             }
                             ind++;
                         }
-                        context.AddMeth(name, types, ret);
                         Context nCon = new Context(context, name);
+                        string p = GenerateParams(m, nCon);
+                        context.AddMeth(name, names, types, p, ret);
                         if (m.Type == AstNodeType.FUNCTION)
                         {
                             nCon.AddVar("result", ret);
@@ -138,12 +170,21 @@ namespace PascalCompiler.MSILGeneration
                         }
                         msil.Append(string.Format("        IL_{0:X4}: ret\n", strIndex++));
                         msil.Append("   }\n");
+                        msil.Append(String.Format("\n    .method public hidebysig specialname rtspecialname instance void .ctor({0}) cil managed", p));
                         msil.Append(@"
-    .method public hidebysig specialname rtspecialname instance void .ctor() cil managed
     {
         IL_0000:  ldarg.0
         IL_0001:  call instance void [mscorlib]System.Object::.ctor()
-        IL_0003:  ret
+");
+                        for (int c = 0; c < names.Count; c++)
+                        {
+                            Variable v = nCon.FindVar(names[c]);
+                            LoadFieldData(nCon, v.Name);
+                            msil.Append(string.Format("        IL_{0:X4}: ldarg.{1}\n", strIndex++, c+1));
+                            msil.Append(string.Format("        IL_{0:X4}: stfld {1} {2}\n\n", strIndex++, v.Type, v.FullName));
+
+                        }
+                        msil.Append(@"        IL_0003:  ret
     }
 }
 ");
@@ -219,7 +260,6 @@ namespace PascalCompiler.MSILGeneration
                     break;
                 case AstNodeType.FUNC_CALL:
 #warning TODO function calls
-#warning Outer context access
                     if (node.GetChild(0).Text == "write")
                     {
                         Generate(node.GetChild(1).GetChild(0), context);
@@ -230,7 +270,13 @@ namespace PascalCompiler.MSILGeneration
                     {
                         Method m = context.FindMethod(node.GetChild(0).Text);
                         int ind = context.MethodsCash.IndexOf(m);
-                        msil.Append(string.Format("        IL_{0:X4}: newobj instance void {1}::.ctor()\n", strIndex++, m.FullName));
+                        if (node.ChildCount == 2) 
+                        {
+                            ITree p = node.GetChild(1);
+                            for (int i = 0; i < p.ChildCount; i++)
+                                Generate(p.GetChild(i), context);
+                        }
+                        msil.Append(string.Format("        IL_{0:X4}: newobj instance void {1}::.ctor({2})\n", strIndex++, m.FullName, m.ParamsStr));
                         msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
                         msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n\n", strIndex++, m.Type, m.FullName, context.ContextName));
                     }
