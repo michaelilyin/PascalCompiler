@@ -1,16 +1,27 @@
 ﻿program test;
 
-function GetHello: string;
+procedure Generate();
+
+	procedure Loop;
+	begin
+		write(" start ");
+		i := 0;
+		for i := 5 to 10 do
+			write(" hello ");
+		write(" end ");
+	end;
+
+var
+	str : string;
 begin
-	result := " Func return hello ";
+	str := " generated string ";
+	Loop();
+
 end;
 
-procedure Hello;
-begin
-	write(" Hello from proc! ");
-end;
+var
+	i : integer;
 
 begin	
-	Hello;
-	write(GetHello);
+	Generate;
 end.

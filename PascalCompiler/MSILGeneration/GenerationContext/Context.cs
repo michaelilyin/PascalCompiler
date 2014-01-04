@@ -56,6 +56,11 @@ namespace PascalCompiler.MSILGeneration.GenerationContext
                 return v;
         }
 
+        public bool ContainsVar(string name)
+        {
+            return variables.Exists(a => a.Name == name);
+        }
+
         public Method FindMethod(string name)
         {
             Method meth = methods.Find(m => m.Name == name);

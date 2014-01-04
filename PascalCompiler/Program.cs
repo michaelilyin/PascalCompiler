@@ -98,6 +98,7 @@ namespace PascalCompiler
             catch (Exception ex)
             {
                 output.WriteLine("Unknown error! " + ex.Message);
+                output.WriteLine(ex.StackTrace);
                 output.Flush();
             }
             if (logpos <= 0)
