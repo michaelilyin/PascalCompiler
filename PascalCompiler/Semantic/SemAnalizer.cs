@@ -435,7 +435,6 @@ namespace PascalCompiler.Semantic
                         if (proc.ParamsTypes.Count > 0) // но есть формальные
                             throw new SemanticException(String.Format("Unallowed count of parameters in func {0}", proc.Name));
                     break;
-#warning тут конструкции языка
                 case AstNodeType.IF:
                     if (AnalizeTerm(node.GetChild(0), context , node.GetChild(0).Line) != VariableType.BOOL)
                         throw new SemanticException(String.Format("{0} The condition in operator\"if\" only must be BOOLEAN", node.GetChild(0).Line.ToString()));

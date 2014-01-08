@@ -18,6 +18,7 @@ namespace PascalCompiler.MSILGeneration
 
         private int whileCondCount;
         private int forCondCount;
+        private int thenCount, endIfCount;
         private Stack<string> whileCondStack;
         private Stack<int> whileBodyStack;
         private Stack<int> doBodyStack;
@@ -259,7 +260,7 @@ namespace PascalCompiler.MSILGeneration
                     msil.Append(string.Format("        IL_{0:X4}: ldfld {1} {2} \n", strIndex++, v.Type, v.FullName));
                     break;
                 case AstNodeType.FUNC_CALL:
-#warning TODO function calls
+#warning TODO system_calls
                     if (node.GetChild(0).Text == "write")
                     {
                         Generate(node.GetChild(1).GetChild(0), context);
@@ -277,8 +278,26 @@ namespace PascalCompiler.MSILGeneration
                                 Generate(p.GetChild(i), context);
                         }
                         msil.Append(string.Format("        IL_{0:X4}: newobj instance void {1}::.ctor({2})\n", strIndex++, m.FullName, m.ParamsStr));
-                        msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
-                        msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n\n", strIndex++, m.Type, m.FullName, context.ContextName));
+                        //if (context.ContainsMeth(m.Name))
+                        //{
+                        //    msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
+                        //    msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n\n", strIndex++, m.Type, m.FullName, context.ContextName));
+                        //}
+                        //else
+                        //{
+                            msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
+                            Context cont = context;
+                            string cn = context.ContextName;
+#warning maybee dont work
+                            while (!cont.ContainsMeth(m.Name))
+                            {
+                                msil.Append(string.Format("        IL_{0:X4}: ldfld class {1} {2}\n", strIndex++, context.ParentContext.ContextName, context.FindVar("__p__").FullName));
+                                cont = cont.ParentContext;
+                                cn = cont.ContextName;
+                            }
+                            //msil.Append(string.Format("        IL_{0:X4}: ldfld class {1} {2}::__p__\n", strIndex++, context.ParentContext.ContextName, context.ContextName));
+                            msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n\n", strIndex++, m.Type, m.FullName, cn));
+                        //}
                     }
                     break;
 #region convert
@@ -399,6 +418,16 @@ namespace PascalCompiler.MSILGeneration
                     msil.Append(string.Format("        IL_{0:X4}: brtrue.s IL_{1:X4}\n\n", strIndex++, forBodyStack.Pop()));
                     break;
 #endregion
+                case AstNodeType.IF:
+                    Generate(node.GetChild(0), context);
+                    msil.Append(string.Format("        IL_{0:X4}: brtrue.s THEN_{1:X4}\n\n", strIndex++, thenCount++));
+                    if (node.ChildCount == 3)
+                        Generate(node.GetChild(2), context);
+                    msil.Append(string.Format("        IL_{0:X4}: br.s ENDIF_{1:X4}\n\n", strIndex++, endIfCount++));
+                    msil.Replace(String.Format("THEN_{0:X4}", --thenCount), String.Format("IL_{0:X4}", strIndex));
+                    Generate(node.GetChild(1), context);
+                    msil.Replace(String.Format("ENDIF_{0:X4}", --endIfCount), String.Format("IL_{0:X4}", strIndex));
+                    break;
             }
         }
 
@@ -427,6 +456,8 @@ namespace PascalCompiler.MSILGeneration
             doBodyStack = new Stack<int>();
             forBodyStack = new Stack<int>();
             forCondStack = new Stack<string>();
+            thenCount = 0;
+            endIfCount = 0;
             msil.Append(@".assembly program
 {
 }
