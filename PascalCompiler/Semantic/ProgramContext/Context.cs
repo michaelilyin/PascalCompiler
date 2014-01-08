@@ -29,14 +29,11 @@ namespace PascalCompiler.Semantic.ProgramContext
                 Procedure pr = new Procedure("write");
                 pr.addParamType(VariableType.STRING);
                 Procedure pr1 = new Procedure("writeln");
-                Procedure pr2 = new Procedure("read");
-                pr2.addParamType(VariableType.STRING);
-                Procedure pr3 = new Procedure("readln");
-                pr3.addParamType(VariableType.STRING);
+                pr1.addParamType(VariableType.STRING);
+                Procedure pr2 = new Function("readln", VariableType.STRING);
                 methods.Add(pr);
                 methods.Add(pr1);
                 methods.Add(pr2);
-                methods.Add(pr3);
             }
         }
 

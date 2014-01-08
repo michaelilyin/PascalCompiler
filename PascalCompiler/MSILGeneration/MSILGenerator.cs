@@ -204,6 +204,31 @@ namespace PascalCompiler.MSILGeneration
             }
         }
 
+        private bool GenerateSysCall(ITree node, Context context)
+        {
+            if (node.Type == AstNodeType.FUNC_CALL)
+            {
+                switch (node.GetChild(0).Text)
+                {
+                    case "writeln":
+                        Generate(node.GetChild(1).GetChild(0), context);
+                        msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::WriteLine(string)\n", strIndex++));
+                        msil.Append(string.Format("        IL_{0:X4}: nop\n\n", strIndex++));
+                        return true;
+                    case "write":
+                        Generate(node.GetChild(1).GetChild(0), context);
+                        msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::Write(string)\n", strIndex++));
+                        msil.Append(string.Format("        IL_{0:X4}: nop\n\n", strIndex++));
+                        return true;
+                    case "readln":
+                        msil.Append(string.Format("        IL_{0:X4}: call string [mscorlib]System.Console::ReadLine()\n", strIndex++));
+                        msil.Append(string.Format("        IL_{0:X4}: nop\n\n", strIndex++));
+                        return true;
+                }
+            }
+            return false;
+        }
+
         private void Generate(ITree node, Context context) 
         {
             switch (node.Type)
@@ -261,12 +286,16 @@ namespace PascalCompiler.MSILGeneration
                     break;
                 case AstNodeType.FUNC_CALL:
 #warning TODO system_calls
-                    if (node.GetChild(0).Text == "write")
+                    //if (node.GetChild(0).Text == "write")
+                    //{
+                    //    Generate(node.GetChild(1).GetChild(0), context);
+                    //    msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::WriteLine(string)\n", strIndex++));
+                    //    msil.Append(string.Format("        IL_{0:X4}: nop\n\n", strIndex++));
+                    //} 
+                    if (GenerateSysCall(node, context))
                     {
-                        Generate(node.GetChild(1).GetChild(0), context);
-                        msil.Append(string.Format("        IL_{0:X4}: call void [mscorlib]System.Console::WriteLine(string)\n", strIndex++));
-                        msil.Append(string.Format("        IL_{0:X4}: nop\n\n", strIndex++));
-                    } 
+                        ;
+                    }
                     else
                     {
                         Method m = context.FindMethod(node.GetChild(0).Text);
