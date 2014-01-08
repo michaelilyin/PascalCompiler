@@ -82,11 +82,6 @@
     <None Include="App.config" />
     <None Include="PascalGrammar.g" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Test\comp_test.txt" />
-    <Content Include="Test\input.txt" />
-    <Content Include="Test\SemTest.txt" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

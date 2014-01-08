@@ -327,6 +327,16 @@ namespace PascalCompiler.Semantic
                         }
                     return t1;
                     break;
+                case AstNodeType.AND:
+                case AstNodeType.OR:
+                case AstNodeType.XOR:
+                    t1 = AnalizeTerm(node.GetChild(0), context, line);
+                    t2 = AnalizeTerm(node.GetChild(1), context, line);
+                    if (t1 == VariableType.BOOL && t2 == VariableType.BOOL)
+                        return VariableType.BOOL;
+                    else
+                        throw new SemanticException("Logical operations only on boolean types!");
+                    break;
                 case AstNodeType.COMPARE:
                     //if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))
                     //    throw new SemanticException("Illegal comparision");
