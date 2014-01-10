@@ -19,6 +19,7 @@ namespace PascalCompiler.MSILGeneration
         private int whileCondCount;
         private int forCondCount;
         private int thenCount, endIfCount;
+        private int boolFirstCount, boolSecondCount;
         private Stack<string> whileCondStack;
         private Stack<int> whileBodyStack;
         private Stack<int> doBodyStack;
@@ -259,6 +260,26 @@ namespace PascalCompiler.MSILGeneration
                     Generate(node.GetChild(1), context);
                     msil.Append(string.Format("        IL_{0:X4}: {1}\n", strIndex++, oper));
                     break;
+                case AstNodeType.AND:
+                    Generate(node.GetChild(0), context);
+                    msil.Append(string.Format("        IL_{0:X4}: brfalse.s BOOL_1_{1} \n\n", strIndex++, boolFirstCount++));
+                    Generate(node.GetChild(1), context);
+                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1} \n\n", strIndex++, boolSecondCount++));
+                    msil.Replace(String.Format("BOOL_1_{0}", --boolFirstCount), String.Format("IL_{0:X4}", strIndex));
+                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.0 \n\n", strIndex++));
+                    msil.Replace(String.Format("BOOL_2_{0}", --boolSecondCount), String.Format("IL_{0:X4}", strIndex));
+                    msil.Append(string.Format("        IL_{0:X4}: nop \n\n", strIndex++));
+                    break;
+                case AstNodeType.OR:
+                    Generate(node.GetChild(0), context);
+                    msil.Append(string.Format("        IL_{0:X4}: brtrue.s BOOL_1_{1} \n\n", strIndex++, boolFirstCount++));
+                    Generate(node.GetChild(1), context);
+                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1} \n\n", strIndex++, boolSecondCount++));
+                    msil.Replace(String.Format("BOOL_1_{0}", --boolFirstCount), String.Format("IL_{0:X4}", strIndex));
+                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.1 \n\n", strIndex++));
+                    msil.Replace(String.Format("BOOL_2_{0}", --boolSecondCount), String.Format("IL_{0:X4}", strIndex));
+                    msil.Append(string.Format("        IL_{0:X4}: nop \n\n", strIndex++));
+                    break;
 #endregion
 #region constants
                 case AstNodeType.NUMBER:
@@ -284,6 +305,7 @@ namespace PascalCompiler.MSILGeneration
                     //msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
                     msil.Append(string.Format("        IL_{0:X4}: ldfld {1} {2} \n", strIndex++, v.Type, v.FullName));
                     break;
+#region funccall
                 case AstNodeType.FUNC_CALL:
 #warning TODO system_calls
                     //if (node.GetChild(0).Text == "write")
@@ -329,34 +351,44 @@ namespace PascalCompiler.MSILGeneration
                         //}
                     }
                     break;
+#endregion
 #region convert
                 case AstNodeType.CONVERT:
                     //Generate(node.GetChild(0), context);
 #warning TODO notmal universal convertion
-                    switch (node.GetChild(0).Type)
-                    {
-                        case AstNodeType.IDENT:
-                            v = context.FindVar(node.GetChild(0).Text);
-                            LoadFieldData(context, v.Name);
-                            //msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
-                            msil.Append(string.Format("        IL_{0:X4}: ldflda {1} {2} \n", strIndex++, v.Type, v.FullName));
-                            break;
-                    }
+                    //switch (node.GetChild(0).Type)
+                    //{
+                    //    case AstNodeType.IDENT:
+                    //        v = context.FindVar(node.GetChild(0).Text);
+                    //        LoadFieldData(context, v.Name);
+                    //        //msil.Append(string.Format("        IL_{0:X4}: ldarg.0\n", strIndex++));
+                    //        msil.Append(string.Format("        IL_{0:X4}: ldflda {1} {2} \n", strIndex++, v.Type, v.FullName));
+                    //        break;
+                    //}
+                    Generate(node.GetChild(0), context);
+
                     switch (((ConvertAstNode)node).Type)
                     {
                         case Semantic.ProgramContext.Variables.ConvType.bool_to_str:
                             //v = context.FindVar(node.GetChild(0).Text);
                             //msil.Append(String.Format("        IL_{0:X4}: ldsflda {1} {2}\n", strIndex++, v.Type, v.FullName));
+                            //msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, ));
+                            msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("bool")));
+                            msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("bool"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Boolean::ToString()\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.float_to_str:
                             //v = context.FindVar(node.GetChild(0).Text);
                             //msil.Append(String.Format("        IL_{0:X4}: ldsflda {1} {2}\n", strIndex++, v.Type, v.FullName));
+                            msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("float32")));
+                            msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("float32"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Single::ToString()\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.int_to_str:
                             //v = context.FindVar(node.GetChild(0).Text);
                             //msil.Append(String.Format("        IL_{0:X4}: ldsflda {1} {2}\n", strIndex++, v.Type, v.FullName));
+                            msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("int32")));
+                            msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("int32"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Int32::ToString()\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.int_to_float:
@@ -407,7 +439,6 @@ namespace PascalCompiler.MSILGeneration
                     whileBodyStack.Push(strIndex);
                     Generate(node.GetChild(1), context);
                     msil.Replace(whileCondStack.Pop(), string.Format("IL_{0:X4}", strIndex));
-#warning incrementation
                     whileCondCount--; 
                     Generate(node.GetChild(0), context);
                     msil.Append(string.Format("        IL_{0:X4}: brtrue.s IL_{1:X4}\n\n", strIndex++, whileBodyStack.Pop()));
@@ -460,17 +491,34 @@ namespace PascalCompiler.MSILGeneration
             }
         }
 
+        private List<string> locals;
+
+        private void InitLocalDictionary()
+        {
+            locals = new List<string>();
+            locals.Add("int32");
+            locals.Add("float32");
+            locals.Add("bool");
+            locals.Add("string");
+        }
+
         private void GenerateLocalMethods(Context context)
         {
             context.GenerateMethodsCash();
+            msil.Append(".maxstack  2\n");
             msil.Append("       .locals init (\n");
-            for (int i = 0; i < context.MethodsCash.Count; i++)
+            for (int i = 0; i < locals.Count; i++)
             {
-                msil.Append(String.Format("            [{0}] class {1} {2}", i, context.MethodsCash[i].FullName, context.MethodsCash[i].Name));
-                if (i != context.MethodsCash.Count - 1)
-                    msil.Append(",\n");
+                msil.Append(String.Format("            [{0}] {1} __loc_{2}__", i, locals[i], i));
+                if (i < locals.Count - 1) msil.Append(", \n");
             }
-            msil.Append("\n       )\n");
+                //for (int i = 0; i < context.MethodsCash.Count; i++)
+                //{
+                //    msil.Append(String.Format("            [{0}] class {1} {2}", i, context.MethodsCash[i].FullName, context.MethodsCash[i].Name));
+                //    if (i != context.MethodsCash.Count - 1)
+                //        msil.Append(",\n");
+                //}
+                msil.Append("\n       )\n");
         }
 
         public override string Generate()
@@ -485,8 +533,11 @@ namespace PascalCompiler.MSILGeneration
             doBodyStack = new Stack<int>();
             forBodyStack = new Stack<int>();
             forCondStack = new Stack<string>();
+            boolFirstCount = 0;
+            boolSecondCount = 0;
             thenCount = 0;
             endIfCount = 0;
+            InitLocalDictionary();
             msil.Append(@".assembly program
 {
 }
