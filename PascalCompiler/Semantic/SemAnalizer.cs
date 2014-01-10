@@ -337,6 +337,11 @@ namespace PascalCompiler.Semantic
                     else
                         throw new SemanticException("Logical operations only on boolean types!");
                     break;
+                case AstNodeType.NOT:
+                    if (AnalizeTerm(node.GetChild(0), context, line) != VariableType.BOOL)
+                        throw new SemanticException("Can not apple \"not\" to the non logical operand!");
+                    return VariableType.BOOL;
+                    break;
                 case AstNodeType.COMPARE:
                     //if (AnalizeTerm(node.GetChild(0), context, line) != AnalizeTerm(node.GetChild(1), context, line))
                     //    throw new SemanticException("Illegal comparision");

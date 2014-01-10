@@ -31,6 +31,7 @@ tokens {
 	AND = 'and';
 	OR = 'or';
 	XOR = 'xor';
+	NOT = 'not';
 }
 
 @lexer::namespace { PascalCompiler }
@@ -56,8 +57,8 @@ IDENT:
     ;
 
 NUMBER:   
-    ('0'..'9')+ ('.' ('0'..'9')+)?
-    |   '.' ('0'..'9')+ 
+    '-'?(('0'..'9')+ ('.' ('0'..'9')+)?
+    |   '.' ('0'..'9')+ )
     ;
 
 COMMENT
@@ -90,8 +91,9 @@ group
 	| IDENT
 	| STRING -> STRING<StringAstNode>[$STRING.text]
 	;
-      
-mult: group ( ( MUL | DIV | AND )^ group )*  ;
+   
+denial	: NOT^? group;      
+mult: denial ( ( MUL | DIV | AND )^ denial )*  ;
 add:  mult  ( ( ADD | SUB | OR | XOR )^ mult  )*  ;
 compare	: add ( COMPARE^ add)*;
 term	: compare;
