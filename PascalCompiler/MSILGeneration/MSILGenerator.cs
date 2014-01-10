@@ -262,23 +262,28 @@ namespace PascalCompiler.MSILGeneration
                     break;
                 case AstNodeType.AND:
                     Generate(node.GetChild(0), context);
-                    msil.Append(string.Format("        IL_{0:X4}: brfalse.s BOOL_1_{1} \n\n", strIndex++, boolFirstCount++));
+                    msil.Append(string.Format("        IL_{0:X4}: brfalse.s BOOL_1_{1} \n", strIndex++, boolFirstCount++));
                     Generate(node.GetChild(1), context);
-                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1} \n\n", strIndex++, boolSecondCount++));
+                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1} \n", strIndex++, boolSecondCount++));
                     msil.Replace(String.Format("BOOL_1_{0}", --boolFirstCount), String.Format("IL_{0:X4}", strIndex));
-                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.0 \n\n", strIndex++));
+                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.0 \n", strIndex++));
                     msil.Replace(String.Format("BOOL_2_{0}", --boolSecondCount), String.Format("IL_{0:X4}", strIndex));
                     msil.Append(string.Format("        IL_{0:X4}: nop \n\n", strIndex++));
                     break;
                 case AstNodeType.OR:
                     Generate(node.GetChild(0), context);
-                    msil.Append(string.Format("        IL_{0:X4}: brtrue.s BOOL_1_{1} \n\n", strIndex++, boolFirstCount++));
+                    msil.Append(string.Format("        IL_{0:X4}: brtrue.s BOOL_1_{1}\n", strIndex++, boolFirstCount++));
                     Generate(node.GetChild(1), context);
-                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1} \n\n", strIndex++, boolSecondCount++));
+                    msil.Append(string.Format("        IL_{0:X4}: br.s BOOL_2_{1}\n", strIndex++, boolSecondCount++));
                     msil.Replace(String.Format("BOOL_1_{0}", --boolFirstCount), String.Format("IL_{0:X4}", strIndex));
-                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.1 \n\n", strIndex++));
+                    msil.Append(string.Format("        IL_{0:X4}: ldc.i4.1 \n", strIndex++));
                     msil.Replace(String.Format("BOOL_2_{0}", --boolSecondCount), String.Format("IL_{0:X4}", strIndex));
                     msil.Append(string.Format("        IL_{0:X4}: nop \n\n", strIndex++));
+                    break;
+                case AstNodeType.NOT:
+                    Generate(node.GetChild(0), context);
+                    msil.Append(string.Format("        IL_{0:X4}:  ldc.i4.0 \n", strIndex++));
+                    msil.Append(string.Format("        IL_{0:X4}:  ceq \n", strIndex++));
                     break;
 #endregion
 #region constants
