@@ -352,7 +352,16 @@ namespace PascalCompiler.MSILGeneration
                                 cn = cont.ContextName;
                             }
                             //msil.Append(string.Format("        IL_{0:X4}: ldfld class {1} {2}::__p__\n", strIndex++, context.ParentContext.ContextName, context.ContextName));
-                            msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n\n", strIndex++, m.Type, m.FullName, cn));
+                            msil.Append(string.Format("        IL_{0:X4}: call instance {1} {2}::Run(class {3})\n", strIndex++, m.Type, m.FullName, cn));
+                            if (m.Type != "void" && (node.Parent.Type == AstNodeType.BLOCK
+                                    || node.Parent.Type == AstNodeType.WHILE
+                                    || node.Parent.Type == AstNodeType.DO
+                                    || node.Parent.Type == AstNodeType.FOR
+                                    || node.Parent.Type == AstNodeType.IF
+                                    ))
+                            {
+                                msil.Append(string.Format("        IL_{0:X4}: pop\n\n", strIndex++));
+                            }
                         //}
                     }
                     break;
@@ -381,6 +390,7 @@ namespace PascalCompiler.MSILGeneration
                             msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("bool")));
                             msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("bool"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Boolean::ToString()\n", strIndex++));
+                            //msil.Append(String.Format("        IL_{0:X4}: pop\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.float_to_str:
                             //v = context.FindVar(node.GetChild(0).Text);
@@ -388,6 +398,7 @@ namespace PascalCompiler.MSILGeneration
                             msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("float32")));
                             msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("float32"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Single::ToString()\n", strIndex++));
+                           // msil.Append(String.Format("        IL_{0:X4}: pop\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.int_to_str:
                             //v = context.FindVar(node.GetChild(0).Text);
@@ -395,6 +406,7 @@ namespace PascalCompiler.MSILGeneration
                             msil.Append(String.Format("        IL_{0:X4}: stloc.{1}\n", strIndex++, locals.IndexOf("int32")));
                             msil.Append(String.Format("        IL_{0:X4}: ldloca.s {1}\n", strIndex++, String.Format("__loc_{0}__", locals.IndexOf("int32"))));
                             msil.Append(String.Format("        IL_{0:X4}: call instance string [mscorlib]System.Int32::ToString()\n", strIndex++));
+                            //msil.Append(String.Format("        IL_{0:X4}: pop\n", strIndex++));
                             break;
                         case Semantic.ProgramContext.Variables.ConvType.int_to_float:
                             //v = context.FindVar(node.GetChild(0).Text);
