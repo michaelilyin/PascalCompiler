@@ -311,6 +311,10 @@ namespace PascalCompiler.Semantic
                 case AstNodeType.DIV:
                     VariableType t1 = AnalizeTerm(node.GetChild(0), context, line);
                     VariableType t2 = AnalizeTerm(node.GetChild(1), context, line);
+                    if (t1 == VariableType.STRING || t2 == VariableType.STRING)
+                        throw new SemanticException("Could not douing ariphmetic operations with strings");
+                    if (t1 == VariableType.BOOL || t2 == VariableType.BOOL)
+                        throw new SemanticException("Could not douing ariphmetic operations with booleans");
                     ConvType f1t2 = ConvertTable.IsConvertable(t1, t2);
                     ConvType f2t1 = ConvertTable.IsConvertable(t2, t1);
                     if (f1t2 == ConvType.not_alowed && f2t1 == ConvType.not_alowed)
