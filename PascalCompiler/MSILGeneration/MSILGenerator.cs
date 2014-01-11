@@ -290,7 +290,7 @@ namespace PascalCompiler.MSILGeneration
                 case AstNodeType.NUMBER:
                     int num;
                     if (Int32.TryParse(((NumAstNode)node).ToString(), out num))
-                        msil.Append(string.Format("        IL_{0:X4}: ldc.i4.s {1}\n", strIndex++, ((NumAstNode)node).ToString()));
+                        msil.Append(string.Format("        IL_{0:X4}: ldc.i4 {1}\n", strIndex++, ((NumAstNode)node).ToString()));
                     else
                         msil.Append(string.Format("        IL_{0:X4}: ldc.r4 {1}\n", strIndex++, ((NumAstNode)node).ToString()));
                     break;
@@ -522,7 +522,7 @@ namespace PascalCompiler.MSILGeneration
         private void GenerateLocalMethods(Context context)
         {
             context.GenerateMethodsCash();
-            msil.Append(".maxstack  2\n");
+            //msil.Append("       .maxstack  2\n");
             msil.Append("       .locals init (\n");
             for (int i = 0; i < locals.Count; i++)
             {
@@ -555,11 +555,16 @@ namespace PascalCompiler.MSILGeneration
             thenCount = 0;
             endIfCount = 0;
             InitLocalDictionary();
-            msil.Append(@".assembly program
+            msil.Append(@".assembly extern mscorlib
+{
+    .publickeytoken = (B7 7A 5C 56 19 34 E0 89 )      
+    .ver 4:0:0:0
+}
+.assembly program
 {
 }
 
-.class public Program extends [mscorlib]System.Object
+.class private auto ansi beforefieldinit Program extends [mscorlib]System.Object
 {   
 ");
             GenerateVars(program, context);
