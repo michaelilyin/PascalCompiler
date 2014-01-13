@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace PascalCompiler.JavaGeneration
+{
+    
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+
+        class Context
+        {
+            public string ContextName { get; private set; }
+            public Context ParentContext { get; private set; }
+            public List<Method> MethodsCash { get; private set; }
+            public int strIndex;
+
+            private List<Variable> variables;
+            private List<Method> methods;
+
+            public Context(Context parent, string name)
+            {
+                strIndex = 0;
+                if (parent == null)
+                    ContextName = name;
+                else
+                    ContextName = parent.ContextName + "/" + name;
+                ParentContext = parent;
+                variables = new List<Variable>();
+                methods = new List<Method>();
+            }
+
+            public void AddVar(string name, string type)
+            {
+                variables.Add(new Variable(name, type, ContextName + "/" + name));
+            }
+
+            public void AddArg(string name, string type)
+            {
+
+            }
+
+            public void AddMeth(string name, List<string> names, List<string> types, string paramsStr, string @return)
+            {
+                methods.Add(new Method(name, names, types, paramsStr, @return, ContextName + "/" + name));
+            }
+
+            public Variable FindVar(string name)
+            {
+                Variable v = variables.Find(a => a.Name == name);
+                if (v == null)
+                    if (ParentContext == null)
+                        return null;
+                    else
+                        return ParentContext.FindVar(name);
+                else
+                    return v;
+            }
+
+            public bool ContainsVar(string name)
+            {
+                return variables.Exists(a => a.Name == name);
+            }
+
+            public bool ContainsMeth(string name)
+            {
+                return methods.Exists(m => m.Name == name);
+            }
+
+            public Method FindMethod(string name)
+            {
+                Method meth = methods.Find(m => m.Name == name);
+                if (meth == null)
+                    if (ParentContext == null)
+                        return null;
+                    else
+                        return ParentContext.FindMethod(name);
+                else
+                    return meth;
+            }
+
+            private List<Method> GetAllMethods()
+            {
+                List<Method> buf = new List<Method>(methods);
+                if (ParentContext != null)
+                    buf.AddRange(ParentContext.GetAllMethods());
+                return buf;
+            }
+
+            public void GenerateMethodsCash()
+            {
+                MethodsCash = GetAllMethods();
+            }
+        }
+    
+
+}
