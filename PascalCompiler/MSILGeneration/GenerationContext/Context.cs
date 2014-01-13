@@ -31,7 +31,7 @@ namespace PascalCompiler.MSILGeneration.GenerationContext
 
         public void AddVar(string name, string type)
         {
-            variables.Add(new Variables.Variable(name, type, ContextName + "::" + name));
+            variables.Add(new Variables.Variable(name, type, ContextName + "/" + name));
         }
 
         public void AddArg(string name, string type)
