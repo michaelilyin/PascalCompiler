@@ -14,6 +14,17 @@ namespace PascalCompiler.JavaGeneration
     class JavaGenerator : Generator
     {
         private StringBuilder jasmin;
+
+        private int whileCondCount;
+        private int forCondCount;
+        private int thenCount, endIfCount;
+        private int boolFirstCount, boolSecondCount;
+        private Stack<string> whileCondStack;
+        private Stack<int> whileBodyStack;
+        private Stack<int> doBodyStack;
+        private Stack<string> forCondStack;
+        private Stack<int> forBodyStack;
+
         public JavaGenerator(ITree program)
             : base(program)
         {
@@ -129,6 +140,29 @@ namespace PascalCompiler.JavaGeneration
                     Generate(node.GetChild(0), context);
                     Generate(node.GetChild(1), context);
                     jasmin.Append(string.Format("{0}{1}\n",JavaPrefixes(null),  oper));
+                    break;
+
+                case AstNodeType.IF:
+                    Generate(node.GetChild(0), context);
+                    jasmin.Append(string.Format("ifeq THEN_{1:X4}\n\n", thenCount++));
+                    if (node.ChildCount == 3)
+                        Generate(node.GetChild(2), context);
+                    jasmin.Append(string.Format("goto ENDIF_{1:X4}\n\n",  endIfCount++));
+                    jasmin.Replace(String.Format("THEN_{0:X4}", --thenCount), String.Format(""));
+                    Generate(node.GetChild(1), context);
+                    //wat?
+                    jasmin.Replace(String.Format("ENDIF_{0:X4}", --endIfCount), String.Format(""));
+                    break;
+
+                case AstNodeType.WHILE:
+                    whileCondStack.Push(string.Format("while_{0}", whileCondCount++));
+                    jasmin.Append(string.Format("goto {1}\n", strIndex++, whileCondStack.Peek()));
+                    whileBodyStack.Push(strIndex);
+                    Generate(node.GetChild(1), context);
+                    jasmin.Replace(whileCondStack.Pop(), string.Format("IL_{0:X4}", strIndex));
+                    whileCondCount--;
+                    Generate(node.GetChild(0), context);
+                    jasmin.Append(string.Format("        IL_{0:X4}: ifeq IL_{1:X4}\n\n", strIndex++, whileBodyStack.Pop()));
                     break;
 
             }
