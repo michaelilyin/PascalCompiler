@@ -252,7 +252,7 @@ namespace PascalCompiler.MSILGeneration
             return false;
         }
 
-        private enum GenType { @int, @float, @bool, @string, @void, none }
+        public enum GenType { @int, @float, @bool, @string, @void, none }
 
         private GenType Generate(ITree node, Context context) 
         {
